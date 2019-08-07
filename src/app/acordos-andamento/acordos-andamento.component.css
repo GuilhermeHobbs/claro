@@ -1,0 +1,16 @@
+.produto-heading {
+    line-height: 44px;
+    font-size: 22px;
+    margin-left: 10px;    
+    }
+    
+    .logo {
+        width: 120px;
+        display: block;
+        margin: 10px auto;
+    }
+    
+    .produto-img {
+        height: 45px;
+        float: left;
+    }

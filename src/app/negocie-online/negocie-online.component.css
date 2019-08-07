@@ -1,0 +1,65 @@
+.produto-heading {
+line-height: 44px;
+font-size: 22px;
+margin-left: 10px;    
+}
+
+.logo {
+    width: 120px;
+    display: block;
+    margin: 10px auto;
+}
+
+.produto-img {
+    height: 45px;
+    float: left;
+}
+
+.btn {
+    width: 100%;
+    font-size: 19px;  
+}
+
+table {
+    margin-bottom: 20px;
+}
+
+.opcoes-parcelamento {
+    margin-bottom: 15px;
+}
+
+.opcoes-parcelamento .btn {
+    margin-bottom: 10px;    
+}
+
+.metodo-pagamento {
+    margin-top: 30px;
+}
+
+.opcoes-para-parcelamento {
+    text-align: right;
+}
+
+.metodo-de-pagamento {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+
+    .opcoes-para-parcelamento {
+        text-align: left;
+    }    
+
+    .btn {
+        margin-top: 10px;    
+    }
+
+    .metodo-de-pagamento {
+        text-align: left;
+    }
+
+    .btn-accordion {
+        margin: 0;
+        padding: 0;
+    }
+}

@@ -1,0 +1,27 @@
+.btn {
+    width: 100%;
+    font-size: 19px;
+    margin-bottom: 20px;  
+}
+
+.btn-yellow {
+    background: #ffbc4a;
+    color: white;
+}
+
+.escolha-data {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+ 
+    .btn {
+        margin-bottom: 0px;
+        margin-top: 20px;
+    }
+
+    .escolha-data {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+}    

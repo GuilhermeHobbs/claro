@@ -1,0 +1,83 @@
+<div class="row height-100">
+    <div class="col-lg-3 fundo-paulista">
+    </div>
+ 
+    <div class="back-beje col-lg-9">
+                            
+            <p class="link-voltar btn-link" (click)="voltarMenu()" *ngIf="!showOpcoes">Voltar ao Menu Principal</p>        
+            <img src="assets/img/logo.png" alt="Claro" class="logo" [hidden]="logo_menor">
+            
+            <app-negocie-online *ngIf="showNegocieOnline"></app-negocie-online>
+            <app-assistente-virtual *ngIf="showAssistenteVirtual"></app-assistente-virtual>
+            <app-receba-nossa-ligacao *ngIf="showRecebaNossaLigacao"></app-receba-nossa-ligacao>
+            <app-acordos-andamento *ngIf="showAcordosAndamento"></app-acordos-andamento>
+                        
+            <div class="padding-right-10px" *ngIf="showOpcoes">
+                <h3 class="text-center" *ngIf="!fizPagamentoOk">Bem-vindo, {{nome}}!</h3>    
+                
+                <div class="row">                    
+                    <a class="card col-lg-2" (click)="negocieOnline()">
+                            <img src="assets/icons/negocie_online.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                            <h5 class="card-title">Negocie Online</h5>
+                            <p class="card-text">Some quick example text to  bulk of the card's content.</p>
+                            
+                            </div>
+                            <p class="btn btn-acessar">Acessar</p>
+                    </a>
+    
+            <a class="card col-lg-2" (click)="assistenteVirtual()">
+                    <img src="assets/icons/assistente-virtual.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">Assistente Virtual</h5>
+                    <p class="card-text">Some quick example text to  bulk of the card's content.</p>
+                    
+                    </div>
+                    <p class="btn btn-acessar">Acessar</p>
+            </a>
+    
+            <a class="card col-lg-2" (click)="recebaNossaLigacao()">
+                    <img src="assets/icons/receber-ligacao.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">Receba nossa Ligação</h5>
+                    <p class="card-text">Some quick example text to  bulk of the card's content.</p>
+                    
+                    </div>
+                    <p class="btn btn-acessar">Acessar</p>
+            </a>
+    
+            <div class="col-lg-3" *ngIf="fizPagamentoOk">
+                  <div class="container">
+                        <span class="red">Obrigada!</span><br><br>
+                        As informações de pagamento foram enviadas para a nossa central.<br>
+                        Caso necessário entraremos em contato no nosso número:<br> 
+                        0800 208 8080         
+                </div>            
+        </div>
+
+            <div class="card col-lg-2" *ngIf="cardBodyPagamento" (click)="fizPagamento()">
+                    <img src="assets/icons/fiz-pagamento.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">Já fiz o Pagamento</h5>
+                    <p class="card-text">Some quick example text to  bulk of the card's content.</p>
+                        
+                    </div>
+                    <p class="btn btn-acessar">Informar</p>
+                </div>
+    
+            <a class="card col-lg-2" (click)="acordosAndamento()">
+                    <img src="assets/icons/acordos.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">Seus Acordos em Andamento</h5>
+                    <p class="card-text">Some quick example text to  bulk of the card's content.</p>
+                    
+                    </div>
+                    <p class="btn btn-acessar">Acessar</p>
+            </a>
+        </div>
+     </div>    
+                <p class="bottom-fixed back-beje">A Fulltimm é uma empresa autorizada pela Claro para a cobrança de débito.</p>
+                
+    </div>    
+
+</div>      

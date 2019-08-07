@@ -1,0 +1,87 @@
+<header *ngIf="showHeader">
+  <img src="assets/img/logo.png" alt="Claro" class="logo">
+  <h3 class="text-center">Selecione um contrato para avaliar as condições de negociação:</h3>
+</header>
+
+<accordion [isAnimated]="true" [closeOthers]="true">
+  <accordion-group>
+    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="showHeader = false">
+      <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
+      <div class="pull-left float-left produto-heading">Claro Móvel</div>  
+    </button>
+    
+    <div class="table-responsive-lg" *ngIf="showFatura">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Fatura - Vencimento</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Valor (R$)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">10/07/2007</th>
+            <td>1</td>
+            <td>R$ 546,00</td>
+          </tr>
+          <tr>
+            <th scope="row">Total</th>
+            <td></td>
+            <td>R$ 546,00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>  
+    
+    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
+      <div class="col-sm-3 opcoes-para-parcelamento">
+        Opções para parcelamento:
+      </div>  
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()">
+          R$15000,28 + 1 x R$150,27
+        </button>
+        <button type="button" class="btn btn-primary">
+          R$150,28 + 1 x R$150,27
+        </button>
+      </div>
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-primary">
+          R$150,28 + 1 x R$150,27
+        </button>
+      </div>    
+    </div>
+  
+    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()"></app-prazo-finalizacao>
+
+    <div class="row metodo-pagamento" *ngIf="metodoPagamento">
+      <div class="col-sm-5 metodo-de-pagamento">
+        Método de pagamento:
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-primary">
+          À vista: R$ 100,00
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento()">
+          Parcelado
+        </button> 
+      </div>  
+    </div>
+    
+  </accordion-group>
+  <accordion-group>
+    <button class="btn btn-link btn-accordion" accordion-heading>
+      <img src="assets/icons/internet.jpg" class="produto-img" alt="...">
+      <div class="pull-left float-left produto-heading">Claro Internet</div>
+    </button>
+  </accordion-group>
+  <accordion-group>
+      <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading>
+        <img src="assets/icons/tv.jpg" class="produto-img" alt="...">
+        <div class="pull-left float-left produto-heading">Claro TV</div>
+      </button>
+    </accordion-group>
+</accordion>

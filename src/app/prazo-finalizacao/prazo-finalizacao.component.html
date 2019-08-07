@@ -1,0 +1,45 @@
+<div *ngIf="fim">
+  <p>Detalhes do acordo:</p>
+  <p>Data do primeiro pagamento: 14/02/2019</p>
+  <p>Valor da parcela: R$ 10,00</p>
+  <p>Demais parcelas: 2 x R$ 10,00</p>
+  <div class="row">
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-yellow">
+        Confirmar acordo
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-primary" (click)="mudarData()">
+        Mudar data
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-primary" (click)="voltar()">
+        Mudar parcelamento
+      </button>
+    </div>            
+  </div>
+</div>
+
+<div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
+    <div class="col-sm-3 escolha-data">
+        Escolha uma data para pagamento:
+    </div>  
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-primary" (click)="showFinalizacao()">
+        Pagamento até amanhã
+      </button>
+      <button type="button" class="btn btn-primary">
+        Pagamento em até 5 dias
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-primary">
+        Pagamento em até 10 dias
+      </button>
+      <button type="button" class="btn btn-primary" (click)="voltar()">
+        Voltar
+      </button>
+    </div>    
+  </div>
