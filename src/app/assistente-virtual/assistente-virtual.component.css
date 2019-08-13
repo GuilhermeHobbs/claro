@@ -54,7 +54,8 @@ a {
         width: 80%;
         /* text-align: center; */
         flex-direction: row;
-        margin-top: 15px;       
+        margin-top: 15px;   
+        height: 90px;    
     }
 
     .card-text, .card-title {
@@ -71,10 +72,8 @@ a {
     } 
 
      .card-body {
-        height: auto;
         padding-top: 5px;
         padding-bottom: 5px;
-
     } 
 
     .card-title {

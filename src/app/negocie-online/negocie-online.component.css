@@ -46,6 +46,11 @@ table {
 
 @media (max-width: 768px) {
 
+    h3 {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    
     .opcoes-para-parcelamento {
         text-align: left;
     }    
@@ -54,6 +59,10 @@ table {
         margin-top: 10px;    
     }
 
+    .metodo-pagamento {
+        margin-top: 0px;
+    }
+    
     .metodo-de-pagamento {
         text-align: left;
     }
@@ -62,4 +71,10 @@ table {
         margin: 0;
         padding: 0;
     }
+      
+    table {
+        margin-top: -16px;
+        margin-bottom: -10px;
+    }
+        
 }
