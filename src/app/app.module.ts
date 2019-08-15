@@ -3,13 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule }    from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-
-import { NgxSoapModule } from 'ngx-soap';
 
 import { CpfCnpjBoxComponent } from './cpf-cnpj-box/cpf-cnpj-box.component';
 import { NegocieOnlineComponent } from './negocie-online/negocie-online.component';
@@ -36,7 +35,7 @@ import { PrazoFinalizacaoComponent } from './prazo-finalizacao/prazo-finalizacao
     FormsModule,
     TextMaskModule,
     BrowserAnimationsModule,
-    NgxSoapModule,
+    HttpClientModule,
     AccordionModule.forRoot()
   ],
   providers: [],

@@ -1,5 +1,5 @@
 a {
-    text-decoration: none !important;
+    /*text-decoration: none !important;*/
     color: inherit;
 }
 
@@ -25,10 +25,6 @@ a {
     padding-top: 5px;
 }
 
-.card-title {
-    font-size: 18px;
-    text-align: center;
-}
 
 .btn-acessar {
     background: #e32620;
@@ -61,10 +57,6 @@ a {
     .card-text, .card-title {
         font-size: 13px;
     }
-
-    .card-title { 
-        font-weight: bold;
-    }    
 
      .card-img-top {
         margin: auto;

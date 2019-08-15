@@ -13,6 +13,10 @@
     text-align: right;
 }
 
+.detalhes-titulo {
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
  
     .btn {
@@ -24,4 +28,9 @@
         text-align: left;
         margin-bottom: 10px;
     }
+
+    .detalhes-titulo {
+        margin-bottom: 0;
+        
+    }    
 }    

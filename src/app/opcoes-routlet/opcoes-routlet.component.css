@@ -34,12 +34,8 @@ h3 {
     padding-top: 5px;
 }
 
-.card-title {
-    font-size: 18px;
-}
-
 .card-text {
-    font-size: 15px;
+    font-size: 14.5px;
 }
 
 .btn-acessar {
@@ -97,7 +93,7 @@ h3 {
     
     .logo {
         width: 35%;
-        margin: 3px auto;
+        margin: 6px auto 3px;
     }
 
     .card {
@@ -111,10 +107,6 @@ h3 {
     .card-text, .card-title {
         font-size: 13px;
     }
-
-    .card-title { 
-        font-weight: bold;
-    }    
 
      .card-img-top {
         margin: auto;

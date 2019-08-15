@@ -1,8 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {Router} from '@angular/router';
 import { ApiRestService } from '../api-rest.service';
-import { NgxSoapService, Client } from 'ngx-soap';
-
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-cpf-cnpj-box',
@@ -11,35 +10,19 @@ import { NgxSoapService, Client } from 'ngx-soap';
 })
 export class CpfCnpjBoxComponent implements OnInit {
 
-  client: Client;
-  intA: number;
-  intB: number;
-  message: string;
-  xmlResponse: string;
+  constructor(private http: HttpClient, private router: Router, private cd: ChangeDetectorRef, private apiRestService: ApiRestService) {    
+       
+    /*const params = new HttpParams().set('cpf', '10805480765');
 
-  constructor(private soap: NgxSoapService, private router: Router, private cd: ChangeDetectorRef, private apiRestService: ApiRestService) {
-    this.soap.createClient('https://integracaonegociafacilclaro.mfmti.com.br/WebService.asmx?wsdl')
-      .then(client => {
-        console.log('Client', client);
-        this.client = client;
-      })
-      .catch(err => console.log('Error', err));
+    this.http.post('http://172.22.4.33:8085/landingpage/soap.php', params, {
+      headers: {'Content-Type':'application/x-www-form-urlencoded'}}).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
+  */
   }
-
-sum() {
-    const body = {
-      intA: this.intA,
-      intB: this.intB
-    };
-
-    this.client.call('Add', body).subscribe(res => {
-      console.log('method response', res);
-      this.xmlResponse = res.xml;
-      this.message = res.result.AddResult;
-    }, err => console.log(err));
-
-  }  
-
+ 
   ngOnInit() {
   }
 
@@ -90,17 +73,17 @@ sum() {
   }
 
   valida() {
-        
-   let cpfCnpj = this.cpf_cnpj.replace(/[`\-.\{\}\[\]\\\/]/gi, '');
-    switch (cpfCnpj.length) {
     
+    const cpfCnpj = this.cpf_cnpj.replace(/[`\-.\{\}\[\]\\\/]/gi, '');
+         
+    switch (cpfCnpj.length) {
      case 11: {
       if (this.testaCPF(cpfCnpj)) {
         this.verificando = true;
-        this.apiRestService.temDividas(cpfCnpj).subscribe(div => {
+        this.apiRestService.temDividasouAcordo(cpfCnpj).subscribe(res => {
           this.verificando = false;
-          if (div) this.router.navigateByUrl('/opcoes-routlet');
-          else this.cpf_sem_debitos = true;
+          //if (res) this.router.navigateByUrl('/opcoes-routlet');
+         //else this.cpf_sem_debitos = true;
         }); 
       }
       else this.cpf_inv = true; 
@@ -108,13 +91,14 @@ sum() {
     }  
 
     case 14: {
-      if (this.testaCNPJ(cpfCnpj)) { 
-        this.verificando = true; 
-      this.apiRestService.temDividas(cpfCnpj).subscribe(div => {
-        this.verificando = false;
-        if (div) this.router.navigateByUrl('/opcoes-routlet');
-        else this.cnpj_sem_debitos = true;
-      });
+    if (this.testaCNPJ(cpfCnpj)) {
+             
+  //      this.verificando = true; 
+    //  this.apiRestService.temDividas(cpfCnpj).subscribe(div => {
+      //  this.verificando = false;
+        //if (div) this.router.navigateByUrl('/opcoes-routlet');
+     //   else this.cnpj_sem_debitos = true;
+    //  });
     }  
     else this.cnpj_inv = true; 
     break;
