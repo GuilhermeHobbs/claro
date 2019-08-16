@@ -11,19 +11,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class CpfCnpjBoxComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private cd: ChangeDetectorRef, private apiRestService: ApiRestService) {    
-       
-    /*const params = new HttpParams().set('cpf', '10805480765');
-
-    this.http.post('http://172.22.4.33:8085/landingpage/soap.php', params, {
-      headers: {'Content-Type':'application/x-www-form-urlencoded'}}).subscribe(
-      res => {
-        console.log(res);
-      }
-    );
-  */
+    apiRestService.getOpcoesPagamento("178773").subscribe (res => {
+      console.log(res);
+    })
   }
  
-  ngOnInit() {
+  ngOnInit() {    
   }
 
   public cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
@@ -82,8 +75,8 @@ export class CpfCnpjBoxComponent implements OnInit {
         this.verificando = true;
         this.apiRestService.temDividasouAcordo(cpfCnpj).subscribe(res => {
           this.verificando = false;
-          //if (res) this.router.navigateByUrl('/opcoes-routlet');
-         //else this.cpf_sem_debitos = true;
+          if (res) this.router.navigateByUrl('/opcoes-routlet');
+         else this.cpf_sem_debitos = true;
         }); 
       }
       else this.cpf_inv = true; 

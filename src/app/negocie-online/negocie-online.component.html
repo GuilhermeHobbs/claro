@@ -4,7 +4,8 @@
 </header>
 
 <accordion [isAnimated]="true" [closeOthers]="true">
-  <accordion-group>
+  
+  <accordion-group *ngIf="apiRestService.getDividasClaroMovel().length">
     <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="showHeader = false">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading">Claro Móvel</div>  
@@ -72,13 +73,13 @@
     </div>
     
   </accordion-group>
-  <accordion-group>
+  <accordion-group *ngIf="apiRestService.getDividasClaroInternet().length">
     <button class="btn btn-link btn-accordion" accordion-heading>
       <img src="assets/icons/internet.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading">Claro Internet</div>
     </button>
   </accordion-group>
-  <accordion-group>
+  <accordion-group *ngIf="apiRestService.getDividasClaroTv().length">
       <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading>
         <img src="assets/icons/tv.jpg" class="produto-img" alt="...">
         <div class="pull-left float-left produto-heading">Claro TV</div>

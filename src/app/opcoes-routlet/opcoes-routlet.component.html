@@ -13,7 +13,7 @@
             <app-acordos-andamento *ngIf="showAcordosAndamento"></app-acordos-andamento>
                         
             <div class="padding-right-10px" *ngIf="showOpcoes">
-                <h3 class="text-center" *ngIf="!fizPagamentoOk">Bem-vindo, {{nome}}!</h3>    
+                <h3 class="text-center" *ngIf="!fizPagamentoOk">Bem-vindo, <span class="text-capitalize">{{nome}}</span>!</h3>    
                 
                 <div class="row">                    
                     <a class="card col-lg-2" (click)="negocieOnline()">

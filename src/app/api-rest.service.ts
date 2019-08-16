@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, flatMap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -9,8 +9,13 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class ApiRestService {
 
+  public nome: string;
+
+  public dividas: Divida;
+
   private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosdevedor.php';
   private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosdivida.php';  
+  private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apirequest_getopcoespagamento.php'
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -19,24 +24,20 @@ export class ApiRestService {
   
   constructor(private http: HttpClient) { }
 
-  temDividasouAcordo(cpfCnpj: string): Observable<boolean> {
+  temDividasouAcordo(cpfCnpj: string): Observable<any> {
      
-     this.getDadosDevedor(cpfCnpj).pipe( map( (devedor: Devedor) => {
-      console.log ("DEVEDOR = ");
-      console.log(devedor); 
-      
-      //this.getDadosDivida(cpfCnpj, devedor.Devedores.Devedor.CodigoDevedor).subscribe((divida: Divida) => {
-          
-         // if (!divida.Acordo && !divida.Divida) observer.next(true);
-         // else observer.next(false);
-         // observer.complete()
-      //});
+     return this.getDadosDevedor(cpfCnpj).pipe( flatMap( (devedor: Devedor) => {
+      this.nome = devedor.Devedores.Devedor.Nome;
+      return this.getDadosDivida(cpfCnpj, devedor.Devedores.Devedor.CodigoDevedor).pipe( map( (divida: Divida) => {
+        this.dividas = divida;
+        console.log(divida);
+        return (divida.Acordo || divida.Divida);
+      }));
     }));       
-    return of(true);
   }
 
   getNome(): string {
-    return ("Guilherme Hobbs");
+    return this.nome.toLowerCase();
   }  
 
   meLigue(num: string): Observable<boolean> {
@@ -46,33 +47,62 @@ export class ApiRestService {
   fizPagamento(): Observable<boolean> {
     return of(true);
   } 
-   
+    
+  testee(): Observable<Devedor> {
+    const cpfCnpjParam = new HttpParams().set('cpf', '10805480765');
+     return this.http.post<Devedor>(this.urlDadosDevedor, cpfCnpjParam, this.httpOptions).pipe( map( (devedor: Devedor) => {
+      return devedor;
+     }));
+  }
   
  getDadosDevedor(cpfCnpj: string): Observable<Devedor> {
   const cpfCnpjParam = new HttpParams().set('cpf', cpfCnpj);
-   return this.http.post<Devedor>(this.urlDadosDevedor, cpfCnpjParam, this.httpOptions).pipe( map( (devedor: Devedor) => {
-    console.log ("DEVE = ");
-    console.log(devedor); 
-   
-    return devedor;
-   }));
+   return this.http.post<Devedor>(this.urlDadosDevedor, cpfCnpjParam, this.httpOptions);
   }  
 
- getDadosDivida(cpfCnpj: string, codDevedor: string): Observable<any> {
-  const cpfCnpjParam = new HttpParams().set('cpf', cpfCnpj);
-    
+ getDadosDivida(cpfCnpj: string, codDevedor: string): Observable<Divida> {
   const cpfDevedorParam = new HttpParams()
   .set('cpf', cpfCnpj)    
   .set('codigodevedor', codDevedor);
-  
   return this.http.post<Divida>(this.urlDadosDivida, cpfDevedorParam, this.httpOptions);
-
  }  
+
+ getOpcoesPagamento(codTitulo: string) {
+  const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo);
+  return this.http.post<Divida>(this.urlOpcoesPagamento, cpfCnpjParam, this.httpOptions);
+ } 
+
+ getDividasClaroMovel() {
+  return this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );
+ }
+
+ getDividasClaroInternet() {
+  return this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Internet" );
+ }
+
+ getDividasClaroTv() {
+  return this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro TV" );
+ }
 
 }
 
   class Divida {
-    Divida: any;
+    Divida: {
+      DadosDivida: Array<{
+        CodigoDevedor: string;
+        CodigoTitulo: string;
+        NumeroTitulo: string;
+        Produto: string;
+        Parcelas: {
+          ParcelaDivida: {
+            CodigoParcela: string;
+            DescricaoDaParcela: string;
+            Valor: string;
+            Vencimento: string;
+          }
+        }
+      }>
+    }
     Acordo:any;
   }
 
