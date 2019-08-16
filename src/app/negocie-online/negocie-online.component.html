@@ -5,39 +5,16 @@
 
 <accordion [isAnimated]="true" [closeOthers]="true">
   
-  <accordion-group *ngIf="apiRestService.getDividasClaroMovel().length">
+  <accordion-group *ngIf=".length">
     <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="showHeader = false">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading">Claro Móvel</div>  
     </button>
     
-    <div class="table-responsive-lg" *ngIf="showFatura">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Fatura - Vencimento</th>
-            <th scope="col">Descrição</th>
-            <th scope="col">Valor (R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">13/07/2007</th>
-            <td>1</td>
-            <td>R$ 546,00</td>
-          </tr>
-          <tr>
-            <th scope="row">Total</th>
-            <td></td>
-            <td>R$ 546,00</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>  
-    
-    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
+          
+    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento" *ngFor="let div of dividasClaroMovel">
       <div class="col-sm-3 opcoes-para-parcelamento">
-        Opções para parcelamento:
+       Valor total: R$ {{ dividasClaroMovel.Parcelas.ParcelaDivida.Valor }}
       </div>  
       <div class="col-sm-4">
         <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()">

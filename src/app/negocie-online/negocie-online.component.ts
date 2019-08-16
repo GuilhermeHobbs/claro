@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiRestService } from '../api-rest.service';
+import { ApiRestService, Divida } from '../api-rest.service';
 
 
 @Component({
@@ -17,7 +17,10 @@ export class NegocieOnlineComponent implements OnInit {
  
   constructor(private apiRestService: ApiRestService) { }
 
+  public dividasClaroMovel: Divida[];
+
   ngOnInit() {
+    this.dividasClaroMovel.push(this.apiRestService.getDividasClaroMovel());
   }
 
   showPrazoFinalizacao() {

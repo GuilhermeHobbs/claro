@@ -15,7 +15,7 @@ export class ApiRestService {
 
   private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosdevedor.php';
   private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosdivida.php';  
-  private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apirequest_getopcoespagamento.php'
+  private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosopcoespagamento.php'
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -86,7 +86,7 @@ export class ApiRestService {
 
 }
 
-  class Divida {
+  export class Divida {
     Divida: {
       DadosDivida: Array<{
         CodigoDevedor: string;
@@ -106,7 +106,7 @@ export class ApiRestService {
     Acordo:any;
   }
 
-  class Devedor {
+  export class Devedor {
     Devedores: {
       Devedor: {
         Credor: string;
@@ -114,4 +114,10 @@ export class ApiRestService {
         Nome: string;
       }    
     }    
+  }
+
+  export class OpcoesPagamento {
+    OpcaoPagamento: {
+      Plano: number;
+    }
   }
