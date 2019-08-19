@@ -17,10 +17,9 @@ export class NegocieOnlineComponent implements OnInit {
  
   constructor(private apiRestService: ApiRestService) { }
 
-  public dividasClaroMovel: Divida[];
+  public opcoesPg = this.apiRestService.opcoesPgTitulo; 
 
   ngOnInit() {
-    this.dividasClaroMovel.push(this.apiRestService.getDividasClaroMovel());
   }
 
   showPrazoFinalizacao() {
@@ -31,11 +30,16 @@ export class NegocieOnlineComponent implements OnInit {
   }
 
   showOpcoesParcelamento() {
+
     this.opcoesParcelamento = true;
     this.showFatura = false;
     this.prazoFinalizacao = false;
     this.metodoPagamento = true;
   }
 
-
+  getOpcaoAVista (codTitulo: string) {
+    console.log (this.apiRestService.opcoesPgTitulo);
+    console.log(codTitulo);
+    return this.apiRestService.opcoesPgTitulo[codTitulo].OpcaoPagamento.OpcaoPagamento.ValorNegociar;
+  }
 }

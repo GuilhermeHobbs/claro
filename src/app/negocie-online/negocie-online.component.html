@@ -5,16 +5,17 @@
 
 <accordion [isAnimated]="true" [closeOthers]="true">
   
-  <accordion-group *ngIf=".length">
-    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="showHeader = false">
+  <accordion-group *ngIf="apiRestService.getDividasClaroMovel().length" (click)="showHeader = false">
+    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="apiRestService.getAllOpcoesClaroMovel()">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading">Claro Móvel</div>  
     </button>
-    
-          
-    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento" *ngFor="let div of dividasClaroMovel">
+    <p>Débitos para serem negociados:</p>
+
+    <!--      
+    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento"> <!-- *ngFor="let div of apiRestService.getDividasClaroMovel()">
       <div class="col-sm-3 opcoes-para-parcelamento">
-       Valor total: R$ {{ dividasClaroMovel.Parcelas.ParcelaDivida.Valor }}
+       Valor total: R$ <!--{{ dividasClaroMovel.Parcelas.ParcelaDivida.Valor }}
       </div>  
       <div class="col-sm-4">
         <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()">
@@ -29,17 +30,19 @@
           R$150,28 + 1 x R$150,27
         </button>
       </div>    
-    </div>
+    </div>  -->
   
     <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()"></app-prazo-finalizacao>
-
-    <div class="row metodo-pagamento" *ngIf="metodoPagamento">
+      
+    
+    <div class="row metodo-pagamento" [hidden]="!metodoPagamento" *ngFor="let div of apiRestService.getDividasClaroMovel(); let ind = index">
       <div class="col-sm-5 metodo-de-pagamento">
-        Método de pagamento:
+        Valor total: R$ {{ apiRestService.getDividasClaroMovel()[ind].Parcelas.ParcelaDivida.Valor }}
       </div>
       <div class="col-6 col-sm-3">
         <button type="button" class="btn btn-primary">
-          À vista: R$ 100,00
+          À vista: R$ {{ getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) }}
+            apiRestService.getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) 
         </button>
       </div>
       <div class="col-6 col-sm-3">

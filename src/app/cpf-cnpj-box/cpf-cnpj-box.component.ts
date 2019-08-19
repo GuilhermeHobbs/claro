@@ -11,9 +11,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class CpfCnpjBoxComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private cd: ChangeDetectorRef, private apiRestService: ApiRestService) {    
-    apiRestService.getOpcoesPagamento("178773").subscribe (res => {
-      console.log(res);
-    })
   }
  
   ngOnInit() {    
