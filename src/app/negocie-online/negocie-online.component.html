@@ -5,7 +5,7 @@
 
 <accordion [isAnimated]="true" [closeOthers]="true">
   
-  <accordion-group *ngIf="apiRestService.getDividasClaroMovel().length" (click)="showHeader = false">
+  <accordion-group *ngIf="dadosDivida.length" (click)="showHeader = false">
     <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="apiRestService.getAllOpcoesClaroMovel()">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading">Claro Móvel</div>  
@@ -29,25 +29,26 @@
         <button type="button" class="btn btn-primary">
           R$150,28 + 1 x R$150,27
         </button>
-      </div>    
-    </div>  -->
+      </div>    52787486304
+    </div>  -->  
   
     <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()"></app-prazo-finalizacao>
       
     
-    <div class="row metodo-pagamento" [hidden]="!metodoPagamento" *ngFor="let div of apiRestService.getDividasClaroMovel(); let ind = index">
-      <div class="col-sm-5 metodo-de-pagamento">
-        Valor total: R$ {{ apiRestService.getDividasClaroMovel()[ind].Parcelas.ParcelaDivida.Valor }}
+    <div class="row metodo-pagamento" *ngFor="let div of dadosDivida; let ind = index">
+      <div class="col-sm-5 metodo-de-pagamento"> <!-- [hidden]="!metodoPagamento"-->
+        Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }}
       </div>
       <div class="col-6 col-sm-3">
         <button type="button" class="btn btn-primary">
-          À vista: R$ {{ apiRestService.opcoesPg[apiRestService.getDividasClaroMovel()[ind].CodigoTitulo] | async }}  
+          À vista: R$ {{ getValorAVista(dadosDivida[ind].CodigoTitulo) }} 
+         <!-- apiRestService.opcoesPg[apiRestService.getDividasClaroMovel()[ind].CodigoTitulo] | async 
             getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) 
-            apiRestService.getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) 
+            apiRestService.getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) -->
         </button>
       </div>
       <div class="col-6 col-sm-3">
-        <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento()">
+        <button type="button" class="btn btn-primary" (click)="getOpcaoAVista(dadosDivida[ind].CodigoTitulo)"> <!-- (click)="showOpcoesParcelamento()"> -->
           Parcelado
         </button> 
       </div>  

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiRestService, Divida } from '../api-rest.service';
+import { ApiRestService, Divida, OpcoesPagamento } from '../api-rest.service';
 
 
 @Component({
@@ -15,11 +15,16 @@ export class NegocieOnlineComponent implements OnInit {
   public prazoFinalizacao: boolean;
   public metodoPagamento: boolean = true;
  
-  constructor(private apiRestService: ApiRestService) { }
+  constructor(private apiRestService: ApiRestService) {    
+    this.dadosDivida = this.apiRestService.getDividasClaroMovel();
+    this.dadosDivida.forEach(dados => this.getOpcaoAVista(dados.CodigoTitulo));  
+  }
 
-  public opcoesPg = this.apiRestService.opcoesPgTitulo; 
+  public opcoesPag: OpcoesPagamento = { };
+  public dadosDivida = [];      
 
   ngOnInit() {
+    
   }
 
   showPrazoFinalizacao() {
@@ -37,9 +42,37 @@ export class NegocieOnlineComponent implements OnInit {
     this.metodoPagamento = true;
   }
 
-  getOpcaoAVista (codTitulo: string) {
-    //console.log (this.apiRestService.opcoesPgTitulo);
-    //console.log(codTitulo);
-    return this.apiRestService.opcoesPgTitulo[codTitulo].OpcaoPagamento.OpcaoPagamento.ValorNegociar;
-  }
+  getOpcaoAVista(codTitulo: string) {
+    console.log("inicializando:");
+    console.log(codTitulo);
+    
+    this.opcoesPag[codTitulo] = {
+      OpcaoPagamento: {
+        OpcaoPagamento: {
+          ValorNegociar: "Aguarde..."
+        }
+      }    
+    };
+
+    console.log("this.opcoesPag[codTitulo] = ");
+    console.log(this.opcoesPag[codTitulo]);
+     this.apiRestService.opcoesPg.subscribe( opc => {
+       this.opcoesPag[codTitulo] = opc[codTitulo];
+      });
+      //this.opcoesPag = opc;
+    }
+
+   // getOpcaoAVista(codTitulo: string){
+   //   this.getOpcaoAVista1(codTitulo).subscribe
+   // }  
+
+   // console.log( this.apiRestService.opcoesPgTitulo[codTitulo].OpcaoPagamento.OpcaoPagamento.ValorNegociar | );
+  
+   getValorAVista(ind) {
+     console.log("ind=");
+     console.log(ind);
+     console.log("opcoesPag[ind]");
+     console.log(this.opcoesPag);
+    return this.opcoesPag[ind].OpcaoPagamento.OpcaoPagamento.ValorNegociar;
+   }
 }
