@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map, catchError, flatMap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -14,11 +14,12 @@ export class ApiRestService {
   
   public dividasClaroMovel: Divida;
 
-  public opcoesPgTitulo = { };
+  public opcoesPgTitulo: OpcoesPagamento = { };
+  public opcoesPg = new BehaviorSubject<OpcoesPagamento>(this.opcoesPgTitulo);
 
   private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosdevedor.php';
   private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosdivida.php';  
-  private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apirequest_getdadosopcoespagamento.php'
+  private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -86,13 +87,13 @@ export class ApiRestService {
   this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );
   this.dividasClaroMovel.Divida.DadosDivida.forEach( (divida) => {  
     this.opcoesPgTitulo[divida.CodigoTitulo] = new OpcoesPagamento();
-    this.opcoesPgTitulo[divida.CodigoTitulo] = {
-      OpcaoPagamento: {
-        OpcaoPagamento: {
-          ValorNegociar: Number
-        }  
-      }
-    }      
+  //  this.opcoesPgTitulo[divida.CodigoTitulo] = {
+    //  OpcaoPagamento: {
+     //   OpcaoPagamento: {
+    //      ValorNegociar: Number
+    //    }  
+   //   }
+  //  }      
   });
   return this.dividasClaroMovel.Divida.DadosDivida;
 }
@@ -100,10 +101,10 @@ export class ApiRestService {
  getAllOpcoesClaroMovel() {
    
  this.dividasClaroMovel.Divida.DadosDivida.forEach ( (divida) => {
-  
    this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( opc => {
-    
     this.opcoesPgTitulo[divida.CodigoTitulo] = opc;
+    this.opcoesPg.next(this.opcoesPgTitulo[divida.CodigoTitulo]);
+    console.log (this.opcoesPg);
     });
   });
  }
@@ -150,7 +151,7 @@ export class ApiRestService {
   }
 
   export class OpcoesPagamento {
-    OpcaoPagamento: {
+    OpcaoPagamento?: {
       OpcaoPagamento: {
         Plano: number;
         ValorCorrecao: string;

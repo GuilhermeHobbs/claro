@@ -38,8 +38,8 @@ export class NegocieOnlineComponent implements OnInit {
   }
 
   getOpcaoAVista (codTitulo: string) {
-    console.log (this.apiRestService.opcoesPgTitulo);
-    console.log(codTitulo);
+    //console.log (this.apiRestService.opcoesPgTitulo);
+    //console.log(codTitulo);
     return this.apiRestService.opcoesPgTitulo[codTitulo].OpcaoPagamento.OpcaoPagamento.ValorNegociar;
   }
 }

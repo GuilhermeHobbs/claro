@@ -41,7 +41,8 @@
       </div>
       <div class="col-6 col-sm-3">
         <button type="button" class="btn btn-primary">
-          À vista: R$ {{ getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) }}
+          À vista: R$ {{ apiRestService.opcoesPg[apiRestService.getDividasClaroMovel()[ind].CodigoTitulo] | async }}  
+            getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) 
             apiRestService.getOpcaoAVista(apiRestService.getDividasClaroMovel()[ind].CodigoTitulo) 
         </button>
       </div>
