@@ -16,14 +16,17 @@ export class NegocieOnlineComponent implements OnInit {
   public metodoPagamento: boolean = true;
  
   constructor(private apiRestService: ApiRestService) {    
-    this.dadosDivida = this.apiRestService.getDividasClaroMovel();
-    this.dadosDivida.forEach(dados => this.getOpcaoAVista(dados.CodigoTitulo));  
+    //this.dadosDivida = this.apiRestService.getDividasClaroMovel();
+    //this.dadosDivida.forEach(dados => this.getOpcaoAVista(dados.CodigoTitulo));  
   }
 
   public opcoesPag: OpcoesPagamento = { };
   public dadosDivida = [];      
 
   ngOnInit() {
+    let dados = this.apiRestService.getDividasClaroMovel();
+    //dados.forEach(dados => this.getOpcaoAVista(dados.CodigoTitulo));
+    this.dadosDivida = dados;
     
   }
 
@@ -56,9 +59,9 @@ export class NegocieOnlineComponent implements OnInit {
 
     console.log("this.opcoesPag[codTitulo] = ");
     console.log(this.opcoesPag[codTitulo]);
-     this.apiRestService.opcoesPg.subscribe( opc => {
-       this.opcoesPag[codTitulo] = opc[codTitulo];
-      });
+  //   this.apiRestService.opcoesPg.subscribe( opc => {
+  //     this.opcoesPag[codTitulo] = opc[codTitulo];
+  //    });
       //this.opcoesPag = opc;
     }
 
@@ -73,6 +76,7 @@ export class NegocieOnlineComponent implements OnInit {
      console.log(ind);
      console.log("opcoesPag[ind]");
      console.log(this.opcoesPag);
-    return this.opcoesPag[ind].OpcaoPagamento.OpcaoPagamento.ValorNegociar;
+     if (!this.opcoesPag[ind].OpcaoPagamento) return "Em aguarde...";
+     else return this.opcoesPag[ind].OpcaoPagamento.OpcaoPagamento.ValorNegociar;
    }
 }

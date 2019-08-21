@@ -15,7 +15,7 @@ export class ApiRestService {
   public dividasClaroMovel: Divida;
 
   public opcoesPgTitulo: OpcoesPagamento = { };
-  public opcoesPg = new BehaviorSubject<OpcoesPagamento>(this.opcoesPgTitulo);
+  public opcoesPg = { }; //= new BehaviorSubject<OpcoesPagamento>(this.opcoesPgTitulo);
 
   private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
   private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
@@ -78,7 +78,6 @@ export class ApiRestService {
   
 
  getDividasClaroMovel() {
-   console.log("rodou");
   this.dividasClaroMovel = new Divida();
   this.dividasClaroMovel = {
     Divida: { 
@@ -102,9 +101,12 @@ export class ApiRestService {
  getAllOpcoesClaroMovel() {
    
  this.dividasClaroMovel.Divida.DadosDivida.forEach ( (divida) => {
-   this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( opc => {
+   this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
     this.opcoesPgTitulo[divida.CodigoTitulo] = opc;
-    this.opcoesPg.next(this.opcoesPgTitulo);
+    console.log("opc=");
+    console.log(opc);
+    this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<string>(opc.OpcoesPagamento.OpcaoPagamento.ValorNegociar);
+    //this.opcoesPg.next(this.opcoesPgTitulo);
     //console.log (this.opcoesPg);
     });
   });
@@ -152,7 +154,7 @@ export class ApiRestService {
   }
 
   export class OpcoesPagamento {
-    OpcaoPagamento?: {
+    OpcoesPagamento?: {
       OpcaoPagamento: {
         Plano?: number;
         ValorCorrecao?: string;
