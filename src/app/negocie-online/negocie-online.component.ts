@@ -15,19 +15,43 @@ export class NegocieOnlineComponent implements OnInit {
   public prazoFinalizacao: boolean;
   public metodoPagamento: boolean = true;
  
+  public nao_parcelado = { };
+
   constructor(private apiRestService: ApiRestService) {    
-    //this.dadosDivida = this.apiRestService.getDividasClaroMovel();
-    //this.dadosDivida.forEach(dados => this.getOpcaoAVista(dados.CodigoTitulo));  
   }
 
-  public opcoesPag: OpcoesPagamento = { };
-  public dadosDivida = [];      
+  public dadosDivida = [];
+  public opcoesPg = { };      
 
   ngOnInit() {
-    let dados = this.apiRestService.getDividasClaroMovel();
-    //dados.forEach(dados => this.getOpcaoAVista(dados.CodigoTitulo));
-    this.dadosDivida = dados;
+    this.dadosDivida = this.apiRestService.getDividasClaroMovel();
     
+  }
+
+  getAllOpcoesClaroMovel() {
+    this.apiRestService.getAllOpcoesClaroMovel();
+    this.dadosDivida.forEach( (dados) => this.sett(dados.CodigoTitulo));
+  }
+  sett (cod: string) {
+    let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
+    console.log("dadosDividaCod =");
+    console.log(dadosDividaCod);
+    console.log("this.apiRestService.opcoesPg=");
+    console.log(this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]);
+    this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
+      this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
+    });
+  }
+
+  getValorNegociar (cod: string) {
+    if (this.opcoesPg[cod]) {
+      if (this.opcoesPg[cod].OpcaoPagamento.ValorNegociar) return this.opcoesPg[cod].OpcaoPagamento.ValorNegociar;      
+      else if (this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar) {
+        this.nao_parcelado[cod] = true;
+        return this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar; 
+      }  
+    }
+    else return "";      
   }
 
   showPrazoFinalizacao() {
@@ -45,38 +69,5 @@ export class NegocieOnlineComponent implements OnInit {
     this.metodoPagamento = true;
   }
 
-  getOpcaoAVista(codTitulo: string) {
-    console.log("inicializando:");
-    console.log(codTitulo);
-    
-    this.opcoesPag[codTitulo] = {
-      OpcaoPagamento: {
-        OpcaoPagamento: {
-          ValorNegociar: "Aguarde..."
-        }
-      }    
-    };
-
-    console.log("this.opcoesPag[codTitulo] = ");
-    console.log(this.opcoesPag[codTitulo]);
-  //   this.apiRestService.opcoesPg.subscribe( opc => {
-  //     this.opcoesPag[codTitulo] = opc[codTitulo];
-  //    });
-      //this.opcoesPag = opc;
-    }
-
-   // getOpcaoAVista(codTitulo: string){
-   //   this.getOpcaoAVista1(codTitulo).subscribe
-   // }  
-
-   // console.log( this.apiRestService.opcoesPgTitulo[codTitulo].OpcaoPagamento.OpcaoPagamento.ValorNegociar | );
   
-   getValorAVista(ind) {
-     console.log("ind=");
-     console.log(ind);
-     console.log("opcoesPag[ind]");
-     console.log(this.opcoesPag);
-     if (!this.opcoesPag[ind].OpcaoPagamento) return "Em aguarde...";
-     else return this.opcoesPag[ind].OpcaoPagamento.OpcaoPagamento.ValorNegociar;
-   }
 }

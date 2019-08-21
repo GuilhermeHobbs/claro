@@ -14,8 +14,7 @@ export class ApiRestService {
   
   public dividasClaroMovel: Divida;
 
-  public opcoesPgTitulo: OpcoesPagamento = { };
-  public opcoesPg = { }; //= new BehaviorSubject<OpcoesPagamento>(this.opcoesPgTitulo);
+  public opcoesPg = { }; 
 
   private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
   private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
@@ -84,30 +83,26 @@ export class ApiRestService {
       DadosDivida: []
     }
   };
-  this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );
-  this.dividasClaroMovel.Divida.DadosDivida.forEach( (divida) => {  
-    this.opcoesPgTitulo[divida.CodigoTitulo] = new OpcoesPagamento();
-  //  this.opcoesPgTitulo[divida.CodigoTitulo] = {
-    //  OpcaoPagamento: {
-     //   OpcaoPagamento: {
-    //      ValorNegociar: Number
-    //    }  
-   //   }
-  //  }      
-  });
+  this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );  
   return this.dividasClaroMovel.Divida.DadosDivida;
 }
 
  getAllOpcoesClaroMovel() {
    
  this.dividasClaroMovel.Divida.DadosDivida.forEach ( (divida) => {
+  
+  this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
+    OpcoesPagamento: {
+      OpcaoPagamento: {
+        ValorNegociar: "Aguarde..."
+      }
+    }
+  });  
+ 
    this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
-    this.opcoesPgTitulo[divida.CodigoTitulo] = opc;
     console.log("opc=");
     console.log(opc);
-    this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<string>(opc.OpcoesPagamento.OpcaoPagamento.ValorNegociar);
-    //this.opcoesPg.next(this.opcoesPgTitulo);
-    //console.log (this.opcoesPg);
+    this.opcoesPg[divida.CodigoTitulo].next(opc);
     });
   });
  }
