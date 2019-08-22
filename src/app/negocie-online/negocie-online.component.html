@@ -13,18 +13,17 @@
     <p>Débitos para serem negociados:</p>
 
           
-    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento"> 
-      <div class="col-sm-3 opcoes-para-parcelamento">
-      </div>  
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()">
-            R$ {{ getOpcao(1) }}
-        </button>
-        <button type="button" class="btn btn-primary" *ngIf="opcoesPg[dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[2]"> 
-          R$ {{ getOpcao(2) }} 
-        </button>
-      </div>
-          
+    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
+        <div class="col-sm-4" *ngFor="let opc of opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index">
+          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()" *ngIf="ind">
+              R$ {{ getOpcao(ind) }}
+          </button>              
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" (click)="hideOpcoesParcelamento()">
+             Voltar
+          </button>
+    </div>
     </div>   
   
     <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()"></app-prazo-finalizacao>

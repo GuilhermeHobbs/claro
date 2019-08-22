@@ -88,7 +88,8 @@ export class ApiRestService {
 }
 
  getAllOpcoesClaroMovel() {
-   
+
+if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) return;  
  this.dividasClaroMovel.Divida.DadosDivida.forEach ( (divida) => {
   
   this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({

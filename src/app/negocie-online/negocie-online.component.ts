@@ -73,8 +73,13 @@ export class NegocieOnlineComponent implements OnInit {
     this.prazoFinalizacao = false;
 
     this.ind_parcelado = ind;
-
   }
 
-  
+  hideOpcoesParcelamento() {
+
+    this.opcoesParcelamento = false;
+    this.showFatura = true;
+    this.prazoFinalizacao = false;
+  }  
+
 }
