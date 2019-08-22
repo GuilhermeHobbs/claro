@@ -13,29 +13,25 @@
     <p>Débitos para serem negociados:</p>
 
           
-    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento"> <!-- *ngFor="let div of apiRestService.getDividasClaroMovel()"> -->
+    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento"> 
       <div class="col-sm-3 opcoes-para-parcelamento">
       </div>  
       <div class="col-sm-4">
         <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()">
-          R$15000,28 + 1 x R$150,27
+            R$ {{ getOpcao(1) }}
         </button>
-        <button type="button" class="btn btn-primary">
-          R$150,28 + 1 x R$150,27
+        <button type="button" class="btn btn-primary" *ngIf="opcoesPg[dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[2]"> 
+          R$ {{ getOpcao(2) }} 
         </button>
       </div>
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-primary">
-          R$150,28 + 1 x R$150,27
-        </button>
-      </div>    
+          
     </div>   
   
     <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()"></app-prazo-finalizacao>
       
     
-    <div class="row metodo-pagamento" *ngFor="let div of dadosDivida; let ind = index">
-      <div class="col-sm-5 metodo-de-pagamento" [hidden]="!metodoPagamento">
+    <div class="row metodo-pagamento" *ngFor="let div of dadosDivida; let ind = index" [hidden]="opcoesParcelamento">
+      <div class="col-sm-5 metodo-de-pagamento">
         Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }}
       </div>
       <div class="col-6 col-sm-3">
@@ -45,7 +41,7 @@
         --></button>
       </div>
       <div class="col-6 col-sm-3">
-        <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento()" *ngIf="nao_parcelado[dadosDivida[ind].CodigoTitulo]"> 
+        <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="nao_parcelado[dadosDivida[ind].CodigoTitulo]"> 
           Parcelado
         </button> 
       </div>  
