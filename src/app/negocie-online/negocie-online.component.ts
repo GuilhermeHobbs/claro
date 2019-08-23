@@ -13,6 +13,7 @@ export class NegocieOnlineComponent implements OnInit {
   public showHeader: boolean = true;
   public opcoesParcelamento: boolean;
   public prazoFinalizacao: boolean;
+  public movelLabel: boolean;
  
   public nao_parcelado = { };
   public ind_parcelado: number; 
@@ -29,15 +30,14 @@ export class NegocieOnlineComponent implements OnInit {
   }
 
   getAllOpcoesClaroMovel() {
+    this.showHeader = false;
+    this.movelLabel = true;
+
     this.apiRestService.getAllOpcoesClaroMovel();
     this.dadosDivida.forEach( (dados) => this.sett(dados.CodigoTitulo));
   }
   sett (cod: string) {
     let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
-    console.log("dadosDividaCod =");
-    console.log(dadosDividaCod);
-    console.log("this.apiRestService.opcoesPg=");
-    console.log(this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]);
     this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
       this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
     });
@@ -55,8 +55,6 @@ export class NegocieOnlineComponent implements OnInit {
   }
 
   getOpcao (ind: number) {
-    console.log ("this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo]");
-    console.log (this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo]);
     return this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X " + this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
   }
 

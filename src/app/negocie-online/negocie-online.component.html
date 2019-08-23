@@ -5,13 +5,11 @@
 
 <accordion [isAnimated]="true" [closeOthers]="true">
   
-  <accordion-group *ngIf="dadosDivida.length" (click)="showHeader = false">
+  <accordion-group *ngIf="dadosDivida.length">
     <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroMovel()">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
-      <div class="pull-left float-left produto-heading">Claro Móvel</div>  
-    </button>
-    <p>Débitos para serem negociados:</p>
-
+      <div class="pull-left float-left produto-heading">Claro Móvel <span class="movelLabel" *ngIf="movelLabel">Débitos para serem negociados:</span></div>  
+    </button>  
           
     <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
         <div class="col-sm-4" *ngFor="let opc of opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index">
@@ -28,24 +26,29 @@
   
     <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()"></app-prazo-finalizacao>
       
-    
-    <div class="row metodo-pagamento" *ngFor="let div of dadosDivida; let ind = index" [hidden]="opcoesParcelamento">
-      <div class="col-sm-5 metodo-de-pagamento">
-        Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }}
+    <div class="row" [hidden]="opcoesParcelamento">
+      <div class="metodo-pagamento col-xl-4 col-lg-6" *ngFor="let div of dadosDivida; let ind = index">
+        <div class="metodo-de-pagamento">
+          Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }}
+        </div>
+        <div class="row">  
+          <div class="col-6 pr-0"> <!--  col-sm-3 -->
+            <button type="button" class="btn btn-primary"> 
+              À vista:<br> R$ {{ getValorNegociar(dadosDivida[ind].CodigoTitulo) }} 
+            </button>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="nao_parcelado[dadosDivida[ind].CodigoTitulo]"> 
+              Parcelado
+            </button> 
+            <button type="button" class="btn btn-primary font-15px" *ngIf="!nao_parcelado[dadosDivida[ind].CodigoTitulo]" disabled>
+              Sem opção de parcelamento  
+            </button>
+          </div>
+        </div>    
       </div>
-      <div class="col-6 col-sm-3">
-        <button type="button" class="btn btn-primary"> 
-          À vista: R$ {{ getValorNegociar(dadosDivida[ind].CodigoTitulo) }} 
-          <!-- {{ (apiRestService.opcoesPg[dadosDivida[ind].CodigoTitulo].OpcoesPagamento | async) || "Aguarde . . ." }}
-        --></button>
-      </div>
-      <div class="col-6 col-sm-3">
-        <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="nao_parcelado[dadosDivida[ind].CodigoTitulo]"> 
-          Parcelado
-        </button> 
-      </div>  
     </div>
-    
+      
   </accordion-group>
   <accordion-group *ngIf="apiRestService.getDividasClaroInternet().length">
     <button class="btn btn-link btn-accordion" accordion-heading>

@@ -25,10 +25,14 @@
 <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
     <div class="col-sm-3 escolha-data">
         Escolha uma data para pagamento:
+        <input type="text"
+        placeholder="Datepicker"
+        class="form-control"
+        bsDatepicker>
     </div>  
     <div class="col-sm-4">
       <button type="button" class="btn btn-primary" (click)="showFinalizacao()">
-        Pagamento até amanhã
+        
       </button>
       <button type="button" class="btn btn-primary">
         Pagamento em até 5 dias

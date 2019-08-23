@@ -10,6 +10,10 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
+defineLocale('pt-br', ptBrLocale); 
+
 import { CpfCnpjBoxComponent } from './cpf-cnpj-box/cpf-cnpj-box.component';
 import { NegocieOnlineComponent } from './negocie-online/negocie-online.component';
 import { OpcoesRoutletComponent } from './opcoes-routlet/opcoes-routlet.component';
@@ -17,6 +21,7 @@ import { AssistenteVirtualComponent } from './assistente-virtual/assistente-virt
 import { RecebaNossaLigacaoComponent } from './receba-nossa-ligacao/receba-nossa-ligacao.component';
 import { AcordosAndamentoComponent } from './acordos-andamento/acordos-andamento.component';
 import { PrazoFinalizacaoComponent } from './prazo-finalizacao/prazo-finalizacao.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,8 @@ import { PrazoFinalizacaoComponent } from './prazo-finalizacao/prazo-finalizacao
     TextMaskModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AccordionModule.forRoot()
+    AccordionModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

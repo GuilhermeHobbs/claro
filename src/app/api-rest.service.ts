@@ -19,6 +19,7 @@ export class ApiRestService {
   private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
   private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
   private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
+  private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -74,6 +75,10 @@ export class ApiRestService {
   return this.http.post<OpcoesPagamento>(this.urlOpcoesPagamento, cpfCnpjParam, this.httpOptions);
  } 
 
+ getDadosAcordo(codTitulo: string): Observable<OpcoesPagamento> {
+  const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo);
+  return this.http.post<OpcoesPagamento>(this.urlDadosAcordo, cpfCnpjParam, this.httpOptions);
+ } 
   
 
  getDividasClaroMovel() {
@@ -91,7 +96,7 @@ export class ApiRestService {
 
 if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) return;  
  this.dividasClaroMovel.Divida.DadosDivida.forEach ( (divida) => {
-  
+ 
   this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
     OpcoesPagamento: {
       OpcaoPagamento: {
@@ -99,10 +104,8 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
       }
     }
   });  
- 
+      console.log(divida.CodigoTitulo);
    this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
-    console.log("opc=");
-    console.log(opc);
     this.opcoesPg[divida.CodigoTitulo].next(opc);
     });
   });

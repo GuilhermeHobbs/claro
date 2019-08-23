@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker/ngx-bootstrap-datepicker';
+
 
 @Component({
   selector: 'app-prazo-finalizacao',
@@ -12,7 +14,9 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public opcoesParcelamento: boolean = true;
   public fim: boolean;
 
-  constructor() { }
+  constructor(private localeService: BsLocaleService) {
+    this.localeService.use('pt-br');
+   }
 
   ngOnInit() {
   }
