@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { BsLocaleService } from 'ngx-bootstrap/datepicker/ngx-bootstrap-datepicker';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 
 @Component({

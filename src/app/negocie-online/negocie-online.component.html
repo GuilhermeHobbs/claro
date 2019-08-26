@@ -8,25 +8,28 @@
   <accordion-group *ngIf="dadosDivida.length">
     <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroMovel()">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
-      <div class="pull-left float-left produto-heading">Claro Móvel <span class="movelLabel" *ngIf="movelLabel">Débitos para serem negociados:</span></div>  
+      <div class="pull-left float-left produto-heading">Claro Móvel 
+        <span class="movelLabel" *ngIf="movelLabel">Débitos para serem negociados:</span>
+        <span class="movelLabel" *ngIf="opcoesParcelamentoLabel">Opções de parcelamento:</span>
+      </div>  
     </button>  
           
     <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
-        <div class="col-sm-4" *ngFor="let opc of opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index">
-          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()" *ngIf="ind">
+        <div class="col-6" *ngFor="let opc of opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
+          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao()">
               R$ {{ getOpcao(ind) }}
-          </button>              
+          </button>
         </div>
-        <div class="col-sm-4">
-          <button type="button" class="btn btn-primary" (click)="hideOpcoesParcelamento()">
+        <div class="col-6">
+          <button type="button" class="btn btn-primary col-6" (click)="hideOpcoesParcelamento()">
              Voltar
           </button>
-    </div>
-    </div>   
+        </div>  
+      </div>   
   
     <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()"></app-prazo-finalizacao>
       
-    <div class="row" [hidden]="opcoesParcelamento">
+    <div class="row" [hidden]="opcoesParcelamento || prazoFinalizacao">
       <div class="metodo-pagamento col-xl-4 col-lg-6" *ngFor="let div of dadosDivida; let ind = index">
         <div class="metodo-de-pagamento">
           Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }}

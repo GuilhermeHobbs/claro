@@ -22,28 +22,24 @@
   </div>
 </div>
 
-<div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
-    <div class="col-sm-3 escolha-data">
-        Escolha uma data para pagamento:
+<div class="opcoes-parcelamento" *ngIf="opcoesParcelamento">
+    <p class="escolha-data">Data para o pagamento:</p>
+    <div class="row">
+    <div class="col-sm-4">
         <input type="text"
-        placeholder="Datepicker"
+        placeholder="Clique para escolher uma data "
         class="form-control"
         bsDatepicker>
     </div>  
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <button type="button" class="btn btn-primary" (click)="showFinalizacao()">
-        
-      </button>
-      <button type="button" class="btn btn-primary">
-        Pagamento em até 5 dias
-      </button>
+          Informar data
+      </button>      
     </div>
-    <div class="col-sm-4">
-      <button type="button" class="btn btn-primary">
-        Pagamento em até 10 dias
-      </button>
+    <div class="col-sm-3">      
       <button type="button" class="btn btn-primary" (click)="voltar()">
         Voltar
       </button>
     </div>    
   </div>
+</div>  

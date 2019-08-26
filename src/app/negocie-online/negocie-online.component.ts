@@ -14,6 +14,7 @@ export class NegocieOnlineComponent implements OnInit {
   public opcoesParcelamento: boolean;
   public prazoFinalizacao: boolean;
   public movelLabel: boolean;
+  public opcoesParcelamentoLabel: boolean;
  
   public nao_parcelado = { };
   public ind_parcelado: number; 
@@ -55,11 +56,11 @@ export class NegocieOnlineComponent implements OnInit {
   }
 
   getOpcao (ind: number) {
-    return this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X " + this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+    return this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
   }
 
   showPrazoFinalizacao() {
-
+    this.opcoesParcelamentoLabel = false;
     this.prazoFinalizacao = true;
     this.opcoesParcelamento = false;
   }
@@ -69,6 +70,8 @@ export class NegocieOnlineComponent implements OnInit {
     this.opcoesParcelamento = true;
     this.showFatura = false;
     this.prazoFinalizacao = false;
+    this.movelLabel = false;
+    this.opcoesParcelamentoLabel = true;
 
     this.ind_parcelado = ind;
   }

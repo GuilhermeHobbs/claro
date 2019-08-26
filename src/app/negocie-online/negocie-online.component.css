@@ -24,12 +24,16 @@ table {
     margin-bottom: 20px;
 }
 
-.opcoes-parcelamento {
-    margin-bottom: 15px;
-}
+.opcoes-parcelamento {  
+    width: 90%;
+    margin: 0 auto;
+}    
+    
+
 
 .opcoes-parcelamento .btn {
-    margin-bottom: 10px;    
+    margin-bottom: 25px;
+    width: 250px;    
 }
 
 .metodo-pagamento {
