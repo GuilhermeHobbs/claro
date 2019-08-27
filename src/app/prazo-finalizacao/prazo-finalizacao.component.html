@@ -1,8 +1,8 @@
 <div *ngIf="fim">
   <p class="detalhes-titulo">Detalhes do acordo:</p>
-  <p>Data do primeiro pagamento: 14/02/2019</p>
-  <p>Valor da parcela: R$ 10,00</p>
-  <p>Demais parcelas: 2 x R$ 10,00</p>
+  <p>Data do primeiro pagamento: {{ dataPagamento.toLocaleString().split(',')[0] }}</p>
+  <p>Valor da {{ primeiraParcelado()? 'primeira':'' }} parcela: R$ {{ primeiraParcelado()? primeiraParcelado():valorAVista() }}</p>
+  <p *ngIf="vezesParcelado()">Demais parcelas: {{ vezesParcelado() }} x R$ {{ outrasParcelado() }}</p>
   <div class="row">
     <div class="col-sm-4">
       <button type="button" class="btn btn-yellow">
@@ -27,9 +27,10 @@
     <div class="row">
     <div class="col-sm-4">
         <input type="text"
-        placeholder="Clique para escolher uma data "
+        placeholder="Clique para escolher uma data"
         class="form-control"
-        bsDatepicker>
+        bsDatepicker [minDate]="minDate"
+        [maxDate]="maxDate"  [(ngModel)]="dataPagamento">
     </div>  
     <div class="col-sm-3">
       <button type="button" class="btn btn-primary" (click)="showFinalizacao()">

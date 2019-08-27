@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ApiRestService, Divida, OpcoesPagamento } from '../api-rest.service';
 
 
@@ -9,6 +9,9 @@ import { ApiRestService, Divida, OpcoesPagamento } from '../api-rest.service';
 })
 export class NegocieOnlineComponent implements OnInit {
 
+  public loadingParcelados: boolean;
+  public loaderClaroMovel: boolean = true;
+  
   public showFatura: boolean = true;
   public showHeader: boolean = true;
   public opcoesParcelamento: boolean;
@@ -16,10 +19,10 @@ export class NegocieOnlineComponent implements OnInit {
   public movelLabel: boolean;
   public opcoesParcelamentoLabel: boolean;
  
-  public nao_parcelado = { };
+  public parcelado = { };
   public ind_parcelado: number; 
 
-  constructor(private apiRestService: ApiRestService) {    
+  constructor(private apiRestService: ApiRestService, private cd: ChangeDetectorRef) {    
   }
 
   public dadosDivida = [];
@@ -28,6 +31,20 @@ export class NegocieOnlineComponent implements OnInit {
   ngOnInit() {
     this.dadosDivida = this.apiRestService.getDividasClaroMovel();
     
+  }
+
+  pagarAVista(ind: number, valor: string) {
+    this.apiRestService.parcelas = {
+      aVista: valor
+  }
+}
+
+  pagarParcelado(ind: number) {
+    this.apiRestService.parcelas = {
+      primeira: this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira,
+      vezes: ind,
+      outrasParcelas: this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas 
+    }
   }
 
   getAllOpcoesClaroMovel() {
@@ -41,14 +58,20 @@ export class NegocieOnlineComponent implements OnInit {
     let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
     this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
       this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
+      console.log(res.OpcoesPagamento);
+      this.cd.detectChanges();     
+      event.preventDefault();
+      if (!this.loadingParcelados) { this.loadingParcelados = true; setTimeout(() => { this.loaderClaroMovel = false }, 2000); }
     });
   }
 
   getValorNegociar (cod: string) {
     if (this.opcoesPg[cod]) {
-      if (this.opcoesPg[cod].OpcaoPagamento.ValorNegociar) return this.opcoesPg[cod].OpcaoPagamento.ValorNegociar;      
-      else if (this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar) {
-        this.nao_parcelado[cod] = true;
+      if (this.opcoesPg[cod].OpcaoPagamento.ValorNegociar) {
+        this.parcelado[cod] = 1;
+        return this.opcoesPg[cod].OpcaoPagamento.ValorNegociar;      
+      } else if (this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar) {
+        this.parcelado[cod] = 2;
         return this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar; 
       }  
     }

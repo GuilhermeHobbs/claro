@@ -11,7 +11,9 @@ export class ApiRestService {
 
   public devedor: Devedor; 
   public dividas: Divida;
-  
+  public dataPagamento: Date;
+  public parcelas = new Parcelas();
+
   public dividasClaroMovel: Divida;
 
   public opcoesPg = { }; 
@@ -104,7 +106,6 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
       }
     }
   });  
-      console.log(divida.CodigoTitulo);
    this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
     this.opcoesPg[divida.CodigoTitulo].next(opc);
     });
@@ -168,4 +169,10 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
 
       }
     }  
+  }
+  export class Parcelas {
+    primeira?: string;
+    outrasParcelas?: string;
+    vezes?: number;
+    aVista?: string;
   }
