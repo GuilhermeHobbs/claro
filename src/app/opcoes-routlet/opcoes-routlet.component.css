@@ -60,6 +60,7 @@ h3 {
   .fundo-paulista {
     background: url("/assets/img/recorte_phixr.jpg") bottom;
     background-size: cover;
+    height: inherit;
 }
 
     .link-voltar {

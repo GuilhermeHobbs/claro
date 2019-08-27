@@ -30,7 +30,7 @@ export class NegocieOnlineComponent implements OnInit {
 
   ngOnInit() {
     this.dadosDivida = this.apiRestService.getDividasClaroMovel();
-    
+    console.log(this.dadosDivida);
   }
 
   pagarAVista(ind: number, valor: string) {
@@ -58,7 +58,6 @@ export class NegocieOnlineComponent implements OnInit {
     let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
     this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
       this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
-      console.log(res.OpcoesPagamento);
       this.cd.detectChanges();     
       event.preventDefault();
       if (!this.loadingParcelados) { this.loadingParcelados = true; setTimeout(() => { this.loaderClaroMovel = false }, 2000); }

@@ -65,5 +65,10 @@ export class PrazoFinalizacaoComponent implements OnInit {
   outrasParcelado() {
     if (this.apiRestService.parcelas.outrasParcelas) return this.apiRestService.parcelas.outrasParcelas;
   }
+
+  gravaAcordo () {
+    this.apiRestService.gravaAcordo()
+  }
+
 }
 

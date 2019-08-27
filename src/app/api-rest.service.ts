@@ -22,6 +22,7 @@ export class ApiRestService {
   private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
   private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
   private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
+  private urlGravaAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -80,7 +81,19 @@ export class ApiRestService {
  getDadosAcordo(codTitulo: string): Observable<OpcoesPagamento> {
   const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo);
   return this.http.post<OpcoesPagamento>(this.urlDadosAcordo, cpfCnpjParam, this.httpOptions);
- } 
+ }
+ 
+ gravaAcordo(codTitulo: string, cpf: string, codDevedor: string, codPlano: string, vencimentoPrimeira: string, valorPrimeira: string): Observable<OpcoesPagamento> {
+  const params = new HttpParams().set('codigotitulo', codTitulo)
+                                       .set('cpf', cpf)
+                                       .set('codigodevedor', codDevedor)
+                                       .set('codigotitulo', codTitulo)
+                                       .set('plano', codPlano)
+                                       .set('vencimentoprimeira', vencimentoPrimeira)
+                                       .set('valorprimeira', valorPrimeira);
+
+  return this.http.post<OpcoesPagamento>(this.urlGravaAcordo, params, this.httpOptions);
+ }
   
 
  getDividasClaroMovel() {
@@ -170,6 +183,30 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
       }
     }  
   }
+
+  export class Acordo {
+    Acordo: {
+      DadosAcordo: {
+        CodigoAcordo: string;
+        CodigoDevedor: string;
+        CodigoTitulo: string;
+        DataAcordo: string;
+        FilialAcordo: string;
+        NumeroTitulo: string;
+        StatusAcordo: string;
+        ParcelasAcordo: {
+          ParcelaAcordo: Array<{
+            CodigoParcelaAcordo: string;
+            DataVencimento: string;
+            NumeroParcela: string;
+            StatusParcelaAcordo: string;
+            ValorParcela: string;
+          }>
+        }
+      }
+    }
+  }
+
   export class Parcelas {
     primeira?: string;
     outrasParcelas?: string;
