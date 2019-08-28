@@ -8,16 +8,15 @@ import { ApiRestService } from '../api-rest.service';
 })
 export class AcordosAndamentoComponent implements OnInit {
 
+  public acordos = { };
+
   constructor(private apiRestService: ApiRestService) { }
 
   ngOnInit() {
 
-    this.apiRestService.acordos.DadosAcordo.ParcelasAcordo.ParcelaAcordo (acc => {    
-
-    this.apiRestService.getDadosAcordo(acc).subscribe (res => {
-      console.log (res);
+    this.apiRestService.acordos.forEach (acc => {    
+    
     });
-  });
   }
 
 }

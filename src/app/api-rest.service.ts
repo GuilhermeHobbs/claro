@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class ApiRestService {
 
-  public acordos: Acordo;
+  public acordos: Acordo[];
   public devedor: Devedor; 
   public dividas: Divida;
   public dataPagamento: Date;
@@ -159,7 +159,7 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
         }
       }>
     }
-    Acordo?: Acordo;
+    Acordo?: Array<Acordo>;
   }
 
   export class Devedor {
@@ -192,6 +192,7 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
 
   export class Acordo {
       DadosAcordo: {
+        Produto?: string;
         CodigoAcordo: string;
         CodigoDevedor: string;
         CodigoTitulo: string;
