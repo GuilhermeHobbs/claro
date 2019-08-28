@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class ApiRestService {
 
+  public acordos: Acordo;
   public devedor: Devedor; 
   public dividas: Divida;
   public dataPagamento: Date;
@@ -41,6 +42,7 @@ export class ApiRestService {
       return this.getDadosDivida(cpfCnpj, devedor.Devedores.Devedor.CodigoDevedor).pipe( map( (divida: Divida) => {
         console.log(divida);
         this.dividas = divida;
+        if (divida.Acordo) this.acordos = divida.Acordo;
         return (divida.Acordo || divida.Divida);
       }));
     }));       
@@ -157,7 +159,7 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
         }
       }>
     }
-    Acordo?: any;
+    Acordo?: Acordo;
   }
 
   export class Devedor {
@@ -189,7 +191,6 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
   }
 
   export class Acordo {
-    Acordo: {
       DadosAcordo: {
         CodigoAcordo: string;
         CodigoDevedor: string;
@@ -209,7 +210,6 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
         }
       }
     }
-  }
 
   export class Parcelas {
     primeira?: string;

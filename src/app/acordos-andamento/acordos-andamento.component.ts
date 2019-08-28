@@ -12,7 +12,7 @@ export class AcordosAndamentoComponent implements OnInit {
 
   ngOnInit() {
 
-    ["27579830","27108636",'25758840','28403040', "15168499", "28929364"].forEach (acc => {    
+    this.apiRestService.acordos.DadosAcordo.ParcelasAcordo.ParcelaAcordo (acc => {    
 
     this.apiRestService.getDadosAcordo(acc).subscribe (res => {
       console.log (res);
