@@ -67,7 +67,13 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   gravaAcordo () {
-    this.apiRestService.gravaAcordo()
+      console.log(this.apiRestService.dividasClaroMovel);
+      if (this.apiRestService.parcelas.aVista) {
+        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].Plano, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].VencimentoPrimeira, this.apiRestService.parcelas.aVista)
+      }
+      else if (this.apiRestService.parcelas.primeira) {
+        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].Plano, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].VencimentoPrimeira, this.apiRestService.parcelas.primeira)
+      }
   }
 
 }

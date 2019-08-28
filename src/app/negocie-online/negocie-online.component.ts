@@ -30,7 +30,6 @@ export class NegocieOnlineComponent implements OnInit {
 
   ngOnInit() {
     this.dadosDivida = this.apiRestService.getDividasClaroMovel();
-    console.log(this.dadosDivida);
   }
 
   pagarAVista(ind: number, valor: string) {
@@ -39,12 +38,13 @@ export class NegocieOnlineComponent implements OnInit {
   }
 }
 
-  pagarParcelado(ind: number) {
+  pagarParcelado(ind: number, codTitulo: string) {
     this.apiRestService.parcelas = {
       primeira: this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira,
       vezes: ind,
       outrasParcelas: this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas 
-    }
+    };
+    this.apiRestService.codTitulo = codTitulo;
   }
 
   getAllOpcoesClaroMovel() {

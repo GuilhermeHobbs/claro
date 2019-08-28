@@ -13,6 +13,8 @@ export class ApiRestService {
   public dividas: Divida;
   public dataPagamento: Date;
   public parcelas = new Parcelas();
+  public codTitulo: string;
+  public cpfCnpj: string;
 
   public dividasClaroMovel: Divida;
 
@@ -33,9 +35,11 @@ export class ApiRestService {
 
   temDividasouAcordo(cpfCnpj: string): Observable<any> {
      
+     this.cpfCnpj = cpfCnpj;
      return this.getDadosDevedor(cpfCnpj).pipe( flatMap( (devedor: Devedor) => {
       this.devedor = devedor;
       return this.getDadosDivida(cpfCnpj, devedor.Devedores.Devedor.CodigoDevedor).pipe( map( (divida: Divida) => {
+        console.log(divida);
         this.dividas = divida;
         return (divida.Acordo || divida.Divida);
       }));

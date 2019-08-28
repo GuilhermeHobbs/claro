@@ -16,8 +16,8 @@
     </button>  
           
     <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
-        <div class="col-6" *ngFor="let opc of opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
-          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParcelado(ind)">
+        <div class="col-6" *ngFor="let opc of opcoesPg[dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
+          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParcelado(ind, dadosDivida[ind_parcelado].CodigoTitulo)">
               R$ {{ getOpcao(ind) }}
           </button>
         </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->
-            <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarAVista(ind, getValorNegociar(dadosDivida[ind].CodigoTitulo))"> 
+            <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarAVista(dadosDivida[ind].CodigoTitulo, getValorNegociar(dadosDivida[ind].CodigoTitulo))"> 
               À vista:<br> R$ {{ getValorNegociar(dadosDivida[ind].CodigoTitulo) }} 
             </button>
           </div>
