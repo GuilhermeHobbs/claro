@@ -9,15 +9,17 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class ApiRestService {
 
-  public acordos: Acordo[];
+  public acordos: any;
   public devedor: Devedor; 
-  public dividas: Divida;
-  public dataPagamento: Date;
+  public dividas: any;
   public parcelas = new Parcelas();
   public codTitulo: string;
   public cpfCnpj: string;
+  public plano: string;
 
   public dividasClaroMovel: Divida;
+  public dividasClaroInternet: Divida;
+  public dividasClaroTv: Divida;
 
   public opcoesPg = { }; 
 
@@ -26,6 +28,7 @@ export class ApiRestService {
   private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
   private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
   private urlGravaAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
+  private urlBoletoAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -33,6 +36,14 @@ export class ApiRestService {
   
   
   constructor(private http: HttpClient) { }
+
+  notificarMotor(id: string) {
+    const params = new HttpParams().set('cpf', this.cpfCnpj)
+                                   .set('datahora', (new Date) as any)
+                                   .set('id', id)
+                                   .set('Operacao', 'Claro'); 
+    this.http.post("https://fulltime.free.beeceptor.com", params, this.httpOptions).subscribe();
+  }
 
   temDividasouAcordo(cpfCnpj: string): Observable<any> {
      
@@ -42,7 +53,7 @@ export class ApiRestService {
       return this.getDadosDivida(cpfCnpj, devedor.Devedores.Devedor.CodigoDevedor).pipe( map( (divida: Divida) => {
         console.log(divida);
         this.dividas = divida;
-        if (divida.Acordo) this.acordos = divida.Acordo;
+        if (divida.Acordo) this.acordos = divida.Acordo.DadosAcordo;
         return (divida.Acordo || divida.Divida);
       }));
     }));       
@@ -84,11 +95,18 @@ export class ApiRestService {
   return this.http.post<OpcoesPagamento>(this.urlOpcoesPagamento, cpfCnpjParam, this.httpOptions);
  } 
 
- getDadosAcordo(codTitulo: string): Observable<OpcoesPagamento> {
+ getDadosAcordo(codTitulo: string): Observable<any> {
   const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo);
-  return this.http.post<OpcoesPagamento>(this.urlDadosAcordo, cpfCnpjParam, this.httpOptions);
+  return this.http.post<any>(this.urlDadosAcordo, cpfCnpjParam, this.httpOptions);
  }
  
+ getBoletoAcordo(codAcordo: string, codCodigoAcordo: string): Observable<Boleto> {
+  const params = new HttpParams().set('codigoacordo', codAcordo)
+                                 .set('codigoparcelaacordo', codCodigoAcordo); 
+  return this.http.post<Boleto>(this.urlBoletoAcordo, params, this.httpOptions);
+ }
+ 
+
  gravaAcordo(codTitulo: string, cpf: string, codDevedor: string, codPlano: string, vencimentoPrimeira: string, valorPrimeira: string): Observable<OpcoesPagamento> {
   const params = new HttpParams().set('codigotitulo', codTitulo)
                                        .set('cpf', cpf)
@@ -102,15 +120,58 @@ export class ApiRestService {
  }
   
 
- getDividasClaroMovel() {
+ getDividas() {
+  
   this.dividasClaroMovel = new Divida();
   this.dividasClaroMovel = {
     Divida: { 
       DadosDivida: []
     }
   };
-  this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );  
-  return this.dividasClaroMovel.Divida.DadosDivida;
+
+  this.dividasClaroInternet = new Divida();
+  this.dividasClaroInternet = {
+    Divida: { 
+      DadosDivida: []
+    }
+  };
+
+  this.dividasClaroTv = new Divida();
+  this.dividasClaroTv = {
+    Divida: { 
+      DadosDivida: []
+    }
+  };
+  
+  console.log("this.dividasClaroTv.Divida.DadosDivida");
+  console.log(this.dividasClaroTv.Divida.DadosDivida);
+
+
+  
+  if (this.dividas.Divida.DadosDivida.length) {
+    this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );  
+    this.dividasClaroInternet.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Internet" );
+    this.dividasClaroTv.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro TV" );
+  }
+  
+  else { 
+    
+    switch (this.dividas.Divida.DadosDivida.Produto) {
+      case "Claro Móvel": {
+        this.dividasClaroMovel.Divida.DadosDivida.push(this.dividas.Divida.DadosDivida);
+        break;
+      } 
+      case "Claro Internet": {
+        this.dividasClaroInternet.Divida.DadosDivida.push(this.dividas.Divida.DadosDivida);
+        break;
+      }
+      case "Claro TV": {
+        this.dividasClaroTv.Divida.DadosDivida.push(this.dividas.Divida.DadosDivida);
+        break;
+      }
+  }  
+
+ }
 }
 
  getAllOpcoesClaroMovel() {
@@ -119,26 +180,20 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
  this.dividasClaroMovel.Divida.DadosDivida.forEach ( (divida) => {
  
   this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
+    Carregando: true,
     OpcoesPagamento: {
       OpcaoPagamento: {
-        ValorNegociar: "Aguarde..."
+        ValorNegociar: "Aguarde...",
       }
     }
   });  
    this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
+    opc.Carregando = false;
     this.opcoesPg[divida.CodigoTitulo].next(opc);
     });
   });
  }
 
-
- getDividasClaroInternet() {
-  return this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Internet" );
- }
-
- getDividasClaroTv() {
-  return this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro TV" );
- }
 
 }
 
@@ -159,7 +214,9 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
         }
       }>
     }
-    Acordo?: Array<Acordo>;
+    Acordo?: { 
+      DadosAcordo: Array<Acordo>;
+    }  
   }
 
   export class Devedor {
@@ -173,6 +230,7 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
   }
 
   export class OpcoesPagamento {
+    Carregando?: boolean;
     OpcoesPagamento?: {
       OpcaoPagamento: {
         Plano?: number;
@@ -191,8 +249,6 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
   }
 
   export class Acordo {
-      DadosAcordo: {
-        Produto?: string;
         CodigoAcordo: string;
         CodigoDevedor: string;
         CodigoTitulo: string;
@@ -210,11 +266,18 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
           }>
         }
       }
-    }
 
   export class Parcelas {
     primeira?: string;
     outrasParcelas?: string;
     vezes?: number;
     aVista?: string;
+  }
+
+  export class Boleto {
+    BoletoAcordo: {
+      DataVencimento: string;
+      LinhaDigitavel: string;
+      Valor: string;
+    }
   }

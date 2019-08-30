@@ -74,7 +74,8 @@ table {
     }    
 
     .btn {
-        margin-top: 10px;    
+        margin-top: 10px;
+        font-size: 17px;    
     }
 
     .metodo-pagamento {
@@ -85,6 +86,7 @@ table {
         margin-bottom: 0;
         margin-top: 5px;
         text-align: left;
+        font-size: 17px;
     }
 
     .btn-accordion {
@@ -95,6 +97,10 @@ table {
     table {
         margin-top: -16px;
         margin-bottom: -10px;
+    }
+
+    .movelLabel {
+        display: none;
     }
         
 }

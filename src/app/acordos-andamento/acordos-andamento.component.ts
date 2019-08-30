@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiRestService } from '../api-rest.service';
+import { ApiRestService, Boleto } from '../api-rest.service';
 
 @Component({
   selector: 'app-acordos-andamento',
@@ -8,14 +8,36 @@ import { ApiRestService } from '../api-rest.service';
 })
 export class AcordosAndamentoComponent implements OnInit {
 
-  public acordos = { };
+  public acordos = [ ];
+  public showHeader: boolean = true;
+  public boleto: any;
 
   constructor(private apiRestService: ApiRestService) { }
 
   ngOnInit() {
+    if (this.apiRestService.acordos.length) {
+      this.apiRestService.acordos.forEach (acc => {    
+        this.acordos.push(acc);
+      });
+    }
+    if (this.apiRestService.acordos.CodigoAcordo) {
+      this.acordos.push(this.apiRestService.acordos);
+    }  
+  }
 
-    this.apiRestService.acordos.forEach (acc => {    
-    
+  getIcon(acordo) {
+    switch (acordo.NumeroTitulo.split(' ')[1]) {
+      case "Móvel": {
+        return "assets/icons/phone.jpg";
+      }
+
+    }
+  }
+  
+  segunda_via(codAcordo: string, codCodigoAcordo: string) {
+    this.apiRestService.getBoletoAcordo(codAcordo, codCodigoAcordo).subscribe ((bol: Boleto) => {
+       this.boleto = bol.BoletoAcordo;
+       console.log(bol);
     });
   }
 

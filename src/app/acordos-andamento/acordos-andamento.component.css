@@ -1,3 +1,7 @@
+button {
+    text-decoration: none !important;
+}
+
 .produto-heading {
     line-height: 44px;
     font-size: 22px;
@@ -10,7 +14,25 @@
         margin: 10px auto;
     }
     
+    
     .produto-img {
         height: 45px;
         float: left;
     }
+
+    .btn-accordion {
+        line-height: 50px;
+        font-size: 20px;
+    }
+
+    .acc-body {
+        position: relative;
+        top: -15px;
+    }
+    
+    @media (max-width: 768px) {
+        .btn-accordion {
+            font-size: 16px;
+        }    
+
+    }    

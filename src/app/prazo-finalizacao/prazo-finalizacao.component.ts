@@ -11,11 +11,12 @@ import { ApiRestService } from '../api-rest.service';
 export class PrazoFinalizacaoComponent implements OnInit {
 
   @Output() clickVoltar = new EventEmitter<boolean>(); 
+  @Output() clickVoltarAVista= new EventEmitter<boolean>();
 
   minDate: Date;
   maxDate: Date;
 
-  public dataPagamento: Date;
+  public dataPagamento: string;
   public opcoesParcelamento: boolean = true;
   public fim: boolean;
 
@@ -32,9 +33,6 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
   showFinalizacao() {
    if (this.dataPagamento) { 
-
-    this.apiRestService.dataPagamento = this.dataPagamento;
-
     this.fim = true;
     this.opcoesParcelamento = false;
    } 
@@ -47,6 +45,10 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
   voltar() {
     this.clickVoltar.emit(true);
+  }
+
+  voltar_data() {
+    this.clickVoltarAVista.emit(true);
   }
 
   valorAVista() {
@@ -67,12 +69,15 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   gravaAcordo () {
-      console.log(this.apiRestService.dividasClaroMovel);
       if (this.apiRestService.parcelas.aVista) {
-        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].Plano, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].VencimentoPrimeira, this.apiRestService.parcelas.aVista)
+        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.aVista).subscribe(res => {
+           console.log(res); 
+        });
       }
       else if (this.apiRestService.parcelas.primeira) {
-        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].Plano, this.apiRestService.opcoesPg[this.apiRestService.codTitulo].VencimentoPrimeira, this.apiRestService.parcelas.primeira)
+        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.primeira).subscribe(res => {
+          console.log(res); 
+       });
       }
   }
 

@@ -31,7 +31,10 @@
     }
 
     .detalhes-titulo {
-        margin-bottom: 0;
-        
-    }    
+        margin-bottom: 0;        
+    }
+    
+    .btn-mudar-parce {
+        font-size: 15px;
+    }
 }    

@@ -10,7 +10,7 @@ export class OpcoesRoutletComponent implements OnInit {
 
   constructor(private apiRestService: ApiRestService) { }
 
-  //////////////////////////////////////public nome: string = this.apiRestService.getNome();
+  public nome: string = this.apiRestService.getNome();
 
   showOpcoes: boolean = true;
   showNegocieOnline: boolean;
@@ -24,6 +24,7 @@ export class OpcoesRoutletComponent implements OnInit {
 
   
   ngOnInit() {
+    this.apiRestService.notificarMotor('1');
   }
 
   negocieOnline() {
