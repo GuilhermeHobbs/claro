@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { ApiRestService, Boleto } from '../api-rest.service';
+
 
 @Component({
   selector: 'app-acordos-andamento',
@@ -9,8 +10,8 @@ import { ApiRestService, Boleto } from '../api-rest.service';
 export class AcordosAndamentoComponent implements OnInit {
 
   public acordos = [ ];
-  public showHeader: boolean = true;
-  public boleto: any;
+  public loadingBoleto = [false];
+  public erroBoleto: boolean;
 
   constructor(private apiRestService: ApiRestService) { }
 
@@ -34,10 +35,20 @@ export class AcordosAndamentoComponent implements OnInit {
     }
   }
   
-  segunda_via(codAcordo: string, codCodigoAcordo: string) {
+  segunda_via(codAcordo: string, codCodigoAcordo: string, ind: number) {
+    this.loadingBoleto[ind] = true;
+    console.log(codCodigoAcordo);
     this.apiRestService.getBoletoAcordo(codAcordo, codCodigoAcordo).subscribe ((bol: Boleto) => {
-       this.boleto = bol.BoletoAcordo;
        console.log(bol);
+       this.loadingBoleto[ind] = false;
+
+       if (bol.BoletoAcordo) {
+       window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor);
+       }
+       else {
+         this.erroBoleto = true;
+       }
+       
     });
   }
 

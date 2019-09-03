@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {Router} from '@angular/router';
-import { ApiRestService } from '../api-rest.service';
+import { ApiRestService, Acordo, Boleto } from '../api-rest.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Component({
@@ -13,7 +13,24 @@ export class CpfCnpjBoxComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router, private cd: ChangeDetectorRef, private apiRestService: ApiRestService) {    
   }
  
-  ngOnInit() {    
+  ngOnInit() { 
+    // ["15354161", "22546129"].forEach (num => { this.apiRestService.getDadosAcordo(num).subscribe (acc => {
+    /*  this.apiRestService.getDadosAcordo("15354161").subscribe ((acc: Acordo) => {
+        console.log("acc=");
+        console.log(acc);
+       this.apiRestService.getBoletoAcordo( "22532147", "18271371").subscribe ((bol: Boleto) => {
+         console.log(bol);
+  
+         if (bol.BoletoAcordo) {
+          window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor);
+         }
+         else {
+         }
+         
+      });
+    });
+     */
+
   }
 
   public cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];

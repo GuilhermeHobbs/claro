@@ -22,6 +22,8 @@ import { RecebaNossaLigacaoComponent } from './receba-nossa-ligacao/receba-nossa
 import { AcordosAndamentoComponent } from './acordos-andamento/acordos-andamento.component';
 import { PrazoFinalizacaoComponent } from './prazo-finalizacao/prazo-finalizacao.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BoletoComponent } from './boleto/boleto.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     AssistenteVirtualComponent,
     RecebaNossaLigacaoComponent,
     AcordosAndamentoComponent,
-    PrazoFinalizacaoComponent        
+    PrazoFinalizacaoComponent,
+    BoletoComponent        
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     BrowserAnimationsModule,
     HttpClientModule,
     AccordionModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

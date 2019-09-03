@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { ApiRestService } from '../api-rest.service';
+import { ApiRestService, Boleto, Acordo } from '../api-rest.service';
 
 
 @Component({
@@ -19,6 +19,13 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public dataPagamento: string;
   public opcoesParcelamento: boolean = true;
   public fim: boolean;
+  public sucesso: boolean;
+  public erro: boolean;
+  public loader: boolean;
+  public loadingBoleto: boolean;
+  public erroBoleto: boolean;
+  public codAcordo: string;
+
 
   constructor(private localeService: BsLocaleService, private apiRestService: ApiRestService) {
     this.localeService.use('pt-br');
@@ -68,15 +75,60 @@ export class PrazoFinalizacaoComponent implements OnInit {
     if (this.apiRestService.parcelas.outrasParcelas) return this.apiRestService.parcelas.outrasParcelas;
   }
 
+  abrirBoleto() {
+    let codigoParcelaAcordo: string;
+    this.loadingBoleto = true;
+    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => {
+      console.log("acc=");
+      console.log(acc);
+      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
+      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => {
+       console.log(bol);
+       this.loadingBoleto = false;
+
+       if (bol.BoletoAcordo) {
+        window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor);
+       }
+       else {
+         this.erroBoleto = true;
+       }
+       
+    });
+  });
+}
+  
   gravaAcordo () {
+    this.loader = true;
+    this.fim = false;
       if (this.apiRestService.parcelas.aVista) {
         this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.aVista).subscribe(res => {
-           console.log(res); 
+          console.log(res);  
+          this.loader = false;
+          if (res.Codigo === '12') {
+            this.sucesso = true;
+            this.codAcordo = res.CodigoAcordo;
+           }
+           else {
+             this.erro = true;
+             this.fim = true;
+           }
+
         });
       }
       else if (this.apiRestService.parcelas.primeira) {
         this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.primeira).subscribe(res => {
-          console.log(res); 
+          console.log(res);
+          this.loader = false; 
+          if (res.Codigo === '12') {
+            this.sucesso = true;
+            this.codAcordo = res.CodigoAcordo;
+           }
+           else {
+             this.erro = true;
+             this.fim = true;
+           }
+
        });
       }
   }

@@ -50,6 +50,7 @@ export class ApiRestService {
      this.cpfCnpj = cpfCnpj;
      return this.getDadosDevedor(cpfCnpj).pipe( flatMap( (devedor: Devedor) => {
       this.devedor = devedor;
+      console.log(devedor);
       return this.getDadosDivida(cpfCnpj, devedor.Devedores.Devedor.CodigoDevedor).pipe( map( (divida: Divida) => {
         console.log(divida);
         this.dividas = divida;
@@ -91,7 +92,8 @@ export class ApiRestService {
  }  
 
  getOpcoesPagamento(codTitulo: string): Observable<OpcoesPagamento> {
-  const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo);
+  const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo)
+                                       .set('cpf', this.cpfCnpj);    
   return this.http.post<OpcoesPagamento>(this.urlOpcoesPagamento, cpfCnpjParam, this.httpOptions);
  } 
 
@@ -102,12 +104,13 @@ export class ApiRestService {
  
  getBoletoAcordo(codAcordo: string, codCodigoAcordo: string): Observable<Boleto> {
   const params = new HttpParams().set('codigoacordo', codAcordo)
-                                 .set('codigoparcelaacordo', codCodigoAcordo); 
+                                 .set('codigoparcelaacordo', codCodigoAcordo)
+                                 .set('cpf', this.cpfCnpj);    
   return this.http.post<Boleto>(this.urlBoletoAcordo, params, this.httpOptions);
  }
  
 
- gravaAcordo(codTitulo: string, cpf: string, codDevedor: string, codPlano: string, vencimentoPrimeira: string, valorPrimeira: string): Observable<OpcoesPagamento> {
+ gravaAcordo(codTitulo: string, cpf: string, codDevedor: string, codPlano: string, vencimentoPrimeira: string, valorPrimeira: string): Observable<any> {
   const params = new HttpParams().set('codigotitulo', codTitulo)
                                        .set('cpf', cpf)
                                        .set('codigodevedor', codDevedor)
@@ -116,7 +119,7 @@ export class ApiRestService {
                                        .set('vencimentoprimeira', vencimentoPrimeira)
                                        .set('valorprimeira', valorPrimeira);
 
-  return this.http.post<OpcoesPagamento>(this.urlGravaAcordo, params, this.httpOptions);
+  return this.http.post(this.urlGravaAcordo, params, this.httpOptions);
  }
   
 

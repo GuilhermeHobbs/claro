@@ -1,3 +1,43 @@
+<div class="loader-wrap" *ngIf="loader">
+  <p>Aguarde . . .</p>
+  <div class="loader"></div>
+</div>
+
+<div *ngIf="sucesso">
+  <h1> O Acordo foi realizado com sucesso!</h1>
+  <br>
+  <h4>Como deseja receber seu boleto?</h4>
+  <br>
+  <div class="row">
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-primary">
+          Por e-mail
+        </button>
+      </div>
+      <div class="col-6 col-sm-4">
+        <button type="button" class="btn btn-primary">
+          Por SMS
+        </button>
+      </div>
+      <div class="col-6 col-sm-4">
+        <button type="button" class="btn btn-primary btn-mudar-parce" (click)="abrirBoleto()">
+          Ver dados do boleto
+        </button>
+      </div>            
+    </div>
+    <div class="loader-wrap" *ngIf="loadingBoleto">
+        <p>Aguarde . . .</p>
+        <div class="loader"></div>
+    </div>
+      
+    <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
+</div>
+
+<div *ngIf="erro">
+  <h1> Houve um erro. Tente novamente, por favor.</h1>
+</div>
+
+
 <div *ngIf="fim">
   <p class="detalhes-titulo">Detalhes do acordo:</p>
   <p>Data do {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ dataPagamento.toLocaleString().split(',')[0] }}</p>
@@ -34,7 +74,7 @@
     </div>  
     <div class="col-sm-3">
       <button type="button" class="btn btn-primary" (click)="showFinalizacao()">
-          Informar data
+          Realizar acordo
       </button>      
     </div>
     <div class="col-sm-3">      
