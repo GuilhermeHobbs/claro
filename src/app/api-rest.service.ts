@@ -10,6 +10,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class ApiRestService {
 
   public acordos: any;
+        
+    
+
   public devedor: Devedor; 
   public dividas: any;
   public parcelas = new Parcelas();

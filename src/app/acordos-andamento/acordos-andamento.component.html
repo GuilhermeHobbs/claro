@@ -3,17 +3,17 @@
     <accordion-group *ngFor="let acordo of acordos">
         <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading>
          <div class="row">
-          <div class="col-2">
-            <img [src]="getIcon(acordo)" class="produto-img">  
-            {{ acordo.NumeroTitulo.split(' ')[1] }}
+          <div class="col-12 col-sm-2 img-produto">
+             <img [src]="getIcon(acordo)" class="produto-img">  
+             <p>{{ acordo.NumeroTitulo.split(' ')[1] }}</p>
           </div>  
-            <div class="col-3">  
+            <div class="col-sm-3 col-4 btn-linha no-padd-left no-padd-right">  
                 Data: {{ acordo.DataAcordo }}
             </div>              
-          <div class="col-5">
+          <div class="col-5 btn-linha">
               Status: {{ acordo.StatusAcordo }}
           </div>
-          <div class="col-2">
+          <div class="col-sm-2 col-3 btn-linha">
               Filial: {{ acordo.FilialAcordo }}
           </div>
         </div>
@@ -21,26 +21,27 @@
         <div class="acc-body">
          <p class="font-weight-bold">Parcelas</p>
           <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.length">
-            <div *ngFor="let par of acordo.ParcelasAcordo.ParcelaAcordo; let ind = index" class="row mb-15">
-                    <div class="col-2">
+            <div *ngFor="let par of acordo.ParcelasAcordo.ParcelaAcordo; let ind = index" class="row bottom-parcela">
+                    <div class="col-3 no-padd-left no-padd-right">
                         Data: {{ par.DataVencimento }}
                     </div>
                     <div class="col-3">
                         Status: {{ par.StatusParcelaAcordo }}
                     </div>
-                    <div class="col-2">
-                        Valor: {{ par.ValorParcela }}
+                    <div class="col-2 valor-mobile">
+                        {{ par.ValorParcela }}
                     </div>
-                    <div class="col-3">
+                    <div class="col-2 no-padd-left">
                         <a type="button" class="btn btn-primary" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, ind)">
                             Segunda via do boleto        
                         </a>
                         <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
                     </div>
-                    <div class="loader-wrap">
-                        <div class="loader col-1" *ngIf="loadingBoleto[ind]"></div>
-                    </div>    
-                    
+                    <div class="col-1">
+                        <div class="loader-wrap">
+                            <div class="loader" *ngIf="loadingBoleto[ind]"></div>
+                        </div>    
+                    </div>
             </div>
          </div>
          <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo" class="row">

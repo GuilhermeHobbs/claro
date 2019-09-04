@@ -16,12 +16,17 @@ import { ActivatedRoute } from '@angular/router';
   public linha: string;
   public data: string;
   public valor: string;
+  public cliente: string;
+  public contrato: string;
 
   constructor(private modalService: BsModalService, route: ActivatedRoute) {
     
     this.linha = route.snapshot.queryParams.linha;
     this.valor = route.snapshot.queryParams.valor;
     this.data = route.snapshot.queryParams.data;
+    this.cliente = route.snapshot.queryParams.cliente;
+    this.contrato = route.snapshot.queryParams.contrato;
+
     
   }
 

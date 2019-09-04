@@ -10,8 +10,8 @@
     <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroMovel()">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading"><span>Claro Móvel</span> 
-        <span class="movelLabel" *ngIf="movelLabel">Débitos para serem negociados:</span>
-        <span class="movelLabel" *ngIf="opcoesParcelamentoLabel">Opções de parcelamento:</span>
+        <span class="movelLabel" *ngIf="movelLabel">Débitos para serem negociados</span>
+        <span class="movelLabel" *ngIf="opcoesParcelamentoLabel">Opções de parcelamento</span>
       </div>        
     </button>  
           
@@ -38,7 +38,8 @@
     <div class="row" [hidden]="opcoesParcelamento || prazoFinalizacao || loaderClaroMovel"> 
       <div class="metodo-pagamento col-xl-4 col-lg-6" *ngFor="let div of dadosDivida; let ind = index">
         <div class="metodo-de-pagamento">
-          Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }}
+          Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }} <br>
+          Data Venc.: {{ dadosDivida[ind].Parcelas.ParcelaDivida.Vencimento }}
         </div>
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->

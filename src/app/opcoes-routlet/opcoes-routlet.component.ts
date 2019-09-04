@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiRestService } from '../api-rest.service';
+import { ApiRestService, Divida, Acordo } from '../api-rest.service';
 
 @Component({
   selector: 'app-opcoes-routlet',
@@ -10,8 +10,8 @@ export class OpcoesRoutletComponent implements OnInit {
 
   constructor(private apiRestService: ApiRestService) { }
 
-  public nome: string = this.apiRestService.getNome();
-
+  //public nome: string = this.apiRestService.getNome();
+  //////////////////////////////////////////////////////////////
   showOpcoes: boolean = true;
   showNegocieOnline: boolean;
   showAssistenteVirtual: boolean;
@@ -24,6 +24,34 @@ export class OpcoesRoutletComponent implements OnInit {
 
   
   ngOnInit() {
+
+   //////////////////////////////////////////////////////////////// 
+    this.apiRestService.dividas = new Divida();
+    this.apiRestService.dividas.Acordo = new Acordo();
+    this.apiRestService.acordos = [{
+      DataAcordo: "14/02/2019",
+      FilialAcordo: "NET",
+      NumeroTitulo: "102405257.Claro Móvel",
+      StatusAcordo: "PENDENTE",
+      ParcelasAcordo: {
+      ParcelaAcordo: [{
+          DataVencimento: "15/02/2019",
+          StatusParcelaAcordo: "NÃO PAGO",
+          ValorParcela: "R$ 323.23",
+        }, {
+          DataVencimento: "15/02/2019",
+          StatusParcelaAcordo: "NÃO PAGO",
+          ValorParcela: "R$ 323.23",
+        }, {
+          DataVencimento: "15/02/2019",
+          StatusParcelaAcordo: "NÃO PAGO",
+          ValorParcela: "R$ 323.23"
+        }]
+      }
+    }];
+
+
+
     this.apiRestService.notificarMotor('1');
   }
 

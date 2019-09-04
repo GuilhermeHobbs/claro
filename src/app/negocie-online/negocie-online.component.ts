@@ -12,6 +12,7 @@ export class NegocieOnlineComponent implements OnInit {
   constructor(private apiRestService: ApiRestService, private cd: ChangeDetectorRef) {    
   }
 
+    
   public loadingParcelados: boolean;
   public loaderClaroMovel: boolean = true;
   
@@ -30,6 +31,7 @@ export class NegocieOnlineComponent implements OnInit {
   public opcoesPg = { };      
 
   ngOnInit() {
+
     this.apiRestService.getDividas();
     if (this.apiRestService.dividas.Divida.DadosDivida.length) {
       this.dadosDivida = this.apiRestService.dividas.Divida.DadosDivida;

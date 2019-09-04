@@ -16,6 +16,8 @@ export class AcordosAndamentoComponent implements OnInit {
   constructor(private apiRestService: ApiRestService) { }
 
   ngOnInit() {
+
+      
     if (this.apiRestService.acordos.length) {
       this.apiRestService.acordos.forEach (acc => {    
         this.acordos.push(acc);
@@ -43,7 +45,7 @@ export class AcordosAndamentoComponent implements OnInit {
        this.loadingBoleto[ind] = false;
 
        if (bol.BoletoAcordo) {
-       window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor);
+       window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor + "&cliente=" + this.apiRestService.getNome());
        }
        else {
          this.erroBoleto = true;
