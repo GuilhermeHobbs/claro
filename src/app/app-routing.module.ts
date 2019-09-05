@@ -6,7 +6,7 @@ import { NegocieOnlineComponent } from './negocie-online/negocie-online.componen
 import { BoletoComponent } from './boleto/boleto.component';
 
 const routes: Routes = [
-  { path: '', component: OpcoesRoutletComponent, pathMatch: 'full' }, // CpfCnpjBoxComponent
+  { path: '', component: CpfCnpjBoxComponent, pathMatch: 'full' }, //  OpcoesRoutletComponent
   { path: 'negocie-online', component: NegocieOnlineComponent },
   { path: 'opcoes-routlet', component: OpcoesRoutletComponent },
   { path: 'boleto', component: BoletoComponent } 

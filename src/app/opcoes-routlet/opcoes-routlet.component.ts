@@ -25,7 +25,8 @@ export class OpcoesRoutletComponent implements OnInit {
   
   ngOnInit() {
 
-   //////////////////////////////////////////////////////////////// 
+   ////////////////////////////////////////////////////////////////
+   /* 
     this.apiRestService.dividas = new Divida();
     this.apiRestService.dividas.Acordo = new Acordo();
     this.apiRestService.acordos = [{
@@ -49,7 +50,7 @@ export class OpcoesRoutletComponent implements OnInit {
         }]
       }
     }];
-
+*/
 
 
     this.apiRestService.notificarMotor('1');

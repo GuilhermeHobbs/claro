@@ -11,8 +11,6 @@ export class ApiRestService {
 
   public acordos: any;
         
-    
-
   public devedor: Devedor; 
   public dividas: any;
   public parcelas = new Parcelas();
@@ -157,7 +155,7 @@ export class ApiRestService {
   if (this.dividas.Divida.DadosDivida.length) {
     this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );  
     this.dividasClaroInternet.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Internet" );
-    this.dividasClaroTv.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro TV" );
+    this.dividasClaroTv.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => { console.log ("div this.dividas.Divida.DadosDivida="); console.log (this.dividas.Divida.DadosDivida); return div.Produto === "Claro TV" });
   }
   
   else { 
@@ -200,6 +198,53 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
   });
  }
 
+
+ getAllOpcoesClaroTv() {
+
+  if (this.opcoesPg[this.dividasClaroTv.Divida.DadosDivida[0].CodigoTitulo]) return;  
+   this.dividasClaroTv.Divida.DadosDivida.forEach ( (divida) => {
+   
+    this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
+      Carregando: true,
+      OpcoesPagamento: {
+        OpcaoPagamento: {
+          ValorNegociar: "Aguarde...",
+        }
+      }
+    });  
+
+    console.log("antes this.opcoesPg[divida.CodigoTitulo]=");
+    console.log(this.opcoesPg[divida.CodigoTitulo]);
+
+     this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
+      opc.Carregando = false;
+      console.log("depois this.opcoesPg[divida.CodigoTitulo]=");
+      console.log(this.opcoesPg[divida.CodigoTitulo]);
+      this.opcoesPg[divida.CodigoTitulo].next(opc);
+      });
+    });
+   }
+
+   getAllOpcoesClaroInternet() {
+
+    if (this.opcoesPg[this.dividasClaroInternet.Divida.DadosDivida[0].CodigoTitulo]) return;  
+     this.dividasClaroInternet.Divida.DadosDivida.forEach ( (divida) => {
+     
+      this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
+        Carregando: true,
+        OpcoesPagamento: {
+          OpcaoPagamento: {
+            ValorNegociar: "Aguarde...",
+          }
+        }
+      });  
+       this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
+        opc.Carregando = false;
+        this.opcoesPg[divida.CodigoTitulo].next(opc);
+        });
+      });
+     }
+  
 
 }
 

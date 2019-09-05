@@ -14,7 +14,7 @@ export class NegocieOnlineComponent implements OnInit {
 
     
   public loadingParcelados: boolean;
-  public loaderClaroMovel: boolean = true;
+  public loader: boolean = true;
   
   public showFatura: boolean = true;
   public showHeader: boolean = true;
@@ -26,7 +26,6 @@ export class NegocieOnlineComponent implements OnInit {
   public parcelado = { };
   public ind_parcelado: number; 
 
-  
   public dadosDivida = [];
   public opcoesPg = { };      
 
@@ -64,21 +63,85 @@ export class NegocieOnlineComponent implements OnInit {
     this.showHeader = false;
     this.movelLabel = true;
 
-    this.apiRestService.getAllOpcoesClaroMovel();
-    this.dadosDivida.forEach( (dados) => this.sett(dados.CodigoTitulo));
+    this.apiRestService.getAllOpcoesClaroMovel();  
+    if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.length) {
+      this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+    }
+
+   /* if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.CodigoDevedor) {
+      this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+    }*/
   }
-  sett (cod: string) {
+
+  getAllOpcoesClaroTv() {
+    this.showHeader = false;
+    this.movelLabel = true;
+
+    console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida=");
+    console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida);
+
+    this.apiRestService.getAllOpcoesClaroTv();
+    if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length) {
+      this.apiRestService.dividasClaroTv.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+    }
+   
+  }
+
+
+  getAllOpcoesClaroInternet() {
+    this.showHeader = false;
+    this.movelLabel = true;
+
+    this.apiRestService.getAllOpcoesClaroInternet();    
+    this.dadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+  }
+
+  
+  setOpcoes (cod: string) {
     let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
+    console.log("this.apiRestService.opcoesPg=");
+    console.log(this.apiRestService.opcoesPg);
+    console.log("dadosDividaCod[0].CodigoTitulo=");
+    console.log(dadosDividaCod[0].CodigoTitulo);
+    
+    console.log("this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]=");
+    console.log(this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]);
+    
     this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
       this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
         console.log(res);
       
-      if (!this.loadingParcelados && !res.Carregando) { this.loadingParcelados = true; setTimeout(() => { this.loaderClaroMovel = false }, 2000); }
+      if (!this.loadingParcelados && !res.Carregando) { this.loadingParcelados = true; setTimeout(() => { 
+          this.loader = false; 
+      }, 2000); }
 
       this.cd.detectChanges();     
       event.preventDefault();
     });
   }
+
+  getValorTotal (cod: string) {
+    console.log("getValorTotal>>>>>");
+    console.log(this.opcoesPg[cod]);
+    if (this.opcoesPg[cod] && !this.opcoesPg[cod].Carregando) {
+      console.log(this.opcoesPg[cod]);
+      if (this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido) {
+        console.log ("aquiii");
+        console.log (this.opcoesPg[cod])
+
+        this.parcelado[cod] = 1;
+        return this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido;      
+      } else if (this.opcoesPg[cod].OpcaoPagamento.length) {
+        console.log ("aquiii");
+        console.log (this.opcoesPg[cod])
+        this.parcelado[cod] = 2;
+        return this.opcoesPg[cod].OpcaoPagamento[0].ValorCorrigido; 
+      }  
+    }
+    else return "";      
+  }
+
+  
 
   getValorNegociar (cod: string) {
     if (this.opcoesPg[cod]) {
