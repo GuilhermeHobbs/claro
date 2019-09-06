@@ -17,6 +17,7 @@ export class ApiRestService {
   public codTitulo: string;
   public cpfCnpj: string;
   public plano: string;
+  public telefone: string;
 
   public dividasClaroMovel: Divida;
   public dividasClaroInternet: Divida;
@@ -30,6 +31,7 @@ export class ApiRestService {
   private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
   private urlGravaAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
   private urlBoletoAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
+  private urlEnviaSms = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_smsenvio.php';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -39,11 +41,11 @@ export class ApiRestService {
   constructor(private http: HttpClient) { }
 
   notificarMotor(id: string) {
-    const params = new HttpParams().set('cpf', this.cpfCnpj)
+   /* const params = new HttpParams().set('cpf', this.cpfCnpj)
                                    .set('datahora', (new Date) as any)
                                    .set('id', id)
-                                   .set('Operacao', 'Claro'); 
-    this.http.post("https://fulltime.free.beeceptor.com", params, this.httpOptions).subscribe();
+                                   .set('Operacao', 'Claro'); */
+    //this.http.post("https://fulltime.free.beeceptor.com", params, this.httpOptions).subscribe();
   }
 
   temDividasouAcordo(cpfCnpj: string): Observable<any> {
@@ -108,6 +110,15 @@ export class ApiRestService {
                                  .set('codigoparcelaacordo', codCodigoAcordo)
                                  .set('cpf', this.cpfCnpj);    
   return this.http.post<Boleto>(this.urlBoletoAcordo, params, this.httpOptions);
+ }
+
+ enviaSms(codigobarra: string, vencimento: string, valor: string): Observable<any> {
+  const params = new HttpParams().set('nome', this.devedor.Devedores.Devedor.Nome.toLocaleUpperCase())
+                                 .set('codigobarra', codigobarra)
+                                 .set('vencimento', vencimento)
+                                 .set('valor', valor)    
+                                 .set('numeroenvio', this.telefone);
+  return this.http.post(this.urlEnviaSms, params, this.httpOptions);
  }
  
 

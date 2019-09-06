@@ -24,6 +24,7 @@ import { PrazoFinalizacaoComponent } from './prazo-finalizacao/prazo-finalizacao
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BoletoComponent } from './boleto/boleto.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { InputTelComponent } from './input-tel/input-tel.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     RecebaNossaLigacaoComponent,
     AcordosAndamentoComponent,
     PrazoFinalizacaoComponent,
-    BoletoComponent        
+    BoletoComponent,
+    InputTelComponent        
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<accordion [isAnimated]=\"true\" [closeOthers]=\"true\">\r\n   \r\n    <accordion-group *ngFor=\"let acordo of acordos\">\r\n        <button class=\"btn btn-link btn-block clearfix btn-accordion\" accordion-heading>\r\n         <div class=\"row\">\r\n          <div class=\"col-12 col-sm-2 img-produto\">\r\n             <img [src]=\"getIcon(acordo)\" class=\"produto-img\">  \r\n             <p>{{ acordo.NumeroTitulo.split(' ')[1] }}</p>\r\n          </div>  \r\n            <div class=\"col-sm-3 col-4 btn-linha no-padd-left no-padd-right\">  \r\n                Data: {{ acordo.DataAcordo }}\r\n            </div>              \r\n          <div class=\"col-5 btn-linha\">\r\n              Status: {{ acordo.StatusAcordo }}\r\n          </div>\r\n          <div class=\"col-sm-2 col-3 btn-linha\">\r\n              Filial: {{ acordo.FilialAcordo }}\r\n          </div>\r\n        </div>\r\n        </button>     \r\n        <div class=\"acc-body\">\r\n         <p class=\"font-weight-bold\">Parcelas</p>\r\n          <div *ngIf=\"acordo.ParcelasAcordo.ParcelaAcordo.length\">\r\n            <div *ngFor=\"let par of acordo.ParcelasAcordo.ParcelaAcordo; let ind = index\" class=\"row bottom-parcela\">\r\n                    <div class=\"col-3 no-padd-left no-padd-right\">\r\n                        Data: {{ par.DataVencimento }}\r\n                    </div>\r\n                    <div class=\"col-3\">\r\n                        Status: {{ par.StatusParcelaAcordo }}\r\n                    </div>\r\n                    <div class=\"col-2 valor-mobile\">\r\n                        {{ par.ValorParcela }}\r\n                    </div>\r\n                    <div class=\"col-2 no-padd-left\">\r\n                        <a type=\"button\" class=\"btn btn-primary\" (click)=\"segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, ind)\">\r\n                            Segunda via do boleto        \r\n                        </a>\r\n                        <div class=\"erro-boleto\" *ngIf=\"erroBoleto\">Houve um erro. Tente novamente, por favor.</div>\r\n                    </div>\r\n                    <div class=\"col-1\">\r\n                        <div class=\"loader-wrap\">\r\n                            <div class=\"loader\" *ngIf=\"loadingBoleto[ind]\"></div>\r\n                        </div>    \r\n                    </div>\r\n            </div>\r\n         </div>\r\n         <div *ngIf=\"acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo\" class=\"row\">\r\n                    <div class=\"col-2\">\r\n                            Data: {{ acordo.ParcelasAcordo.ParcelaAcordo.DataVencimento }}\r\n                        </div>\r\n                        <div class=\"col-3\">\r\n                            Status: {{ acordo.ParcelasAcordo.ParcelaAcordo.StatusParcelaAcordo }}\r\n                        </div>\r\n                        <div class=\"col-2\">\r\n                            Valor: {{ acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela }}\r\n                        </div>\r\n                        <div class=\"col-3\">\r\n                            <a type=\"button\" class=\"btn btn-primary\" (click)=\"segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, 0)\">\r\n                                Segunda via do boleto        \r\n                            </a>                          \r\n                            <div class=\"erro-boleto\" *ngIf=\"erroBoleto\">Houve um erro. Tente novamente, por favor.</div>  \r\n                        </div>\r\n                        <div class=\"loader-wrap\">\r\n                            <div class=\"loader col-1\" *ngIf=\"loadingBoleto[0]\"></div>\r\n                        </div>    \r\n            </div>\r\n        </div>    \r\n    </accordion-group>\r\n</accordion>"
+module.exports = "<accordion [isAnimated]=\"true\" [closeOthers]=\"true\">\r\n   \r\n    <accordion-group *ngFor=\"let acordo of acordos\">\r\n        <button class=\"btn btn-link btn-block clearfix btn-accordion\" accordion-heading>\r\n         <div class=\"row\">\r\n          <div class=\"col-12 col-sm-2 img-produto\">\r\n             <img [src]=\"getIcon(acordo)\" class=\"produto-img\">  \r\n             <p class=\"titulo-mobile\">{{ acordo.NumeroTitulo.split(' ')[1] }}</p>\r\n          </div>  \r\n            <div class=\"col-sm-3 col-4 btn-linha no-padd-left no-padd-right\">  \r\n                Data: {{ acordo.DataAcordo }}\r\n            </div>              \r\n          <div class=\"col-5 btn-linha\">\r\n              Status: {{ acordo.StatusAcordo }}\r\n          </div>\r\n          <div class=\"col-sm-2 col-3 btn-linha\">\r\n              Filial: {{ acordo.FilialAcordo }}\r\n          </div>\r\n        </div>\r\n        </button>     \r\n        <div class=\"acc-body\">\r\n         <p class=\"font-weight-bold\">Parcelas</p>\r\n          <div *ngIf=\"acordo.ParcelasAcordo.ParcelaAcordo.length\">\r\n            <div *ngFor=\"let par of acordo.ParcelasAcordo.ParcelaAcordo; let ind = index\" class=\"row bottom-parcela\">\r\n                    <div class=\"col-3 no-padd-left no-padd-right\">\r\n                        Data: {{ par.DataVencimento }}\r\n                    </div>\r\n                    <div class=\"col-3\">\r\n                        Status: {{ par.StatusParcelaAcordo }}\r\n                    </div>\r\n                    <div class=\"col-2 valor-mobile\">\r\n                        {{ par.ValorParcela }}\r\n                    </div>\r\n                    <div class=\"col-2 no-padd-left\">\r\n                        <a type=\"button\" class=\"btn btn-primary\" (click)=\"segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, ind)\">\r\n                            Segunda via do boleto        \r\n                        </a>\r\n                        <div class=\"erro-boleto\" *ngIf=\"erroBoleto\">Houve um erro. Tente novamente, por favor.</div>\r\n                    </div>\r\n                    <div class=\"col-1\">\r\n                        <div class=\"loader-wrap\">\r\n                            <div class=\"loader\" *ngIf=\"loadingBoleto[ind]\"></div>\r\n                        </div>    \r\n                    </div>\r\n            </div>\r\n         </div>\r\n         <div *ngIf=\"acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo\" class=\"row\">\r\n                    <div class=\"col-2\">\r\n                            Data: {{ acordo.ParcelasAcordo.ParcelaAcordo.DataVencimento }}\r\n                        </div>\r\n                        <div class=\"col-3\">\r\n                            Status: {{ acordo.ParcelasAcordo.ParcelaAcordo.StatusParcelaAcordo }}\r\n                        </div>\r\n                        <div class=\"col-2\">\r\n                            Valor: {{ acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela }}\r\n                        </div>\r\n                        <div class=\"col-3\">\r\n                            <a type=\"button\" class=\"btn btn-primary\" (click)=\"segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, 0)\">\r\n                                Segunda via do boleto        \r\n                            </a>                          \r\n                            <div class=\"erro-boleto\" *ngIf=\"erroBoleto\">Houve um erro. Tente novamente, por favor.</div>  \r\n                        </div>\r\n                        <div class=\"loader-wrap\">\r\n                            <div class=\"loader col-1\" *ngIf=\"loadingBoleto[0]\"></div>\r\n                        </div>    \r\n            </div>\r\n        </div>    \r\n    </accordion-group>\r\n</accordion>"
 
 /***/ }),
 
@@ -74,7 +74,7 @@ module.exports = "<ng-template #template>\r\n    <div class=\"modal-header\">\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"tela-grid\">\r\n\r\n <div class=\"cpf-box\">\r\n    <img src=\"assets/img/logo.png\" alt=\"Claro\" class=\"logo\">\r\n    <p>Quer negociar com a Claro? <br> Inicie aqui uma consulta sem custo!  </p>\r\n        <div class=\"form-group\"> \r\n            <input type=\"text\" [textMask]=\"mask()\" class=\"form-control col-sm-8\" aria-describedby=\"emailHelp\" placeholder=\"Digite seu CPF ou CNPJ\" [(ngModel)]=\"cpf_cnpj\" (input)=\"cleanAlerts()\" (keydown.backspace)=\"backspacePress($event)\" (keydown.enter)=\"valida()\">\r\n            <button type=\"submit\" class=\"col-sm-3\" (click)=\"valida()\">Verificar</button>            \r\n        <div class=\"input_error\">\r\n            <p *ngIf=\"cpf_inv\">CPF inválido.</p>\r\n            <p *ngIf=\"cnpj_inv\">CNPJ inválido.</p>\r\n            <p *ngIf=\"input_inv\">Por favor, informe um CPF ou CNPJ.</p>\r\n            <p *ngIf=\"verificando\">Aguarde, estamos verificando. . .</p>\r\n            <p *ngIf=\"cpf_sem_debitos\">O CPF informado não tem débitos.</p>\r\n            <p *ngIf=\"cnpj_sem_debitos\">O CNPJ informado não tem débitos.</p>\r\n        </div>        \r\n    </div> \r\n </div>\r\n\r\n    <a class=\"fixed-bottom auto_inicio\" target=\"_blank\" href=\"http://www.fulltimesolucoes.com.br/\">A Fulltime é uma empresa autorizada pela Claro para a cobrança de débito.</a>\r\n\r\n</div>\r\n"
+module.exports = "<div class=\"tela-grid\">\r\n\r\n <div class=\"cpf-box\">\r\n    <img src=\"assets/img/logo.png\" alt=\"Claro\" class=\"logo\">\r\n    <p>Quer negociar com a Claro? <br> Inicie aqui uma consulta sem custo!  </p>\r\n        <div class=\"form-group\"> \r\n            <input type=\"text\" [textMask]=\"mask()\" class=\"form-control col-sm-8\" aria-describedby=\"emailHelp\" placeholder=\"Digite seu CPF ou CNPJ\" [(ngModel)]=\"cpf_cnpj\" (input)=\"cleanAlerts()\" (keydown.backspace)=\"backspacePress($event)\" (keydown.enter)=\"valida()\">\r\n            <button type=\"submit\" class=\"col-sm-3\" (click)=\"valida()\">Verificar</button>            \r\n        <div class=\"input_error\">\r\n            <p *ngIf=\"cpf_inv\">CPF inválido.</p>\r\n            <p *ngIf=\"cnpj_inv\">CNPJ inválido.</p>\r\n            <p *ngIf=\"input_inv\">Por favor, informe um CPF ou CNPJ.</p>\r\n            <p *ngIf=\"verificando\">Aguarde, estamos verificando. . .</p>\r\n            <p *ngIf=\"cpf_sem_debitos\">O CPF informado não tem débitos ou acordos.</p>\r\n            <p *ngIf=\"cnpj_sem_debitos\">O CNPJ informado não tem débitos ou acordos.</p>\r\n        </div>        \r\n    </div> \r\n </div>\r\n\r\n    <a class=\"fixed-bottom auto_inicio\" target=\"_blank\" href=\"http://www.fulltimesolucoes.com.br/\">A Fulltime é uma empresa autorizada pela Claro para a cobrança de débito.</a>\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -85,7 +85,7 @@ module.exports = "<div class=\"tela-grid\">\r\n\r\n <div class=\"cpf-box\">\r\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header *ngIf=\"showHeader\">\r\n  <img src=\"assets/img/logo.png\" alt=\"Claro\" class=\"logo\">\r\n  <h3 class=\"text-center\">Selecione um contrato para avaliar as condições de negociação:</h3>\r\n</header>\r\n\r\n\r\n<accordion [isAnimated]=\"true\" [closeOthers]=\"true\">\r\n  \r\n  <accordion-group *ngIf=\"apiRestService.dividasClaroMovel.Divida.DadosDivida.length\">\r\n    <button class=\"btn btn-link btn-block clearfix btn-accordion\" accordion-heading (click)=\"getAllOpcoesClaroMovel()\">\r\n      <img src=\"assets/icons/phone.jpg\" class=\"produto-img\" alt=\"...\">\r\n      <div class=\"pull-left float-left produto-heading\"><span>Claro Móvel</span> \r\n        <span class=\"movelLabel\" *ngIf=\"movelLabel\">Débitos para serem negociados</span>\r\n        <span class=\"movelLabel\" *ngIf=\"opcoesParcelamentoLabel\">Opções de parcelamento</span>\r\n      </div>        \r\n    </button>  \r\n          \r\n    <div class=\"row opcoes-parcelamento\" *ngIf=\"opcoesParcelamento\">\r\n        <div class=\"col-md-6\" *ngFor=\"let opc of opcoesPg[this.dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index\" [hidden]=\"!ind\">\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarParcelado(ind, dadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)\"> \r\n              R$ {{ getOpcao(ind) }}\r\n          </button>\r\n        </div>\r\n        <div class=\"col-md-6\">\r\n          <button type=\"button\" class=\"btn btn-primary col-6\" (click)=\"hideOpcoesParcelamento()\">\r\n             Voltar\r\n          </button>\r\n        </div>  \r\n      </div>   \r\n  \r\n    <app-prazo-finalizacao *ngIf=\"prazoFinalizacao\" (clickVoltar)=\"showOpcoesParcelamento()\" (clickVoltarAVista)=\"hideOpcoesParcelamento()\"></app-prazo-finalizacao>\r\n    <div class=\"loader-wrap-wrap\" *ngIf=\"loaderClaroMovel\">  \r\n      <div class=\"loader-wrap\">\r\n        <div class=\"loader\"></div>\r\n      </div>  \r\n    </div>\r\n      \r\n    <div class=\"row\" [hidden]=\"opcoesParcelamento || prazoFinalizacao || loaderClaroMovel\"> \r\n      <div class=\"metodo-pagamento col-xl-4 col-lg-6\" *ngFor=\"let div of dadosDivida; let ind = index\">\r\n        <div class=\"metodo-de-pagamento\">\r\n          Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }} <br>\r\n          Data Venc.: {{ dadosDivida[ind].Parcelas.ParcelaDivida.Vencimento }}\r\n        </div>\r\n        <div class=\"row\">  \r\n          <div class=\"col-6 pr-0\"> <!--  col-sm-3 -->\r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarAVista(dadosDivida[ind].CodigoTitulo, getValorNegociar(dadosDivida[ind].CodigoTitulo), opcoesPg[dadosDivida[ind].CodigoTitulo].OpcaoPagamento.Plano)\"> \r\n              À vista:<br> R$ {{ getValorNegociar(dadosDivida[ind].CodigoTitulo) }} \r\n            </button>\r\n          </div>\r\n          <div class=\"col-6\">\r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"!parcelado[dadosDivida[ind].CodigoTitulo]\"> \r\n                Aguarde...\r\n            </button>            \r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[dadosDivida[ind].CodigoTitulo] === 2\"> \r\n              Parcelado\r\n            </button>\r\n            <button type=\"button\" class=\"btn btn-primary font-15px\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[dadosDivida[ind].CodigoTitulo] === 1\" disabled> \r\n              Sem opção de parcelamento\r\n            </button> \r\n          </div>\r\n        </div>    \r\n      </div>\r\n    </div>\r\n      \r\n  </accordion-group>\r\n  <accordion-group *ngIf=\"apiRestService.dividasClaroInternet.Divida.DadosDivida.length\">\r\n    <button class=\"btn btn-link btn-accordion\" accordion-heading>\r\n      <img src=\"assets/icons/internet.jpg\" class=\"produto-img\" alt=\"...\">\r\n      <div class=\"pull-left float-left produto-heading\">Claro Internet</div>\r\n    </button>\r\n  </accordion-group>\r\n  <accordion-group *ngIf=\"apiRestService.dividasClaroTv.Divida.DadosDivida.length\">\r\n      <button class=\"btn btn-link btn-block clearfix btn-accordion\" accordion-heading>\r\n        <img src=\"assets/icons/tv.jpg\" class=\"produto-img\" alt=\"...\">\r\n        <div class=\"pull-left float-left produto-heading\">Claro TV</div>\r\n      </button>\r\n    </accordion-group>\r\n</accordion>\r\n"
+module.exports = "<header *ngIf=\"showHeader\">\r\n  <img src=\"assets/img/logo.png\" alt=\"Claro\" class=\"logo\">\r\n  <h3 class=\"text-center\">Selecione um contrato para avaliar as condições de negociação:</h3>\r\n</header>\r\n\r\n\r\n<accordion [isAnimated]=\"true\" [closeOthers]=\"true\">\r\n  \r\n  <accordion-group *ngIf=\"apiRestService.dividasClaroMovel.Divida.DadosDivida.length\">\r\n    <button class=\"btn btn-link btn-block clearfix btn-accordion\" accordion-heading (click)=\"getAllOpcoesClaroMovel()\">\r\n      <img src=\"assets/icons/phone.jpg\" class=\"produto-img\" alt=\"...\">\r\n      <div class=\"pull-left float-left produto-heading\"><span>Claro Móvel</span> \r\n        <span class=\"movelLabel\" *ngIf=\"movelLabel\">Débitos para serem negociados</span>\r\n        <span class=\"movelLabel\" *ngIf=\"opcoesParcelamentoLabel\">Opções de parcelamento</span>\r\n      </div>        \r\n    </button>  \r\n          \r\n    <div class=\"row opcoes-parcelamento\" *ngIf=\"opcoesParcelamento && opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo]\">\r\n        <div class=\"col-md-6\" *ngFor=\"let opc of opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index\" [hidden]=\"!ind\">\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarParcelado(ind, apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)\"> \r\n              R$ {{ getOpcao(ind) }}\r\n          </button>\r\n        </div>\r\n        <div class=\"col-md-6\">\r\n          <button type=\"button\" class=\"btn btn-primary col-6\" (click)=\"hideOpcoesParcelamento()\">\r\n             Voltar\r\n          </button>\r\n        </div>  \r\n      </div>   \r\n  \r\n    <app-prazo-finalizacao *ngIf=\"prazoFinalizacao\" (clickVoltar)=\"showOpcoesParcelamento()\" (clickVoltarAVista)=\"hideOpcoesParcelamento()\"></app-prazo-finalizacao>\r\n    <div class=\"loader-wrap-wrap\" *ngIf=\"loader\">  \r\n      <div class=\"loader-wrap\">\r\n        <div class=\"loader\"></div>\r\n      </div>  \r\n    </div>\r\n      \r\n    <div class=\"row\" [hidden]=\"opcoesParcelamento || prazoFinalizacao || loader\"> \r\n      <div class=\"metodo-pagamento col-xl-4 col-lg-6\" *ngFor=\"let div of apiRestService.dividasClaroMovel.Divida.DadosDivida; let ind = index\">\r\n        <div class=\"metodo-de-pagamento\">\r\n          <span class=\"font-weight-bold\">Valor total: R$ {{ div.Parcelas.ParcelaDivida.Valor }} </span><br>\r\n          Data Venc.: {{ div.Parcelas.ParcelaDivida.Vencimento }}\r\n        </div>\r\n        <div class=\"row\">  \r\n          <div class=\"col-6 pr-0\"> <!--  col-sm-3 -->\r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)\"> \r\n              À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} \r\n            </button>\r\n          </div>\r\n          <div class=\"col-6\">\r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"!parcelado[div.CodigoTitulo]\"> \r\n                Aguarde...\r\n            </button>            \r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[div.CodigoTitulo] === 2\"> \r\n              Parcelado\r\n            </button>\r\n            <button type=\"button\" class=\"btn btn-primary font-15px\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[div.CodigoTitulo] === 1\" disabled> \r\n              Sem opção de parcelamento\r\n            </button> \r\n          </div>\r\n        </div>    \r\n      </div>\r\n    </div>\r\n      \r\n  </accordion-group>\r\n  <accordion-group *ngIf=\"apiRestService.dividasClaroInternet.Divida.DadosDivida.length\">\r\n    <button class=\"btn btn-link btn-accordion\" accordion-heading  (click)=\"getAllOpcoesClaroInternet()\">\r\n      <img src=\"assets/icons/internet.jpg\" class=\"produto-img\" alt=\"...\">\r\n      <div class=\"pull-left float-left produto-heading\">Claro Internet</div>\r\n    </button>\r\n    <div class=\"row opcoes-parcelamento\" *ngIf=\"opcoesParcelamento\">\r\n      <div class=\"col-md-6\" *ngFor=\"let opc of opcoesPg[this.dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index\" [hidden]=\"!ind\">\r\n        <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarParcelado(ind, dadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)\"> \r\n            R$ {{ getOpcao(ind) }}\r\n        </button>\r\n      </div>\r\n      <div class=\"col-md-6\">\r\n        <button type=\"button\" class=\"btn btn-primary col-6\" (click)=\"hideOpcoesParcelamento()\">\r\n           Voltar\r\n        </button>\r\n      </div>  \r\n    </div>   \r\n\r\n  <app-prazo-finalizacao *ngIf=\"prazoFinalizacao\" (clickVoltar)=\"showOpcoesParcelamento()\" (clickVoltarAVista)=\"hideOpcoesParcelamento()\"></app-prazo-finalizacao>\r\n  <div class=\"loader-wrap-wrap\" *ngIf=\"loader\">  \r\n    <div class=\"loader-wrap\">\r\n      <div class=\"loader\"></div>\r\n    </div>  \r\n  </div>\r\n    \r\n  <div class=\"row\" [hidden]=\"opcoesParcelamento || prazoFinalizacao || loader\"> \r\n    <div class=\"metodo-pagamento col-xl-4 col-lg-6\" *ngFor=\"let div of apiRestService.dividasClaroInternet.Divida.DadosDivida; let ind = index\">\r\n      <div class=\"metodo-de-pagamento\">\r\n       <span class=\"font-weight-bold\"> Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }} </span><br>\r\n        Data Venc.: {{ dadosDivida[ind].Parcelas.ParcelaDivida.Vencimento }}\r\n      </div>\r\n      <div class=\"row\">  \r\n        <div class=\"col-6 pr-0\"> <!--  col-sm-3 -->\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarAVista(dadosDivida[ind].CodigoTitulo, getValorNegociar(dadosDivida[ind].CodigoTitulo), opcoesPg[dadosDivida[ind].CodigoTitulo].OpcaoPagamento.Plano)\"> \r\n            À vista:<br> R$ {{ getValorNegociar(dadosDivida[ind].CodigoTitulo) }} \r\n          </button>\r\n        </div>\r\n        <div class=\"col-6\">\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"!parcelado[dadosDivida[ind].CodigoTitulo]\"> \r\n              Aguarde...\r\n          </button>            \r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[dadosDivida[ind].CodigoTitulo] === 2\"> \r\n            Parcelado\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary font-15px\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[dadosDivida[ind].CodigoTitulo] === 1\" disabled> \r\n            Sem opção de parcelamento\r\n          </button> \r\n        </div>\r\n      </div>    \r\n    </div>\r\n  </div>\r\n\r\n\r\n  </accordion-group>\r\n  <accordion-group *ngIf=\"apiRestService.dividasClaroTv.Divida.DadosDivida.length\">\r\n      <button class=\"btn btn-link btn-block clearfix btn-accordion\" accordion-heading (click)=\"getAllOpcoesClaroTv()\">\r\n        <img src=\"assets/icons/tv.jpg\" class=\"produto-img\" alt=\"...\">\r\n        <div class=\"pull-left float-left produto-heading\">Claro TV</div>\r\n      </button>\r\n\r\n      <div class=\"row opcoes-parcelamento\" *ngIf=\"opcoesParcelamento && opcoesPg[apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo]\">\r\n        <div class=\"col-md-6\" *ngFor=\"let opc of opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index\" [hidden]=\"!ind\">\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarParcelado(ind, apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)\"> \r\n              R$ {{ getOpcao(ind) }}\r\n          </button>\r\n        </div>\r\n        <div class=\"col-md-6\">\r\n          <button type=\"button\" class=\"btn btn-primary col-6\" (click)=\"hideOpcoesParcelamento()\">\r\n             Voltar\r\n          </button>\r\n        </div>  \r\n      </div>   \r\n  \r\n    <app-prazo-finalizacao *ngIf=\"prazoFinalizacao\" (clickVoltar)=\"showOpcoesParcelamento()\" (clickVoltarAVista)=\"hideOpcoesParcelamento()\"></app-prazo-finalizacao>\r\n    <div class=\"loader-wrap-wrap\" *ngIf=\"loader\">  \r\n      <div class=\"loader-wrap\">\r\n        <div class=\"loader\"></div>\r\n      </div>  \r\n    </div>\r\n      \r\n    <div class=\"row\" [hidden]=\"opcoesParcelamento || prazoFinalizacao || loader\"> \r\n      <div class=\"metodo-pagamento col-xl-4 col-lg-6\" *ngFor=\"let div of apiRestService.dividasClaroTv.Divida.DadosDivida; let ind = index\">\r\n        <div class=\"metodo-de-pagamento\">\r\n          <span class=\"font-weight-bold\">Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }}</span> \r\n           <div *ngIf=\"div.Parcelas.ParcelaDivida.length\">\r\n            <div *ngFor=\"let par of div.Parcelas.ParcelaDivida\">\r\n              Data Venc.: {{ par.Vencimento }}              \r\n            </div>\r\n           </div>\r\n           <div *ngIf=\"div.Parcelas.ParcelaDivida.Vencimento\">\r\n              Data Venc.: {{ div.Parcelas.ParcelaDivida.Vencimento }}\r\n           </div>\r\n        </div>\r\n        <div class=\"row\">  \r\n          <div class=\"col-6 pr-0\"> <!--  col-sm-3 -->\r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)\"> \r\n              À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} \r\n            </button>\r\n          </div>\r\n          <div class=\"col-6\">\r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"!parcelado[div.CodigoTitulo]\"> \r\n                Aguarde...\r\n            </button>            \r\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[div.CodigoTitulo] === 2\"> \r\n              Parcelado\r\n            </button>\r\n            <button type=\"button\" class=\"btn btn-primary font-15px\" (click)=\"showOpcoesParcelamento(ind)\" *ngIf=\"parcelado[div.CodigoTitulo] === 1\" disabled> \r\n              Sem opção de parcelamento\r\n            </button> \r\n          </div>\r\n        </div>    \r\n      </div>\r\n    </div>\r\n\r\n    </accordion-group>\r\n</accordion>\r\n"
 
 /***/ }),
 
@@ -129,7 +129,7 @@ module.exports = "<div class=\"tel-box\">\r\n    <p>Informe seu número de telef
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "button {\r\n    text-decoration: none !important;\r\n}\r\n\r\n.produto-heading {\r\n    line-height: 44px;\r\n    font-size: 22px;\r\n    margin-left: 10px;    \r\n    }\r\n\r\n.logo {\r\n        width: 120px;\r\n        display: block;\r\n        margin: 10px auto;\r\n    }\r\n\r\n.produto-img {\r\n        height: 45px;\r\n        float: left;\r\n    }\r\n\r\n.btn-accordion {\r\n        line-height: 50px;\r\n        font-size: 20px;\r\n    }\r\n\r\n.acc-body {\r\n        position: relative;\r\n        top: -15px;\r\n    }\r\n\r\n.bottom-parcela {\r\n      margin-bottom: 0px;            \r\n    }\r\n\r\n@media (max-width: 768px) {\r\n        .no-padd-left {\r\n            padding-left: 0;\r\n        }\r\n\r\n        .no-padd-right {\r\n            padding-right: 0;\r\n        }\r\n\r\n        .bottom-parcela {\r\n            margin-bottom: 7px;            \r\n          }\r\n        \r\n        .btn-accordion {\r\n            font-size: 16px;\r\n        }    \r\n\r\n        .produto-img {\r\n            height: 25px;\r\n        }    \r\n\r\n        .img-produto {\r\n            line-height: 25px;\r\n        }\r\n\r\n        .btn-linha {\r\n            line-height: 22px;\r\n        }\r\n\r\n        .acc-body {\r\n            font-size: 15px;\r\n        }\r\n\r\n        .valor-mobile {\r\n            font-size: 14px;\r\n            padding-left: 0;\r\n        }\r\n\r\n        .loader-wrap {\r\n            position: relative;\r\n            left: 8px;\r\n            width: 30px;\r\n            height: 30px;\r\n        }\r\n    }    \r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYWNvcmRvcy1hbmRhbWVudG8vYWNvcmRvcy1hbmRhbWVudG8uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGdDQUFnQztBQUNwQzs7QUFFQTtJQUNJLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2YsaUJBQWlCO0lBQ2pCOztBQUVBO1FBQ0ksWUFBWTtRQUNaLGNBQWM7UUFDZCxpQkFBaUI7SUFDckI7O0FBR0E7UUFDSSxZQUFZO1FBQ1osV0FBVztJQUNmOztBQUVBO1FBQ0ksaUJBQWlCO1FBQ2pCLGVBQWU7SUFDbkI7O0FBRUE7UUFDSSxrQkFBa0I7UUFDbEIsVUFBVTtJQUNkOztBQUVBO01BQ0Usa0JBQWtCO0lBQ3BCOztBQUVBO1FBQ0k7WUFDSSxlQUFlO1FBQ25COztRQUVBO1lBQ0ksZ0JBQWdCO1FBQ3BCOztRQUVBO1lBQ0ksa0JBQWtCO1VBQ3BCOztRQUVGO1lBQ0ksZUFBZTtRQUNuQjs7UUFFQTtZQUNJLFlBQVk7UUFDaEI7O1FBRUE7WUFDSSxpQkFBaUI7UUFDckI7O1FBRUE7WUFDSSxpQkFBaUI7UUFDckI7O1FBRUE7WUFDSSxlQUFlO1FBQ25COztRQUVBO1lBQ0ksZUFBZTtZQUNmLGVBQWU7UUFDbkI7O1FBRUE7WUFDSSxrQkFBa0I7WUFDbEIsU0FBUztZQUNULFdBQVc7WUFDWCxZQUFZO1FBQ2hCO0lBQ0oiLCJmaWxlIjoic3JjL2FwcC9hY29yZG9zLWFuZGFtZW50by9hY29yZG9zLWFuZGFtZW50by5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiYnV0dG9uIHtcclxuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZSAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4ucHJvZHV0by1oZWFkaW5nIHtcclxuICAgIGxpbmUtaGVpZ2h0OiA0NHB4O1xyXG4gICAgZm9udC1zaXplOiAyMnB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDEwcHg7ICAgIFxyXG4gICAgfVxyXG4gICAgXHJcbiAgICAubG9nbyB7XHJcbiAgICAgICAgd2lkdGg6IDEyMHB4O1xyXG4gICAgICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgICAgIG1hcmdpbjogMTBweCBhdXRvO1xyXG4gICAgfVxyXG4gICAgXHJcbiAgICBcclxuICAgIC5wcm9kdXRvLWltZyB7XHJcbiAgICAgICAgaGVpZ2h0OiA0NXB4O1xyXG4gICAgICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgfVxyXG5cclxuICAgIC5idG4tYWNjb3JkaW9uIHtcclxuICAgICAgICBsaW5lLWhlaWdodDogNTBweDtcclxuICAgICAgICBmb250LXNpemU6IDIwcHg7XHJcbiAgICB9XHJcblxyXG4gICAgLmFjYy1ib2R5IHtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgdG9wOiAtMTVweDtcclxuICAgIH1cclxuXHJcbiAgICAuYm90dG9tLXBhcmNlbGEge1xyXG4gICAgICBtYXJnaW4tYm90dG9tOiAwcHg7ICAgICAgICAgICAgXHJcbiAgICB9XHJcbiAgICBcclxuICAgIEBtZWRpYSAobWF4LXdpZHRoOiA3NjhweCkge1xyXG4gICAgICAgIC5uby1wYWRkLWxlZnQge1xyXG4gICAgICAgICAgICBwYWRkaW5nLWxlZnQ6IDA7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAubm8tcGFkZC1yaWdodCB7XHJcbiAgICAgICAgICAgIHBhZGRpbmctcmlnaHQ6IDA7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAuYm90dG9tLXBhcmNlbGEge1xyXG4gICAgICAgICAgICBtYXJnaW4tYm90dG9tOiA3cHg7ICAgICAgICAgICAgXHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgXHJcbiAgICAgICAgLmJ0bi1hY2NvcmRpb24ge1xyXG4gICAgICAgICAgICBmb250LXNpemU6IDE2cHg7XHJcbiAgICAgICAgfSAgICBcclxuXHJcbiAgICAgICAgLnByb2R1dG8taW1nIHtcclxuICAgICAgICAgICAgaGVpZ2h0OiAyNXB4O1xyXG4gICAgICAgIH0gICAgXHJcblxyXG4gICAgICAgIC5pbWctcHJvZHV0byB7XHJcbiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAyNXB4O1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLmJ0bi1saW5oYSB7XHJcbiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAyMnB4O1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLmFjYy1ib2R5IHtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAxNXB4O1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLnZhbG9yLW1vYmlsZSB7XHJcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMTRweDtcclxuICAgICAgICAgICAgcGFkZGluZy1sZWZ0OiAwO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLmxvYWRlci13cmFwIHtcclxuICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgICBsZWZ0OiA4cHg7XHJcbiAgICAgICAgICAgIHdpZHRoOiAzMHB4O1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDMwcHg7XHJcbiAgICAgICAgfVxyXG4gICAgfSAgICAiXX0= */"
+module.exports = "button {\r\n    text-decoration: none !important;\r\n}\r\n\r\n.produto-heading {\r\n    line-height: 44px;\r\n    font-size: 22px;\r\n    margin-left: 10px;    \r\n    }\r\n\r\n.logo {\r\n        width: 120px;\r\n        display: block;\r\n        margin: 10px auto;\r\n    }\r\n\r\n.produto-img {\r\n        height: 45px;\r\n        float: left;\r\n    }\r\n\r\n.btn-accordion {\r\n        line-height: 50px;\r\n        font-size: 20px;\r\n    }\r\n\r\n.acc-body {\r\n        position: relative;\r\n        top: -15px;\r\n    }\r\n\r\n.bottom-parcela {\r\n      margin-bottom: 0px;            \r\n    }\r\n\r\n@media (max-width: 768px) {\r\n        .no-padd-left {\r\n            padding-left: 0;\r\n        }\r\n\r\n        .no-padd-right {\r\n            padding-right: 0;\r\n        }\r\n\r\n        .bottom-parcela {\r\n            margin-bottom: 7px;            \r\n          }\r\n        \r\n        .btn-accordion {\r\n            font-size: 16px;\r\n        }    \r\n\r\n        .produto-img {\r\n            height: 25px;\r\n        }    \r\n\r\n        .img-produto {\r\n            line-height: 25px;\r\n        }\r\n\r\n        .btn-linha {\r\n            line-height: 22px;\r\n        }\r\n\r\n        .acc-body {\r\n            font-size: 15px;\r\n        }\r\n\r\n        .valor-mobile {\r\n            font-size: 14px;\r\n            padding-left: 0;\r\n        }\r\n\r\n        .loader-wrap {\r\n            position: relative;\r\n            left: 8px;\r\n            width: 30px;\r\n            height: 30px;\r\n        }\r\n\r\n        .titulo-mobile {\r\n            font-weight: bold;\r\n            font-size: large;\r\n        }\r\n    }    \r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYWNvcmRvcy1hbmRhbWVudG8vYWNvcmRvcy1hbmRhbWVudG8uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGdDQUFnQztBQUNwQzs7QUFFQTtJQUNJLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2YsaUJBQWlCO0lBQ2pCOztBQUVBO1FBQ0ksWUFBWTtRQUNaLGNBQWM7UUFDZCxpQkFBaUI7SUFDckI7O0FBR0E7UUFDSSxZQUFZO1FBQ1osV0FBVztJQUNmOztBQUVBO1FBQ0ksaUJBQWlCO1FBQ2pCLGVBQWU7SUFDbkI7O0FBRUE7UUFDSSxrQkFBa0I7UUFDbEIsVUFBVTtJQUNkOztBQUVBO01BQ0Usa0JBQWtCO0lBQ3BCOztBQUVBO1FBQ0k7WUFDSSxlQUFlO1FBQ25COztRQUVBO1lBQ0ksZ0JBQWdCO1FBQ3BCOztRQUVBO1lBQ0ksa0JBQWtCO1VBQ3BCOztRQUVGO1lBQ0ksZUFBZTtRQUNuQjs7UUFFQTtZQUNJLFlBQVk7UUFDaEI7O1FBRUE7WUFDSSxpQkFBaUI7UUFDckI7O1FBRUE7WUFDSSxpQkFBaUI7UUFDckI7O1FBRUE7WUFDSSxlQUFlO1FBQ25COztRQUVBO1lBQ0ksZUFBZTtZQUNmLGVBQWU7UUFDbkI7O1FBRUE7WUFDSSxrQkFBa0I7WUFDbEIsU0FBUztZQUNULFdBQVc7WUFDWCxZQUFZO1FBQ2hCOztRQUVBO1lBQ0ksaUJBQWlCO1lBQ2pCLGdCQUFnQjtRQUNwQjtJQUNKIiwiZmlsZSI6InNyYy9hcHAvYWNvcmRvcy1hbmRhbWVudG8vYWNvcmRvcy1hbmRhbWVudG8uY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbImJ1dHRvbiB7XHJcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmUgIWltcG9ydGFudDtcclxufVxyXG5cclxuLnByb2R1dG8taGVhZGluZyB7XHJcbiAgICBsaW5lLWhlaWdodDogNDRweDtcclxuICAgIGZvbnQtc2l6ZTogMjJweDtcclxuICAgIG1hcmdpbi1sZWZ0OiAxMHB4OyAgICBcclxuICAgIH1cclxuICAgIFxyXG4gICAgLmxvZ28ge1xyXG4gICAgICAgIHdpZHRoOiAxMjBweDtcclxuICAgICAgICBkaXNwbGF5OiBibG9jaztcclxuICAgICAgICBtYXJnaW46IDEwcHggYXV0bztcclxuICAgIH1cclxuICAgIFxyXG4gICAgXHJcbiAgICAucHJvZHV0by1pbWcge1xyXG4gICAgICAgIGhlaWdodDogNDVweDtcclxuICAgICAgICBmbG9hdDogbGVmdDtcclxuICAgIH1cclxuXHJcbiAgICAuYnRuLWFjY29yZGlvbiB7XHJcbiAgICAgICAgbGluZS1oZWlnaHQ6IDUwcHg7XHJcbiAgICAgICAgZm9udC1zaXplOiAyMHB4O1xyXG4gICAgfVxyXG5cclxuICAgIC5hY2MtYm9keSB7XHJcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgIHRvcDogLTE1cHg7XHJcbiAgICB9XHJcblxyXG4gICAgLmJvdHRvbS1wYXJjZWxhIHtcclxuICAgICAgbWFyZ2luLWJvdHRvbTogMHB4OyAgICAgICAgICAgIFxyXG4gICAgfVxyXG4gICAgXHJcbiAgICBAbWVkaWEgKG1heC13aWR0aDogNzY4cHgpIHtcclxuICAgICAgICAubm8tcGFkZC1sZWZ0IHtcclxuICAgICAgICAgICAgcGFkZGluZy1sZWZ0OiAwO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLm5vLXBhZGQtcmlnaHQge1xyXG4gICAgICAgICAgICBwYWRkaW5nLXJpZ2h0OiAwO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLmJvdHRvbS1wYXJjZWxhIHtcclxuICAgICAgICAgICAgbWFyZ2luLWJvdHRvbTogN3B4OyAgICAgICAgICAgIFxyXG4gICAgICAgICAgfVxyXG4gICAgICAgIFxyXG4gICAgICAgIC5idG4tYWNjb3JkaW9uIHtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAxNnB4O1xyXG4gICAgICAgIH0gICAgXHJcblxyXG4gICAgICAgIC5wcm9kdXRvLWltZyB7XHJcbiAgICAgICAgICAgIGhlaWdodDogMjVweDtcclxuICAgICAgICB9ICAgIFxyXG5cclxuICAgICAgICAuaW1nLXByb2R1dG8ge1xyXG4gICAgICAgICAgICBsaW5lLWhlaWdodDogMjVweDtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIC5idG4tbGluaGEge1xyXG4gICAgICAgICAgICBsaW5lLWhlaWdodDogMjJweDtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIC5hY2MtYm9keSB7XHJcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMTVweDtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIC52YWxvci1tb2JpbGUge1xyXG4gICAgICAgICAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICAgICAgICAgIHBhZGRpbmctbGVmdDogMDtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIC5sb2FkZXItd3JhcCB7XHJcbiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICAgICAgbGVmdDogOHB4O1xyXG4gICAgICAgICAgICB3aWR0aDogMzBweDtcclxuICAgICAgICAgICAgaGVpZ2h0OiAzMHB4O1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLnRpdHVsby1tb2JpbGUge1xyXG4gICAgICAgICAgICBmb250LXdlaWdodDogYm9sZDtcclxuICAgICAgICAgICAgZm9udC1zaXplOiBsYXJnZTtcclxuICAgICAgICB9XHJcbiAgICB9ICAgICJdfQ== */"
 
 /***/ }),
 
@@ -338,7 +338,7 @@ let ApiRestService = class ApiRestService {
         if (this.dividas.Divida.DadosDivida.length) {
             this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter(div => div.Produto === "Claro Móvel");
             this.dividasClaroInternet.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter(div => div.Produto === "Claro Internet");
-            this.dividasClaroTv.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter(div => div.Produto === "Claro TV");
+            this.dividasClaroTv.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter(div => { console.log("div this.dividas.Divida.DadosDivida="); console.log(this.dividas.Divida.DadosDivida); return div.Produto === "Claro TV"; });
         }
         else {
             switch (this.dividas.Divida.DadosDivida.Produto) {
@@ -361,6 +361,46 @@ let ApiRestService = class ApiRestService {
         if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo])
             return;
         this.dividasClaroMovel.Divida.DadosDivida.forEach((divida) => {
+            this.opcoesPg[divida.CodigoTitulo] = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({
+                Carregando: true,
+                OpcoesPagamento: {
+                    OpcaoPagamento: {
+                        ValorNegociar: "Aguarde...",
+                    }
+                }
+            });
+            this.getOpcoesPagamento(divida.CodigoTitulo).subscribe((opc) => {
+                opc.Carregando = false;
+                this.opcoesPg[divida.CodigoTitulo].next(opc);
+            });
+        });
+    }
+    getAllOpcoesClaroTv() {
+        if (this.opcoesPg[this.dividasClaroTv.Divida.DadosDivida[0].CodigoTitulo])
+            return;
+        this.dividasClaroTv.Divida.DadosDivida.forEach((divida) => {
+            this.opcoesPg[divida.CodigoTitulo] = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({
+                Carregando: true,
+                OpcoesPagamento: {
+                    OpcaoPagamento: {
+                        ValorNegociar: "Aguarde...",
+                    }
+                }
+            });
+            console.log("antes this.opcoesPg[divida.CodigoTitulo]=");
+            console.log(this.opcoesPg[divida.CodigoTitulo]);
+            this.getOpcoesPagamento(divida.CodigoTitulo).subscribe((opc) => {
+                opc.Carregando = false;
+                console.log("depois this.opcoesPg[divida.CodigoTitulo]=");
+                console.log(this.opcoesPg[divida.CodigoTitulo]);
+                this.opcoesPg[divida.CodigoTitulo].next(opc);
+            });
+        });
+    }
+    getAllOpcoesClaroInternet() {
+        if (this.opcoesPg[this.dividasClaroInternet.Divida.DadosDivida[0].CodigoTitulo])
+            return;
+        this.dividasClaroInternet.Divida.DadosDivida.forEach((divida) => {
             this.opcoesPg[divida.CodigoTitulo] = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({
                 Carregando: true,
                 OpcoesPagamento: {
@@ -424,7 +464,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const routes = [
-    { path: '', component: _opcoes_routlet_opcoes_routlet_component__WEBPACK_IMPORTED_MODULE_3__["OpcoesRoutletComponent"], pathMatch: 'full' },
+    { path: '', component: _boleto_boleto_component__WEBPACK_IMPORTED_MODULE_5__["BoletoComponent"], pathMatch: 'full' },
     { path: 'negocie-online', component: _negocie_online_negocie_online_component__WEBPACK_IMPORTED_MODULE_4__["NegocieOnlineComponent"] },
     { path: 'opcoes-routlet', component: _opcoes_routlet_opcoes_routlet_component__WEBPACK_IMPORTED_MODULE_3__["OpcoesRoutletComponent"] },
     { path: 'boleto', component: _boleto_boleto_component__WEBPACK_IMPORTED_MODULE_5__["BoletoComponent"] }
@@ -649,10 +689,10 @@ __webpack_require__.r(__webpack_exports__);
 let BoletoComponent = class BoletoComponent {
     constructor(modalService, route) {
         this.modalService = modalService;
-        this.linha = route.snapshot.queryParams.linha;
+        this.linha = "84880000000 0 13710162201 0 90904214517 2 97200239777 8"; //route.snapshot.queryParams.linha;
         this.valor = route.snapshot.queryParams.valor;
-        this.data = route.snapshot.queryParams.data;
-        this.cliente = route.snapshot.queryParams.cliente;
+        this.data = "14/02/2019"; //route.snapshot.queryParams.data;
+        this.cliente = "igor oliveira de albuquerque"; //route.snapshot.queryParams.cliente;
         this.contrato = route.snapshot.queryParams.contrato;
     }
     ngAfterViewInit() {
@@ -901,7 +941,7 @@ let NegocieOnlineComponent = class NegocieOnlineComponent {
     constructor(apiRestService, cd) {
         this.apiRestService = apiRestService;
         this.cd = cd;
-        this.loaderClaroMovel = true;
+        this.loader = true;
         this.showFatura = true;
         this.showHeader = true;
         this.parcelado = {};
@@ -937,20 +977,70 @@ let NegocieOnlineComponent = class NegocieOnlineComponent {
         this.showHeader = false;
         this.movelLabel = true;
         this.apiRestService.getAllOpcoesClaroMovel();
-        this.dadosDivida.forEach((dados) => this.sett(dados.CodigoTitulo));
+        if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.length) {
+            this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach((dados) => this.setOpcoes(dados.CodigoTitulo));
+        }
+        /* if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.CodigoDevedor) {
+           this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+         }*/
     }
-    sett(cod) {
+    getAllOpcoesClaroTv() {
+        this.showHeader = false;
+        this.movelLabel = true;
+        console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida=");
+        console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida);
+        this.apiRestService.getAllOpcoesClaroTv();
+        if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length) {
+            this.apiRestService.dividasClaroTv.Divida.DadosDivida.forEach((dados) => this.setOpcoes(dados.CodigoTitulo));
+        }
+    }
+    getAllOpcoesClaroInternet() {
+        this.showHeader = false;
+        this.movelLabel = true;
+        this.apiRestService.getAllOpcoesClaroInternet();
+        this.dadosDivida.forEach((dados) => this.setOpcoes(dados.CodigoTitulo));
+    }
+    setOpcoes(cod) {
         let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
+        console.log("this.apiRestService.opcoesPg=");
+        console.log(this.apiRestService.opcoesPg);
+        console.log("dadosDividaCod[0].CodigoTitulo=");
+        console.log(dadosDividaCod[0].CodigoTitulo);
+        console.log("this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]=");
+        console.log(this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]);
         this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
             this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
             console.log(res);
             if (!this.loadingParcelados && !res.Carregando) {
                 this.loadingParcelados = true;
-                setTimeout(() => { this.loaderClaroMovel = false; }, 2000);
+                setTimeout(() => {
+                    this.loader = false;
+                }, 2000);
             }
             this.cd.detectChanges();
             event.preventDefault();
         });
+    }
+    getValorTotal(cod) {
+        console.log("getValorTotal>>>>>");
+        console.log(this.opcoesPg[cod]);
+        if (this.opcoesPg[cod] && !this.opcoesPg[cod].Carregando) {
+            console.log(this.opcoesPg[cod]);
+            if (this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido) {
+                console.log("aquiii");
+                console.log(this.opcoesPg[cod]);
+                this.parcelado[cod] = 1;
+                return this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido;
+            }
+            else if (this.opcoesPg[cod].OpcaoPagamento.length) {
+                console.log("aquiii");
+                console.log(this.opcoesPg[cod]);
+                this.parcelado[cod] = 2;
+                return this.opcoesPg[cod].OpcaoPagamento[0].ValorCorrigido;
+            }
+        }
+        else
+            return "";
     }
     getValorNegociar(cod) {
         if (this.opcoesPg[cod]) {
@@ -981,6 +1071,12 @@ let NegocieOnlineComponent = class NegocieOnlineComponent {
         this.movelLabel = false;
         this.opcoesParcelamentoLabel = true;
         this.ind_parcelado = ind;
+        console.log("this.opcoesPg=");
+        console.log(this.opcoesPg);
+        console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo=");
+        console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo);
+        console.log("opcoesPg[apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo]=");
+        console.log(this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo]);
     }
     hideOpcoesParcelamento() {
         this.opcoesParcelamento = false;
@@ -1040,30 +1136,32 @@ let OpcoesRoutletComponent = class OpcoesRoutletComponent {
         this.cardBodyPagamento = true;
     }
     ngOnInit() {
-        //////////////////////////////////////////////////////////////// 
-        this.apiRestService.dividas = new _api_rest_service__WEBPACK_IMPORTED_MODULE_2__["Divida"]();
-        this.apiRestService.dividas.Acordo = new _api_rest_service__WEBPACK_IMPORTED_MODULE_2__["Acordo"]();
-        this.apiRestService.acordos = [{
-                DataAcordo: "14/02/2019",
-                FilialAcordo: "NET",
-                NumeroTitulo: "102405257.Claro Móvel",
-                StatusAcordo: "PENDENTE",
-                ParcelasAcordo: {
-                    ParcelaAcordo: [{
-                            DataVencimento: "15/02/2019",
-                            StatusParcelaAcordo: "NÃO PAGO",
-                            ValorParcela: "R$ 323.23",
-                        }, {
-                            DataVencimento: "15/02/2019",
-                            StatusParcelaAcordo: "NÃO PAGO",
-                            ValorParcela: "R$ 323.23",
-                        }, {
-                            DataVencimento: "15/02/2019",
-                            StatusParcelaAcordo: "NÃO PAGO",
-                            ValorParcela: "R$ 323.23"
-                        }]
-                }
-            }];
+        ////////////////////////////////////////////////////////////////
+        /*
+         this.apiRestService.dividas = new Divida();
+         this.apiRestService.dividas.Acordo = new Acordo();
+         this.apiRestService.acordos = [{
+           DataAcordo: "14/02/2019",
+           FilialAcordo: "NET",
+           NumeroTitulo: "102405257.Claro Móvel",
+           StatusAcordo: "PENDENTE",
+           ParcelasAcordo: {
+           ParcelaAcordo: [{
+               DataVencimento: "15/02/2019",
+               StatusParcelaAcordo: "NÃO PAGO",
+               ValorParcela: "R$ 323.23",
+             }, {
+               DataVencimento: "15/02/2019",
+               StatusParcelaAcordo: "NÃO PAGO",
+               ValorParcela: "R$ 323.23",
+             }, {
+               DataVencimento: "15/02/2019",
+               StatusParcelaAcordo: "NÃO PAGO",
+               ValorParcela: "R$ 323.23"
+             }]
+           }
+         }];
+     */
         this.apiRestService.notificarMotor('1');
     }
     negocieOnline() {

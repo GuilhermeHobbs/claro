@@ -25,6 +25,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public loadingBoleto: boolean;
   public erroBoleto: boolean;
   public codAcordo: string;
+  public sucessoSms: boolean;
 
 
   constructor(private localeService: BsLocaleService, private apiRestService: ApiRestService) {
@@ -92,8 +93,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
        }
        else {
          this.erroBoleto = true;
-       }
-       
+       }       
     });
   });
 }
@@ -102,6 +102,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
     this.loader = true;
     this.fim = false;
       if (this.apiRestService.parcelas.aVista) {
+        console.log(this.apiRestService.codTitulo + ' ' + this.apiRestService.cpfCnpj + ' ' + this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor + ' ' + this.apiRestService.plano + ' ' + this.dataPagamento.toLocaleString().split(',')[0] + ' ' + this.apiRestService.parcelas.aVista);
         this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.aVista).subscribe(res => {
           console.log(res);  
           this.loader = false;
@@ -117,6 +118,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
         });
       }
       else if (this.apiRestService.parcelas.primeira) {
+        console.log(this.apiRestService.codTitulo + ' ' + this.apiRestService.cpfCnpj + ' ' + this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor + ' ' + this.apiRestService.plano + ' ' + this.dataPagamento.toLocaleString().split(',')[0] + ' ' + this.apiRestService.parcelas.primeira);
         this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.primeira).subscribe(res => {
           console.log(res);
           this.loader = false; 
@@ -131,6 +133,32 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
        });
       }
+  }
+
+  enviarSms() {
+    let codigoParcelaAcordo: string;
+    this.loadingBoleto = true;
+    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => {
+      console.log("acc=");
+      console.log(acc);
+      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
+      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => {
+       console.log(bol);
+       this.loadingBoleto = false;
+
+       if (bol.BoletoAcordo) {
+          this.apiRestService.enviaSms( bol.BoletoAcordo.LinhaDigitavel, bol.BoletoAcordo.DataVencimento, bol.BoletoAcordo.Valor).subscribe(res => {
+             this.sucessoSms = true; 
+             console.log(res);
+          });
+       }
+       else {
+         this.erroBoleto = true;
+       }       
+    });
+  });
+
   }
 
 }

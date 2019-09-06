@@ -6,7 +6,7 @@
 
 <accordion [isAnimated]="true" [closeOthers]="true">
   
-  <accordion-group *ngIf="apiRestService.dividasClaroMovel.Divida.DadosDivida.length">
+  <accordion-group *ngIf="apiRestService.dividasClaroMovel.Divida.DadosDivida.length && fecharAbas[0]">
     <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroMovel()">
       <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading"><span>Claro Móvel</span> 
@@ -15,10 +15,10 @@
       </div>        
     </button>  
           
-    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
+    <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento && opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo]">
         <div class="col-md-6" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
-          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParcelado(ind, apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
-              R$ {{ getOpcao(ind) }}
+          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParceladoMovel(ind, apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
+              R$ {{ getOpcaoMovel(ind) }}
           </button>
         </div>
         <div class="col-md-6">
@@ -29,21 +29,17 @@
       </div>   
   
     <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
-    <div class="loader-wrap-wrap" *ngIf="loader">  
-      <div class="loader-wrap">
-        <div class="loader"></div>
-      </div>  
-    </div>
+    
       
     <div class="row" [hidden]="opcoesParcelamento || prazoFinalizacao || loader"> 
       <div class="metodo-pagamento col-xl-4 col-lg-6" *ngFor="let div of apiRestService.dividasClaroMovel.Divida.DadosDivida; let ind = index">
         <div class="metodo-de-pagamento">
-          Valor total: R$ {{ div.Parcelas.ParcelaDivida.Valor }} <br>
+          <span class="font-weight-bold">Valor total: R$ {{ div.Parcelas.ParcelaDivida.Valor }} </span><br>
           Data Venc.: {{ div.Parcelas.ParcelaDivida.Vencimento }}
         </div>
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->
-            <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
+            <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(0); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
               À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} 
             </button>
           </div>
@@ -51,7 +47,7 @@
             <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="!parcelado[div.CodigoTitulo]"> 
                 Aguarde...
             </button>            
-            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
+            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind, 0)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
               Parcelado
             </button>
             <button type="button" class="btn btn-primary font-15px" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 1" disabled> 
@@ -63,15 +59,15 @@
     </div>
       
   </accordion-group>
-  <accordion-group *ngIf="apiRestService.dividasClaroInternet.Divida.DadosDivida.length">
+  <accordion-group *ngIf="apiRestService.dividasClaroInternet.Divida.DadosDivida.length && fecharAbas[1]">
     <button class="btn btn-link btn-accordion" accordion-heading  (click)="getAllOpcoesClaroInternet()">
       <img src="assets/icons/internet.jpg" class="produto-img" alt="...">
       <div class="pull-left float-left produto-heading">Claro Internet</div>
     </button>
     <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
-      <div class="col-md-6" *ngFor="let opc of opcoesPg[this.dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
-        <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParcelado(ind, dadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
-            R$ {{ getOpcao(ind) }}
+      <div class="col-md-6" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
+        <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParceladoInternet(ind, this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
+            R$ {{ getOpcaoInternet(ind) }}
         </button>
       </div>
       <div class="col-md-6">
@@ -91,12 +87,12 @@
   <div class="row" [hidden]="opcoesParcelamento || prazoFinalizacao || loader"> 
     <div class="metodo-pagamento col-xl-4 col-lg-6" *ngFor="let div of apiRestService.dividasClaroInternet.Divida.DadosDivida; let ind = index">
       <div class="metodo-de-pagamento">
-        Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }} <br>
+       <span class="font-weight-bold"> Valor total: R$ {{ dadosDivida[ind].Parcelas.ParcelaDivida.Valor }} </span><br>
         Data Venc.: {{ dadosDivida[ind].Parcelas.ParcelaDivida.Vencimento }}
       </div>
       <div class="row">  
         <div class="col-6 pr-0"> <!--  col-sm-3 -->
-          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarAVista(dadosDivida[ind].CodigoTitulo, getValorNegociar(dadosDivida[ind].CodigoTitulo), opcoesPg[dadosDivida[ind].CodigoTitulo].OpcaoPagamento.Plano)"> 
+          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(1); pagarAVista(dadosDivida[ind].CodigoTitulo, getValorNegociar(dadosDivida[ind].CodigoTitulo), opcoesPg[dadosDivida[ind].CodigoTitulo].OpcaoPagamento.Plano)"> 
             À vista:<br> R$ {{ getValorNegociar(dadosDivida[ind].CodigoTitulo) }} 
           </button>
         </div>
@@ -104,7 +100,7 @@
           <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="!parcelado[dadosDivida[ind].CodigoTitulo]"> 
               Aguarde...
           </button>            
-          <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[dadosDivida[ind].CodigoTitulo] === 2"> 
+          <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind, 1)" *ngIf="parcelado[dadosDivida[ind].CodigoTitulo] === 2"> 
             Parcelado
           </button>
           <button type="button" class="btn btn-primary font-15px" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[dadosDivida[ind].CodigoTitulo] === 1" disabled> 
@@ -117,16 +113,16 @@
 
 
   </accordion-group>
-  <accordion-group *ngIf="apiRestService.dividasClaroTv.Divida.DadosDivida.length">
+  <accordion-group *ngIf="apiRestService.dividasClaroTv.Divida.DadosDivida.length && fecharAbas[2]">
       <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroTv()">
         <img src="assets/icons/tv.jpg" class="produto-img" alt="...">
         <div class="pull-left float-left produto-heading">Claro TV</div>
       </button>
 
-      <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento">
-        <div class="col-md-6" *ngFor="let opc of opcoesPg[this.dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
-          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParcelado(ind, dadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[dadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
-              R$ {{ getOpcao(ind) }}
+      <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento && apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado] && opcoesPg[apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo] && opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento">
+        <div class="col-md-6" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
+          <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParceladoTv(ind, apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
+              R$ {{ getOpcaoTv(ind) }}
           </button>
         </div>
         <div class="col-md-6">
@@ -146,7 +142,7 @@
     <div class="row" [hidden]="opcoesParcelamento || prazoFinalizacao || loader"> 
       <div class="metodo-pagamento col-xl-4 col-lg-6" *ngFor="let div of apiRestService.dividasClaroTv.Divida.DadosDivida; let ind = index">
         <div class="metodo-de-pagamento">
-          Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }} 
+          <span class="font-weight-bold">Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }}</span> 
            <div *ngIf="div.Parcelas.ParcelaDivida.length">
             <div *ngFor="let par of div.Parcelas.ParcelaDivida">
               Data Venc.: {{ par.Vencimento }}              
@@ -158,7 +154,7 @@
         </div>
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->
-            <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
+            <button type="button" class="btn btn-primary" (click)="showPrazoFinalizacao(2); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
               À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} 
             </button>
           </div>
@@ -166,7 +162,7 @@
             <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="!parcelado[div.CodigoTitulo]"> 
                 Aguarde...
             </button>            
-            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
+            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind, 2)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
               Parcelado
             </button>
             <button type="button" class="btn btn-primary font-15px" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 1" disabled> 
@@ -179,3 +175,8 @@
 
     </accordion-group>
 </accordion>
+<div class="loader-wrap-wrap" *ngIf="loader">  
+    <div class="loader-wrap">
+      <div class="loader"></div>
+    </div>  
+  </div>

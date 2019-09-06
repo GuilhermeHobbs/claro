@@ -12,9 +12,10 @@ export class NegocieOnlineComponent implements OnInit {
   constructor(private apiRestService: ApiRestService, private cd: ChangeDetectorRef) {    
   }
 
-    
+  public fecharAbas = [true, true, true];
+
   public loadingParcelados: boolean;
-  public loader: boolean = true;
+  public loader: boolean;
   
   public showFatura: boolean = true;
   public showHeader: boolean = true;
@@ -49,11 +50,34 @@ export class NegocieOnlineComponent implements OnInit {
   this.apiRestService.plano = plano;
 }
 
-  pagarParcelado(ind: number, codTitulo: string, plano: string) {
+  pagarParceladoTv(ind: number, codTitulo: string, plano: string) {
+    
     this.apiRestService.parcelas = {
-      primeira: this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira,
+      primeira: this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira,
       vezes: ind,
-      outrasParcelas: this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas 
+      outrasParcelas: this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas 
+    };
+    this.apiRestService.codTitulo = codTitulo;
+    this.apiRestService.plano = plano;
+  }
+
+  pagarParceladoMovel(ind: number, codTitulo: string, plano: string) {
+    
+    this.apiRestService.parcelas = {
+      primeira: this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira,
+      vezes: ind,
+      outrasParcelas: this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas 
+    };
+    this.apiRestService.codTitulo = codTitulo;
+    this.apiRestService.plano = plano;
+  }
+
+  pagarParceladoInternet(ind: number, codTitulo: string, plano: string) {
+    
+    this.apiRestService.parcelas = {
+      primeira: this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira,
+      vezes: ind,
+      outrasParcelas: this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas 
     };
     this.apiRestService.codTitulo = codTitulo;
     this.apiRestService.plano = plano;
@@ -77,9 +101,6 @@ export class NegocieOnlineComponent implements OnInit {
     this.showHeader = false;
     this.movelLabel = true;
 
-    console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida=");
-    console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida);
-
     this.apiRestService.getAllOpcoesClaroTv();
     if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length) {
       this.apiRestService.dividasClaroTv.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
@@ -99,17 +120,9 @@ export class NegocieOnlineComponent implements OnInit {
   
   setOpcoes (cod: string) {
     let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
-    console.log("this.apiRestService.opcoesPg=");
-    console.log(this.apiRestService.opcoesPg);
-    console.log("dadosDividaCod[0].CodigoTitulo=");
-    console.log(dadosDividaCod[0].CodigoTitulo);
-    
-    console.log("this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]=");
-    console.log(this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo]);
     
     this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
       this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
-        console.log(res);
       
       if (!this.loadingParcelados && !res.Carregando) { this.loadingParcelados = true; setTimeout(() => { 
           this.loader = false; 
@@ -121,19 +134,12 @@ export class NegocieOnlineComponent implements OnInit {
   }
 
   getValorTotal (cod: string) {
-    console.log("getValorTotal>>>>>");
-    console.log(this.opcoesPg[cod]);
     if (this.opcoesPg[cod] && !this.opcoesPg[cod].Carregando) {
-      console.log(this.opcoesPg[cod]);
       if (this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido) {
-        console.log ("aquiii");
-        console.log (this.opcoesPg[cod])
 
         this.parcelado[cod] = 1;
         return this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido;      
       } else if (this.opcoesPg[cod].OpcaoPagamento.length) {
-        console.log ("aquiii");
-        console.log (this.opcoesPg[cod])
         this.parcelado[cod] = 2;
         return this.opcoesPg[cod].OpcaoPagamento[0].ValorCorrigido; 
       }  
@@ -156,8 +162,37 @@ export class NegocieOnlineComponent implements OnInit {
     else return "";      
   }
 
-  getOpcao (ind: number) {
-    return this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.dadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+  getOpcaoTv (ind: number) {
+    /*console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo=");
+    console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo);
+    console.log("this.opcoesPg=");
+    console.log(this.opcoesPg);
+    console.log("ind=");
+    console.log(ind);*/
+    
+    return this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+  }
+
+  getOpcaoMovel (ind: number) {
+    /*console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo=");
+    console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo);
+    console.log("this.opcoesPg=");
+    console.log(this.opcoesPg);
+    console.log("ind=");
+    console.log(ind);*/
+    
+    return this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+  }
+
+  getOpcaoInternet (ind: number) {
+    /*console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo=");
+    console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo);
+    console.log("this.opcoesPg=");
+    console.log(this.opcoesPg);
+    console.log("ind=");
+    console.log(ind);*/
+    
+    return this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
   }
 
   showPrazoFinalizacao() {
@@ -166,7 +201,7 @@ export class NegocieOnlineComponent implements OnInit {
     this.opcoesParcelamento = false;
   }
 
-  showOpcoesParcelamento(ind) {
+  showOpcoesParcelamento(ind, fecharAba: number) {
 
     this.opcoesParcelamento = true;
     this.showFatura = false;
@@ -175,7 +210,10 @@ export class NegocieOnlineComponent implements OnInit {
     this.opcoesParcelamentoLabel = true;
 
     this.ind_parcelado = ind;
-  }
+
+    this.fecharAbas = [false, false, false];
+    this.fecharAbas[fecharAba] = true;
+    }
 
   hideOpcoesParcelamento() {
 
