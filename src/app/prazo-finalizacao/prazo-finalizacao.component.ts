@@ -26,7 +26,10 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public erroBoleto: boolean;
   public codAcordo: string;
   public sucessoSms: boolean;
-
+  public boleto: Boleto;
+  public porSms: boolean;
+  public porEmail: boolean;
+  public sucessoEmail: boolean;
 
   constructor(private localeService: BsLocaleService, private apiRestService: ApiRestService) {
     this.localeService.use('pt-br');
@@ -84,6 +87,8 @@ export class PrazoFinalizacaoComponent implements OnInit {
       console.log(acc);
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+      console.log("this.codAcordo + + + codigoParcelaAcordo");      
+      console.log(this.codAcordo + " " + codigoParcelaAcordo);
       this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => {
        console.log(bol);
        this.loadingBoleto = false;
@@ -102,11 +107,11 @@ export class PrazoFinalizacaoComponent implements OnInit {
     this.loader = true;
     this.fim = false;
       if (this.apiRestService.parcelas.aVista) {
-        console.log(this.apiRestService.codTitulo + ' ' + this.apiRestService.cpfCnpj + ' ' + this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor + ' ' + this.apiRestService.plano + ' ' + this.dataPagamento.toLocaleString().split(',')[0] + ' ' + this.apiRestService.parcelas.aVista);
         this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.aVista).subscribe(res => {
           console.log(res);  
           this.loader = false;
           if (res.Codigo === '12') {
+            this.fim = false;
             this.sucesso = true;
             this.codAcordo = res.CodigoAcordo;
            }
@@ -118,11 +123,11 @@ export class PrazoFinalizacaoComponent implements OnInit {
         });
       }
       else if (this.apiRestService.parcelas.primeira) {
-        console.log(this.apiRestService.codTitulo + ' ' + this.apiRestService.cpfCnpj + ' ' + this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor + ' ' + this.apiRestService.plano + ' ' + this.dataPagamento.toLocaleString().split(',')[0] + ' ' + this.apiRestService.parcelas.primeira);
         this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.primeira).subscribe(res => {
           console.log(res);
           this.loader = false; 
           if (res.Codigo === '12') {
+            this.fim = false;
             this.sucesso = true;
             this.codAcordo = res.CodigoAcordo;
            }
@@ -136,30 +141,44 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   enviarSms() {
+    this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.Valor).subscribe(res => {
+      this.sucessoSms = true;
+      console.log("RES SMS="); 
+      console.log(res);
+   });
+  }
+
+  pegarTelefone() {
+    this.sucesso = false;
+
     let codigoParcelaAcordo: string;
-    this.loadingBoleto = true;
-    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => {
+    this.loader = true;
+    this.apiRestService.getDadosAcordo("23857528").subscribe (acc => { // this.apiRestService.codTitulo
       console.log("acc=");
       console.log(acc);
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
-      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => {
-       console.log(bol);
-       this.loadingBoleto = false;
-
+      console.log("this.codAcordo + + + codigoParcelaAcordo");      
+      console.log("22547866 " + codigoParcelaAcordo);
+      this.apiRestService.getBoletoAcordo("22547866", codigoParcelaAcordo).subscribe ((bol: Boleto) => { // this.codAcordo
+        this.loader = false;
+        console.log("bol=");  
+        console.log(bol);
+               
        if (bol.BoletoAcordo) {
-          this.apiRestService.enviaSms( bol.BoletoAcordo.LinhaDigitavel, bol.BoletoAcordo.DataVencimento, bol.BoletoAcordo.Valor).subscribe(res => {
-             this.sucessoSms = true; 
-             console.log(res);
-          });
-       }
-       else {
-         this.erroBoleto = true;
-       }       
+         this.porSms = true;
+         this.boleto = bol; 
+       } else this.erroBoleto = true;
+              
     });
   });
 
   }
 
+  pegarEmail() {
+    this.porEmail = true;
+    this.sucesso = false;
+
+  }  
 }
 

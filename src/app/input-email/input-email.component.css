@@ -1,22 +1,22 @@
-.tel-box {
+.email-box {
     margin: 50px auto;
     width: 75%;
 }
 
-.tel-box p {
+.email-box p {
     text-align: center;
     font-size: 21px;
     
 }
 
-.tel-box input {
+.email-box input {
     font-size: 25px;
     float: left;
     /*width: 70%;*/
     height: 52px;
 }
 
-.tel-box button {
+.email-box button {
     font-family: 'DINOT-Medium';
     background: #ffbc4a;
     color: black;
@@ -34,15 +34,15 @@
 }
 
 @media (max-width: 768px) {
-    .tel-box {
+    .email-box {
      padding: 5px;
      width: 100%;   
     }
     
-    .tel-box .logo {
+    .email-box .logo {
         width: 60%;
     }
-    .tel-box button {
+    .email-box button {
         margin-left: 0px;
         margin-top: 10px;
     }    

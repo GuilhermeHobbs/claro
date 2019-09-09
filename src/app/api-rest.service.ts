@@ -191,7 +191,7 @@ export class ApiRestService {
 
  getAllOpcoesClaroMovel() {
 
-if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) return;  
+if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) return true;  
  this.dividasClaroMovel.Divida.DadosDivida.forEach ( (divida) => {
  
   this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
@@ -212,7 +212,7 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
 
  getAllOpcoesClaroTv() {
 
-  if (this.opcoesPg[this.dividasClaroTv.Divida.DadosDivida[0].CodigoTitulo]) return;  
+  if (this.opcoesPg[this.dividasClaroTv.Divida.DadosDivida[0].CodigoTitulo]) return true;
    this.dividasClaroTv.Divida.DadosDivida.forEach ( (divida) => {
    
     this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
@@ -238,7 +238,7 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
 
    getAllOpcoesClaroInternet() {
 
-    if (this.opcoesPg[this.dividasClaroInternet.Divida.DadosDivida[0].CodigoTitulo]) return;  
+    if (this.opcoesPg[this.dividasClaroInternet.Divida.DadosDivida[0].CodigoTitulo]) return true;  
      this.dividasClaroInternet.Divida.DadosDivida.forEach ( (divida) => {
      
       this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({

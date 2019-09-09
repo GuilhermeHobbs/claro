@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, HostListener, OnDestroy } from '@angular/core';
 import { ApiRestService, Divida, OpcoesPagamento } from '../api-rest.service';
 
 
@@ -7,9 +7,12 @@ import { ApiRestService, Divida, OpcoesPagamento } from '../api-rest.service';
   templateUrl: './negocie-online.component.html',
   styleUrls: ['./negocie-online.component.css']
 })
-export class NegocieOnlineComponent implements OnInit {
+export class NegocieOnlineComponent implements OnInit, OnDestroy {
 
-  constructor(private apiRestService: ApiRestService, private cd: ChangeDetectorRef) {    
+  constructor(private apiRestService: ApiRestService, private cd: ChangeDetectorRef) { }
+
+  ngOnDestroy() {
+    this.cd.detach();
   }
 
   public fecharAbas = [true, true, true];
@@ -84,10 +87,12 @@ export class NegocieOnlineComponent implements OnInit {
   }
 
   getAllOpcoesClaroMovel() {
+    
+   if (!this.apiRestService.getAllOpcoesClaroMovel()) { 
+    this.loader = true;
     this.showHeader = false;
     this.movelLabel = true;
-
-    this.apiRestService.getAllOpcoesClaroMovel();  
+      
     if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.length) {
       this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }
@@ -95,26 +100,29 @@ export class NegocieOnlineComponent implements OnInit {
    /* if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.CodigoDevedor) {
       this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }*/
+   }
   }
 
   getAllOpcoesClaroTv() {
+   if (!this.apiRestService.getAllOpcoesClaroTv()) { 
     this.showHeader = false;
     this.movelLabel = true;
 
-    this.apiRestService.getAllOpcoesClaroTv();
+    
     if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length) {
       this.apiRestService.dividasClaroTv.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }
-   
+  }
   }
 
 
   getAllOpcoesClaroInternet() {
+   if (!this.apiRestService.getAllOpcoesClaroInternet()) { 
     this.showHeader = false;
     this.movelLabel = true;
-
-    this.apiRestService.getAllOpcoesClaroInternet();    
+            
     this.dadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+   }
   }
 
   
@@ -123,9 +131,11 @@ export class NegocieOnlineComponent implements OnInit {
     
     this.apiRestService.opcoesPg[dadosDividaCod[0].CodigoTitulo].subscribe(res => {
       this.opcoesPg[dadosDividaCod[0].CodigoTitulo] = res.OpcoesPagamento;
-      
+        console.log("RES.OPCOESPAGAMENTO=");
+        console.log(res.OpcoesPagamento);
       if (!this.loadingParcelados && !res.Carregando) { this.loadingParcelados = true; setTimeout(() => { 
-          this.loader = false; 
+        console.log("this.loader =");
+        this.loader = false; 
       }, 2000); }
 
       this.cd.detectChanges();     

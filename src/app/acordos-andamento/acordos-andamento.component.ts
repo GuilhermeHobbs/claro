@@ -40,6 +40,8 @@ export class AcordosAndamentoComponent implements OnInit {
   segunda_via(codAcordo: string, codCodigoAcordo: string, ind: number) {
     this.loadingBoleto[ind] = true;
     console.log(codCodigoAcordo);
+    console.log("this.codAcordo + + + codigoParcelaAcordo");      
+      console.log(codAcordo + " " + codCodigoAcordo);
     this.apiRestService.getBoletoAcordo(codAcordo, codCodigoAcordo).subscribe ((bol: Boleto) => {
        console.log(bol);
        this.loadingBoleto[ind] = false;

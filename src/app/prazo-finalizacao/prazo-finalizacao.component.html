@@ -1,8 +1,18 @@
+<div *ngIf="sucessoEmail">
+    <h1>E-mail enviado com sucesso!</h1>
+</div>
+  
+<div *ngIf="porEmail">
+    <p>Para qual e-mail enviar seu boleto?</p>
+    <app-input-email (clickEnviar)="enviarEmail()"></app-input-email>
+</div>
+  
 <div *ngIf="sucessoSms">
   <h1>SMS enviado com sucesso!</h1>
 </div>
 
-<div *ngIf="pegarTel">
+<div *ngIf="porSms">
+  <p>Para qual número enviar o SMS?</p>
   <app-input-tel (clickEnviar)="enviarSms()"></app-input-tel>
 </div>
 
@@ -14,33 +24,27 @@
 </div>  
 
 <div *ngIf="sucesso">
-  <h1> O Acordo foi realizado com sucesso!</h1>
+  <h4 class="font-weight-bold"> O Acordo foi realizado com sucesso!</h4>
   <br>
   <h4>Como deseja receber seu boleto?</h4>
   <br>
   <div class="row">
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-primary">
+      <div class="col-6 col-sm-4">
+        <button type="button" class="btn btn-primary" (click)="pegarEmail()">
           Por e-mail
         </button>
       </div>
       <div class="col-6 col-sm-4">
-        <button type="button" class="btn btn-primary" (click)="enviarSms()">
+        <button type="button" class="btn btn-primary" (click)="pegarTelefone()">
           Por SMS
         </button>
       </div>
-      <div class="col-6 col-sm-4">
+      <div class="col-sm-4">
         <button type="button" class="btn btn-primary btn-mudar-parce" (click)="abrirBoleto()">
           Ver dados do boleto
         </button>
       </div>            
     </div>
-    <div *ngIf="loadingBoleto">
-        <p>Aguarde . . .</p> 
-      <div class="loader-wrap">        
-        <div class="loader"></div>
-      </div>
-    </div>  
     <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
 </div>
 
@@ -56,7 +60,7 @@
   <p *ngIf="vezesParcelado()">Demais parcelas: {{ vezesParcelado() }} x R$ {{ outrasParcelado() }}</p>
   <div class="row">
     <div class="col-sm-4">
-      <button type="button" class="btn btn-yellow" (click)="sucesso = true"> <!-- gravaAcordo() -->
+      <button type="button" class="btn btn-yellow" (click)="sucesso = true; this.fim = false;"> <!-- gravaAcordo() -->
         Confirmarr acordo
       </button>
     </div>
