@@ -15,7 +15,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.cd.detach();
   }
 
-  public fecharAbas = [true, true, true];
+  public mostrarAbas = [true, true, true];
 
   public loadingParcelados: boolean;
   public loader: boolean;
@@ -86,8 +86,10 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.apiRestService.plano = plano;
   }
 
-  getAllOpcoesClaroMovel() {
+  getAllOpcoesClaroMovel() { ///////////////////////////////
     
+    this.mostrarAbas = [true, false, false];
+
    if (!this.apiRestService.getAllOpcoesClaroMovel()) { 
     this.loader = true;
     this.showHeader = false;
@@ -104,6 +106,8 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   }
 
   getAllOpcoesClaroTv() {
+    this.mostrarAbas = [false, true, false];
+
    if (!this.apiRestService.getAllOpcoesClaroTv()) { 
     this.showHeader = false;
     this.movelLabel = true;
@@ -117,6 +121,8 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
 
 
   getAllOpcoesClaroInternet() {
+    this.mostrarAbas = [false, false, true];
+
    if (!this.apiRestService.getAllOpcoesClaroInternet()) { 
     this.showHeader = false;
     this.movelLabel = true;
@@ -211,7 +217,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.opcoesParcelamento = false;
   }
 
-  showOpcoesParcelamento(ind, fecharAba: number) {
+  showOpcoesParcelamento(ind) {
 
     this.opcoesParcelamento = true;
     this.showFatura = false;
@@ -220,9 +226,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.opcoesParcelamentoLabel = true;
 
     this.ind_parcelado = ind;
-
-    this.fecharAbas = [false, false, false];
-    this.fecharAbas[fecharAba] = true;
+  
     }
 
   hideOpcoesParcelamento() {

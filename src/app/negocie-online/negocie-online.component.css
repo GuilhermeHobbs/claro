@@ -40,7 +40,9 @@ table {
     margin-top: 25px;
     border: 1px solid #007bff;
     padding-bottom: 10px;
-    margin-left: 7px;
+    /*margin-left: 7px;*/
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .movelLabel {
@@ -105,10 +107,29 @@ table {
     .movelLabel {
         display: none;
     }
-        
+
+    .opcoes-parcelamento {
+        width: 100%;
+        margin: auto;
+        position: relative;
+        top: -20px;
+    }
+
+    .opcoes-parcelamento .btn {
+        width: 150px;
+        margin-bottom: 5px;
+    }
+
+    .wrap-opcao-btn:nth-child(even) {
+        padding-left: 0;
+    }
+
+    .hidden-mobile {
+        display: none;
+    }
 }
 
 .loader-wrap-wrap {
-    height: 380px;
+    height: 4500px;
 }
 
