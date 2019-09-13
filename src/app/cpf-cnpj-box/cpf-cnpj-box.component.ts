@@ -43,13 +43,15 @@ export class CpfCnpjBoxComponent implements OnInit {
   public cnpj_sem_debitos = false;
   public input_inv = false;
   public verificando = false;
+  public disclaimer = true;
 
-  cleanAlerts() {
+  cleanAlertsAndDisclaimer() {
     this.cpf_inv = false; 
     this.cnpj_inv = false; 
     this.cpf_sem_debitos = false;
     this.cnpj_sem_debitos = false;
     this.input_inv = false;
+    this.disclaimer = false;
   }
 
   backspacePress(event: any) {

@@ -4,8 +4,7 @@
   </div>
   <div class="modal-body">
 
-    <P align=center>
-      <TABLE cellSpacing=0 cellPadding=0 border=0 class=Boleto>
+      <TABLE cellSpacing=0 cellPadding=0 border=0 class="Boleto">
         
         <TR>
           <TD style='width: 0.9cm'></TD>
@@ -30,10 +29,10 @@
         </ul>
         </td></tr>
         
-        <tr><td colspan=11 class=BoletoPontilhado>&nbsp;</td></tr>
+        <tr><td colspan=11 class="BoletoPontilhado">&nbsp;</td></tr>
         <TR>
-          <TD colspan=4 class=BoletoLogo><img src='assets/img/logo.jpg' style="width: 60px; padding: 5px"></TD>
-          <TD colspan=8 class=BoletoLinhaDigitavel>{{ linha }}</TD>
+          <TD colspan=4 class="BoletoLogo"><img src='assets/img/logo.jpg' style="width: 60px; padding: 5px"></TD>
+          <TD colspan=8 class="BoletoLinhaDigitavel">{{ linha }}</TD>
         </TR>
         <TR>
           <TD colspan=10 class=BoletoTituloEsquerdo>Nome do Cliente</TD>
@@ -41,15 +40,15 @@
         </TR>
         <TR>
           <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm; text-transform: capitalize'>{{ cliente }}</TD>
-          <TD class=BoletoValorDireito>{{ data }}</TD>
+          <TD class="BoletoValorDireito">{{ data }}</TD>
         </TR>  
         <TR>
-          <TD colspan=10 class=BoletoTituloEsquerdo>Cedente</TD>
-          <TD class=BoletoTituloDireito>Agência/Código do Cedente</TD>
+          <TD colspan=10 class="BoletoTituloEsquerdo">Valor</TD>
+          <TD class=BoletoTituloDireito>Contrato</TD>
         </TR>
         <TR>
-          <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>Cedente</TD>
-          <TD class=BoletoValorDireito>AgenciaCodDoCedente</TD>
+          <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>R$ {{ valor }}</TD>
+          <TD class=BoletoValorDireito>{{ contrato }}</TD>
         </TR>   
         <TR>
           <TD colspan=3 class=BoletoTituloEsquerdo>Data do Documento</TD>
@@ -115,10 +114,6 @@
         <TR>
           <TD class=BoletoValorDireito>&nbsp;</TD>
         </TR>                
-         
-        
-       
-                  
         </TABLE>
 
   </div>

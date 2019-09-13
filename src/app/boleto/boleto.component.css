@@ -29,3 +29,13 @@ td.BoletoValorSacador{font-size: 3mm; font-family: arial, verdana; vertical-alig
    font-weight: bold; text-align: left}	
 td.BoletoPontilhado{border-top: 0.3mm dashed #000000; font-size: 1mm}
 ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}	  
+
+@media (max-width: 768px) {
+      .Boleto {
+            width: 400px;
+      }
+
+      td.BoletoLinhaDigitavel, td.BoletoValorDireito {
+            text-align: left;
+      }
+}      

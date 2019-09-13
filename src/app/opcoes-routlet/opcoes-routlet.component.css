@@ -105,8 +105,13 @@ h3 {
         height: 90px;     
     }
 
-    .card-text, .card-title {
+    .card-title {
         font-size: 13px;
+        min-width: 150px;
+    }
+
+    .card-text {
+        font-size: 12px;
     }
 
      .card-img-top {
@@ -134,4 +139,11 @@ h3 {
         text-align: center;
     }    
 
+    .back-beje-mobile {
+        background: #f8f8f8;
+    }
+    
+    .bem-vindo {
+        font-size: 15px;
+    }
 }

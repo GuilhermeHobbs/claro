@@ -1,5 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { ApiRestService, Boleto } from '../api-rest.service';
+import { RouterModule, Router } from '@angular/router';
 
 
 @Component({
@@ -13,10 +14,9 @@ export class AcordosAndamentoComponent implements OnInit {
   public loadingBoleto = [false];
   public erroBoleto: boolean;
 
-  constructor(private apiRestService: ApiRestService) { }
+  constructor(private apiRestService: ApiRestService, private router: Router) { }
 
   ngOnInit() {
-
       
     if (this.apiRestService.acordos.length) {
       this.apiRestService.acordos.forEach (acc => {    
@@ -37,18 +37,24 @@ export class AcordosAndamentoComponent implements OnInit {
     }
   }
   
-  segunda_via(codAcordo: string, codCodigoAcordo: string, ind: number) {
+  segunda_via(codAcordo: string, codCodigoAcordo: string, numeroTitulo: string, ind: number) {
+    numeroTitulo = numeroTitulo.split('.')[0];
     this.loadingBoleto[ind] = true;
     console.log(codCodigoAcordo);
-    console.log("this.codAcordo + + + codigoParcelaAcordo");      
-      console.log(codAcordo + " " + codCodigoAcordo);
     this.apiRestService.getBoletoAcordo(codAcordo, codCodigoAcordo).subscribe ((bol: Boleto) => {
        console.log(bol);
        this.loadingBoleto[ind] = false;
 
        if (bol.BoletoAcordo) {
-       window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor + "&cliente=" + this.apiRestService.getNome());
-       }
+          //window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor + "&cliente=" + this.apiRestService.getNome());
+          this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, 
+            linha: bol.BoletoAcordo.LinhaDigitavel, 
+            valor: bol.BoletoAcordo.Valor, 
+            cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, 
+            contrato: numeroTitulo
+          }});
+
+        }
        else {
          this.erroBoleto = true;
        }

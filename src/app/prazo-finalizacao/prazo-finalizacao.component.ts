@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { ApiRestService, Boleto, Acordo } from '../api-rest.service';
-
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-prazo-finalizacao',
@@ -31,7 +31,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public porEmail: boolean;
   public sucessoEmail: boolean;
 
-  constructor(private localeService: BsLocaleService, private apiRestService: ApiRestService) {
+  constructor(private localeService: BsLocaleService, private apiRestService: ApiRestService, private router: Router) {
     this.localeService.use('pt-br');
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -81,21 +81,24 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
   abrirBoleto() {
     let codigoParcelaAcordo: string;
+    let numeroTitulo: string;
     this.loadingBoleto = true;
     this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => {
       console.log("acc=");
       console.log(acc);
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
-      console.log("this.codAcordo + + + codigoParcelaAcordo");      
-      console.log(this.codAcordo + " " + codigoParcelaAcordo);
+      numeroTitulo = acc.Acordo.DadosAcordo.NumeroTitulo.split('.')[0];
+
       this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => {
        console.log(bol);
        this.loadingBoleto = false;
 
-       if (bol.BoletoAcordo) {
-        window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor);
-       }
+       if (bol.BoletoAcordo) { ///////////////////////////////////////////////////////////////////
+        //window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor, "_self");
+        this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: bol.BoletoAcordo.Valor, cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: numeroTitulo}});
+
+      }
        else {
          this.erroBoleto = true;
        }       

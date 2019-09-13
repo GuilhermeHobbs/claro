@@ -9,6 +9,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class ApiRestService {
 
+  public showDisclaimer = true;
+  
   public acordos: any;
         
   public devedor: Devedor; 
@@ -22,14 +24,20 @@ export class ApiRestService {
   public dividasClaroMovel: Divida;
   public dividasClaroInternet: Divida;
   public dividasClaroTv: Divida;
+  public dividasClaroFixo: Divida;
 
   public opcoesPg = { }; 
 
-  private urlDadosDevedor = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/devedores'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
-  private urlDadosDivida = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/divida';   //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
-  private urlOpcoesPagamento = 'https://my-json-server.typicode.com/GuilhermeHobbs/opcoes/opcoes'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
+  //private urlDadosDevedor = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/devedores'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
+  private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
+  //private urlDadosDivida = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/divida';   //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
+  private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';
+  //private urlOpcoesPagamento = 'https://my-json-server.typicode.com/GuilhermeHobbs/opcoes/opcoes'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
+  private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
+  //private urlDadosAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/dadosAcordo/acordo';  // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
   private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
   private urlGravaAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
+  //private urlBoletoAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/boletoAcordo/boleto'; // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
   private urlBoletoAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
   private urlEnviaSms = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_smsenvio.php';
 
@@ -78,20 +86,20 @@ export class ApiRestService {
   
  getDadosDevedor(cpfCnpj: string): Observable<Devedor> {
   const cpfCnpjParam = new HttpParams().set('cpf', cpfCnpj);
-   return this.http.get<Devedor>(this.urlDadosDevedor);  // post cpfCnpjParam, this.httpOptions);
+   return this.http.post<Devedor>(this.urlDadosDevedor, cpfCnpjParam, this.httpOptions);
   }  
 
  getDadosDivida(cpfCnpj: string, codDevedor: string): Observable<Divida> {
   const cpfDevedorParam = new HttpParams()
   .set('cpf', cpfCnpj)    
   .set('codigodevedor', codDevedor);
-  return this.http.get<Divida>(this.urlDadosDivida); // ,cpfDevedorParam, this.httpOptions);
+  return this.http.post<Divida>(this.urlDadosDivida,cpfDevedorParam, this.httpOptions);
  }  
 
  getOpcoesPagamento(codTitulo: string): Observable<OpcoesPagamento> {
   const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo)
                                        .set('cpf', this.cpfCnpj);    
-  return this.http.get<OpcoesPagamento>(this.urlOpcoesPagamento) //, cpfCnpjParam, this.httpOptions);
+  return this.http.post<OpcoesPagamento>(this.urlOpcoesPagamento, cpfCnpjParam, this.httpOptions);
  } 
 
  getDadosAcordo(codTitulo: string): Observable<any> {
@@ -151,16 +159,24 @@ export class ApiRestService {
       DadosDivida: []
     }
   };
+
+  this.dividasClaroFixo = new Divida();
+  this.dividasClaroFixo = {
+    Divida: { 
+      DadosDivida: []
+    }
+  };
+
   
   console.log("this.dividasClaroTv.Divida.DadosDivida");
   console.log(this.dividasClaroTv.Divida.DadosDivida);
-
-
   
   if (this.dividas.Divida.DadosDivida.length) {
     this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );  
     this.dividasClaroInternet.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Internet" );
-    this.dividasClaroTv.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => { console.log ("div this.dividas.Divida.DadosDivida="); console.log (this.dividas.Divida.DadosDivida); return div.Produto === "Claro TV" });
+    this.dividasClaroTv.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro TV" );
+    this.dividasClaroFixo.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Fixo" );
+  
   }
   
   else { 
@@ -176,6 +192,10 @@ export class ApiRestService {
       }
       case "Claro TV": {
         this.dividasClaroTv.Divida.DadosDivida.push(this.dividas.Divida.DadosDivida);
+        break;
+      }
+      case "Claro Fixo": {
+        this.dividasClaroFixo.Divida.DadosDivida.push(this.dividas.Divida.DadosDivida);
         break;
       }
   }  
@@ -218,13 +238,8 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
       }
     });  
 
-    console.log("antes this.opcoesPg[divida.CodigoTitulo]=");
-    console.log(this.opcoesPg[divida.CodigoTitulo]);
-
      this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
       opc.Carregando = false;
-      console.log("depois this.opcoesPg[divida.CodigoTitulo]=");
-      console.log(this.opcoesPg[divida.CodigoTitulo]);
       this.opcoesPg[divida.CodigoTitulo].next(opc);
       });
     });
@@ -250,6 +265,25 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
       });
      }
   
+     getAllOpcoesClaroFixo() {
+
+      if (this.opcoesPg[this.dividasClaroFixo.Divida.DadosDivida[0].CodigoTitulo]) return true;  
+       this.dividasClaroFixo.Divida.DadosDivida.forEach ( (divida) => {
+       
+        this.opcoesPg[divida.CodigoTitulo] = new BehaviorSubject<OpcoesPagamento>({
+          Carregando: true,
+          OpcoesPagamento: {
+            OpcaoPagamento: {
+              ValorNegociar: "Aguarde...",
+            }
+          }
+        });  
+         this.getOpcoesPagamento(divida.CodigoTitulo).subscribe( (opc: OpcoesPagamento) => {
+          opc.Carregando = false;
+          this.opcoesPg[divida.CodigoTitulo].next(opc);
+          });
+        });
+       }
 
 }
 

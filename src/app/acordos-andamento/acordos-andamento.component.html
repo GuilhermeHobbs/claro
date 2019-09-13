@@ -22,22 +22,22 @@
          <p class="font-weight-bold">Parcelas</p>
           <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.length">
             <div *ngFor="let par of acordo.ParcelasAcordo.ParcelaAcordo; let ind = index" class="row bottom-parcela">
-                    <div class="col-3 no-padd-left no-padd-right">
+                    <div class="col-6 col-md-3 no-padd-left no-padd-right">
                         Data: {{ par.DataVencimento }}
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-md-3 no-padd-right">
                         Status: {{ par.StatusParcelaAcordo }}
                     </div>
-                    <div class="col-2 valor-mobile">
+                    <div class="col-6 col-md-2 valor-mobile">
                         {{ par.ValorParcela }}
                     </div>
-                    <div class="col-2 no-padd-left">
-                        <a type="button" class="btn btn-primary" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, ind)">
+                    <div class="col-4 col-md-2 no-padd-left">
+                        <a type="button" class="btn btn-primary padd-mobile" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.NumeroTitulo, ind)">
                             Segunda via do boleto        
                         </a>
                         <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 col-md-1">
                         <div class="loader-wrap">
                             <div class="loader" *ngIf="loadingBoleto[ind]"></div>
                         </div>    
@@ -45,23 +45,25 @@
             </div>
          </div>
          <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo" class="row">
-                    <div class="col-2">
+                    <div class="col-6 col-md-3">
                             Data: {{ acordo.ParcelasAcordo.ParcelaAcordo.DataVencimento }}
                         </div>
-                        <div class="col-3">
+                        <div class="col-6 col-md-3 no-padd-right bottom-parcela">
                             Status: {{ acordo.ParcelasAcordo.ParcelaAcordo.StatusParcelaAcordo }}
                         </div>
-                        <div class="col-2">
+                        <div class="col-5 col-md-2 no-padd-right">
                             Valor: {{ acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela }}
                         </div>
-                        <div class="col-3">
-                            <a type="button" class="btn btn-primary" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, 0)">
+                        <div class="col-5 col-md-2 no-padd-right no-padd-left">
+                            <a type="button" class="btn btn-primary padd-mobile" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0)">
                                 Segunda via do boleto        
                             </a>                          
                             <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
                         </div>
-                        <div class="loader-wrap">
-                            <div class="loader col-1" *ngIf="loadingBoleto[0]"></div>
+                        <div class="col-2 col-md-1">
+                            <div class="loader-wrap">
+                                <div class="loader" *ngIf="loadingBoleto[0]"></div>
+                            </div>    
                         </div>    
             </div>
         </div>    

@@ -13,7 +13,7 @@
             <app-acordos-andamento *ngIf="showAcordosAndamento"></app-acordos-andamento>
                         
             <div class="padding-right-10px" *ngIf="showOpcoes">
-                <h3 class="text-center" *ngIf="!fizPagamentoOk">Bem-vindo, <span class="text-capitalize">{{nome}}</span>!</h3>    
+                <h3 class="text-center bem-vindo" *ngIf="!fizPagamentoOk">Bem-vindo, <span class="text-capitalize">{{nome}}</span>!</h3>    
                 
                 <div class="row">                    
                     <a class="card col-lg-2" (click)="negocieOnline()" *ngIf="this.apiRestService.dividas.Divida">
@@ -76,7 +76,7 @@
             </a>
         </div>
      </div>    
-                <a class="bottom-fixed back-beje" target="_blank" href="http://www.fulltimesolucoes.com.br/">A Fulltime é uma empresa autorizada pela Claro para a cobrança de débito.</a>
+        <a class="bottom-fixed back-beje-mobile" target="_blank" href="http://www.fulltimesolucoes.com.br/" *ngIf="apiRestService.showDisclaimer" [class.mobile-hidden]="showOpcoes">A Fulltime é uma empresa autorizada pela Claro para a cobrança de débito.</a>
                 
     </div>    
 

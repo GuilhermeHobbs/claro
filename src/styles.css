@@ -64,7 +64,15 @@ h3 {
   top: -30px;
 }
 
+.pl-15px {
+  padding-left: 15px;
+}
+
 @media (max-width: 1000px) {
+
+  .up-15px-mobile {
+    top: -15px;
+  }
 
   .fundo-paulista {
     display: none;
@@ -74,10 +82,22 @@ h3 {
 
 @media (max-width: 768px) {
  
+  .mobile-hidden {
+    display: none;
+  }
+
+  .mobile-show {
+    display: block;
+  }
+
   h3 {
     font-size: 18px;
   }
-  
+
+  .no-padd-mobile {
+    padding: 0;
+  }
+
 }
 
     

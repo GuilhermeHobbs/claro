@@ -15,7 +15,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.cd.detach();
   }
 
-  public mostrarAbas = [true, true, true];
+  public mostrarAbas = [true, true, true, true];
 
   public loadingParcelados: boolean;
   public loader: boolean;
@@ -34,6 +34,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   public opcoesPg = { };      
 
   ngOnInit() {
+   if (!this.dadosDivida.length) {
 
     this.apiRestService.getDividas();
     if (this.apiRestService.dividas.Divida.DadosDivida.length) {
@@ -44,6 +45,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
       this.dadosDivida.push(this.apiRestService.dividas.Divida.DadosDivida);
     }
   }
+ }
 
   pagarAVista(codTitulo: string, valor: string, plano: string) {
     this.apiRestService.parcelas = {
@@ -86,9 +88,20 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.apiRestService.plano = plano;
   }
 
+  pagarParceladoFixo(ind: number, codTitulo: string, plano: string) {
+    
+    this.apiRestService.parcelas = {
+      primeira: this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira,
+      vezes: ind,
+      outrasParcelas: this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas 
+    };
+    this.apiRestService.codTitulo = codTitulo;
+    this.apiRestService.plano = plano;
+  }
+
   getAllOpcoesClaroMovel() { ///////////////////////////////
     
-    this.mostrarAbas = [true, false, false];
+    this.mostrarAbas = [true, false, false, false];
 
    if (!this.apiRestService.getAllOpcoesClaroMovel()) { 
     this.loader = true;
@@ -96,6 +109,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.movelLabel = true;
       
     if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.length) {
+      if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.length > 2) this.apiRestService.showDisclaimer = false;
       this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }
 
@@ -106,7 +120,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   }
 
   getAllOpcoesClaroTv() {
-    this.mostrarAbas = [false, true, false];
+    this.mostrarAbas = [false, true, false, false];
 
    if (!this.apiRestService.getAllOpcoesClaroTv()) { 
     this.showHeader = false;
@@ -114,6 +128,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
 
     
     if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length) {
+      if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length > 2) this.apiRestService.showDisclaimer = false;
       this.apiRestService.dividasClaroTv.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }
   }
@@ -121,7 +136,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
 
 
   getAllOpcoesClaroInternet() {
-    this.mostrarAbas = [false, false, true];
+    this.mostrarAbas = [false, false, true, false];
 
    if (!this.apiRestService.getAllOpcoesClaroInternet()) { 
     this.showHeader = false;
@@ -131,6 +146,16 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
    }
   }
 
+  getAllOpcoesClaroFixo() {
+    this.mostrarAbas = [false, false, false, true];
+
+   if (!this.apiRestService.getAllOpcoesClaroFixo()) { 
+    this.showHeader = false;
+    this.movelLabel = true;
+            
+    this.dadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+   }
+  }
   
   setOpcoes (cod: string) {
     let dadosDividaCod = this.dadosDivida.filter((dados) => dados.CodigoTitulo === cod);
@@ -178,6 +203,10 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     else return "";      
   }
 
+  getOpcaoFixo (ind: number) {
+    return this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+  } 
+
   getOpcaoTv (ind: number) {
     /*console.log("this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo=");
     console.log(this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo);
@@ -185,7 +214,6 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     console.log(this.opcoesPg);
     console.log("ind=");
     console.log(ind);*/
-    
     return this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
   }
 
@@ -196,7 +224,6 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     console.log(this.opcoesPg);
     console.log("ind=");
     console.log(ind);*/
-    
     return this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
   }
 
@@ -207,11 +234,12 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     console.log(this.opcoesPg);
     console.log("ind=");
     console.log(ind);*/
-    
     return this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
   }
 
   showPrazoFinalizacao() {
+    this.apiRestService.showDisclaimer = true;
+    
     this.opcoesParcelamentoLabel = false;
     this.prazoFinalizacao = true;
     this.opcoesParcelamento = false;
