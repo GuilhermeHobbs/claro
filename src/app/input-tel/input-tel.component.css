@@ -1,6 +1,10 @@
+.form-control {
+    margin-bottom: 10px;
+}
+
 .tel-box {
-    margin: 50px auto;
-    width: 75%;
+    margin: 25px auto;
+    width: 45%;
 }
 
 .tel-box p {

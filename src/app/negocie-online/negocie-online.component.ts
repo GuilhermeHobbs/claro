@@ -12,14 +12,14 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   constructor(private apiRestService: ApiRestService, private cd: ChangeDetectorRef) { }
 
   ngOnDestroy() {
-    this.cd.detach();
+   // this.cd.detach();
   }
 
   public mostrarAbas = [true, true, true, true];
 
   public loadingParcelados: boolean;
   public loader: boolean;
-  
+
   public showFatura: boolean = true;
   public showHeader: boolean = true;
   public opcoesParcelamento: boolean;
@@ -34,17 +34,18 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   public opcoesPg = { };      
 
   ngOnInit() {
-   if (!this.dadosDivida.length) {
+    
+    //if (!this.dadosDivida.length) {
 
     this.apiRestService.getDividas();
-    if (this.apiRestService.dividas.Divida.DadosDivida.length) {
+    if (this.apiRestService.dividas.Divida.DadosDivida.length) {      
       this.dadosDivida = this.apiRestService.dividas.Divida.DadosDivida;
     }
 
     if (this.apiRestService.dividas.Divida.DadosDivida.CodigoDevedor) {
       this.dadosDivida.push(this.apiRestService.dividas.Divida.DadosDivida);
     }
-  }
+ // }
  }
 
   pagarAVista(codTitulo: string, valor: string, plano: string) {
@@ -103,7 +104,8 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     
     this.mostrarAbas = [true, false, false, false];
 
-   if (!this.apiRestService.getAllOpcoesClaroMovel()) { 
+   //////////////////////////////if (!this.apiRestService.getAllOpcoesClaroMovel()) {
+    this.apiRestService.getAllOpcoesClaroMovel();  
     this.loader = true;
     this.showHeader = false;
     this.movelLabel = true;
@@ -116,13 +118,15 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
    /* if (this.apiRestService.dividasClaroMovel.Divida.DadosDivida.CodigoDevedor) {
       this.apiRestService.dividasClaroMovel.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }*/
-   }
+   ////////////////////////////}
   }
 
   getAllOpcoesClaroTv() {
     this.mostrarAbas = [false, true, false, false];
 
-   if (!this.apiRestService.getAllOpcoesClaroTv()) { 
+   //////////////////////////////if (!this.apiRestService.getAllOpcoesClaroTv()) {
+    this.apiRestService.getAllOpcoesClaroTv();
+    this.loader = true;  
     this.showHeader = false;
     this.movelLabel = true;
 
@@ -131,19 +135,21 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
       if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length > 2) this.apiRestService.showDisclaimer = false;
       this.apiRestService.dividasClaroTv.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }
-  }
+  //}
   }
 
 
   getAllOpcoesClaroInternet() {
     this.mostrarAbas = [false, false, true, false];
 
-   if (!this.apiRestService.getAllOpcoesClaroInternet()) { 
+   ///////////////////////////////////if (!this.apiRestService.getAllOpcoesClaroInternet()) { 
+    this.apiRestService.getAllOpcoesClaroInternet();
+    this.loader = true;
     this.showHeader = false;
     this.movelLabel = true;
             
     this.dadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
-   }
+   //////}
   }
 
   getAllOpcoesClaroFixo() {
@@ -165,7 +171,6 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
         console.log("RES.OPCOESPAGAMENTO=");
         console.log(res.OpcoesPagamento);
       if (!this.loadingParcelados && !res.Carregando) { this.loadingParcelados = true; setTimeout(() => { 
-        console.log("this.loader =");
         this.loader = false; 
       }, 2000); }
 

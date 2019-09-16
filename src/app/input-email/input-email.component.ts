@@ -9,6 +9,7 @@ import { ApiRestService } from '../api-rest.service';
 export class InputEmailComponent implements OnInit {
 
   @Output() clickEnviar = new EventEmitter<boolean>(); 
+  @Output() clickVoltar = new EventEmitter<boolean>(); 
 
    public email: string; 
    public email_inv: boolean;
@@ -31,5 +32,10 @@ export class InputEmailComponent implements OnInit {
   envia() { 
     if (!this.validaEmail(this.email)) this.email_inv = true; 
   }
-    
+ 
+  voltar() {
+    this.clickVoltar.emit(true);
+  }
+
+
 }

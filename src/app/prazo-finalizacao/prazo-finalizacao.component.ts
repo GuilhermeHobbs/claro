@@ -42,6 +42,18 @@ export class PrazoFinalizacaoComponent implements OnInit {
   ngOnInit() {
   }
 
+  voltarEmail() {
+    this.porEmail = false;
+    this.sucesso = true;
+    this.sucessoEmail = false;
+  }
+
+  voltarSms() {
+    this.porSms = false;
+    this.sucesso = true;
+    this.sucessoSms = false;
+  }
+
   showFinalizacao() {
    if (this.dataPagamento) { 
     this.fim = true;
@@ -156,14 +168,14 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
     let codigoParcelaAcordo: string;
     this.loader = true;
-    this.apiRestService.getDadosAcordo("23857528").subscribe (acc => { // this.apiRestService.codTitulo
+    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => { 
       console.log("acc=");
       console.log(acc);
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
       console.log("this.codAcordo + + + codigoParcelaAcordo");      
       console.log("22547866 " + codigoParcelaAcordo);
-      this.apiRestService.getBoletoAcordo("22547866", codigoParcelaAcordo).subscribe ((bol: Boleto) => { // this.codAcordo
+      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
         this.loader = false;
         console.log("bol=");  
         console.log(bol);

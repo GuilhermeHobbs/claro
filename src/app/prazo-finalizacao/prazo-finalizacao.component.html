@@ -1,19 +1,19 @@
-<div *ngIf="sucessoEmail">
+<div *ngIf="sucessoEmail" class="mb-15">
     <h1>E-mail enviado com sucesso!</h1>
 </div>
   
 <div *ngIf="porEmail">
-    <p>Para qual e-mail enviar seu boleto?</p>
-    <app-input-email (clickEnviar)="enviarEmail()"></app-input-email>
+    <p class="text-center">Para qual e-mail enviar seu boleto?</p>
+    <app-input-email (clickEnviar)="enviarEmail()" (clickVoltar)="voltarEmail()"></app-input-email>
 </div>
   
-<div *ngIf="sucessoSms">
+<div *ngIf="sucessoSms" class="mb-15">
   <h1>SMS enviado com sucesso!</h1>
 </div>
 
 <div *ngIf="porSms">
-  <p>Para qual número enviar o SMS?</p>
-  <app-input-tel (clickEnviar)="enviarSms()"></app-input-tel>
+  <p class="text-center">Para qual número enviar o SMS?</p>
+  <app-input-tel (clickEnviar)="enviarSms()" (clickVoltar)="voltarSms()"></app-input-tel>
 </div>
 
 <div *ngIf="loader">
@@ -31,7 +31,7 @@
   <div class="row">
       <div class="col-6 col-sm-4">
         <button type="button" class="btn btn-primary" (click)="pegarEmail()">
-          Por e-mmail
+          Por e-mail
         </button>
       </div>
       <div class="col-6 col-sm-4">
@@ -60,7 +60,7 @@
   <p *ngIf="vezesParcelado()">Demais parcelas: {{ vezesParcelado() }} x R$ {{ outrasParcelado() }}</p>
   <div class="row">
     <div class="col-sm-4">
-      <button type="button" class="btn btn-yellow" (click)="sucesso = true; this.fim = false;"> <!-- gravaAcordo() -->
+      <button type="button" class="btn btn-yellow" (click)="gravaAcordo()"> <!-- sucesso = true; this.fim = false;  -->
         Confirmar acordo
       </button>
     </div>
@@ -70,9 +70,9 @@
       </button>
     </div>
     <div class="col-6 col-sm-4">
-      <button type="button" class="btn btn-primary btn-mudar-parce" (click)="voltar()">
+      <!--<button type="button" class="btn btn-primary btn-mudar-parce" (click)="voltar()">
         Mudar parcelamento
-      </button>
+      </button>-->
     </div>            
   </div>
 </div>

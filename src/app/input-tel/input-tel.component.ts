@@ -9,6 +9,7 @@ import { ApiRestService } from '../api-rest.service';
 export class InputTelComponent implements OnInit {
 
   @Output() clickEnviar = new EventEmitter<boolean>(); 
+  @Output() clickVoltar = new EventEmitter<boolean>(); 
 
   constructor(private cd: ChangeDetectorRef, private apiRestService: ApiRestService) { }
 
@@ -40,6 +41,11 @@ export class InputTelComponent implements OnInit {
 
     this.apiRestService.telefone = telNum;
     this.clickEnviar.emit(true);  
+  }
+
+  voltar() {
+    this.clickVoltar.emit(true);
+    
   }
 
 }

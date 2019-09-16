@@ -98,6 +98,10 @@ h3 {
     padding: 0;
   }
 
+  .no-margimBottom-mobile {
+    margin-bottom: 0;
+  }
+
 }
 
     

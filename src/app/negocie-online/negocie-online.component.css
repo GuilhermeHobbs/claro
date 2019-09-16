@@ -65,6 +65,10 @@ table {
     margin-bottom: 5px;
 }
 
+.btn-smaller {
+    width: 205px !important;
+}
+
 @media (max-width: 768px) {
 
     h3 {
@@ -116,17 +120,19 @@ table {
     }
 
     .opcoes-parcelamento .btn {
-        width: 80px;
-        margin-bottom: 2px;
+        /*width: 155px;*/
+        display: block;
+        margin: 20px auto 0;
         padding: 1px;
-        position: relative;
-        left: -20px;
+        /*position: relative;
+        left: -20px;*/
     }
 
-/*    .wrap-opcao-btn:nth-child(even) {
+   /* .wrap-opcao-btn:nth-child(even) {
         padding-left: 0;
     }*/
 
+    
 }
 
 .loader-wrap-wrap {
