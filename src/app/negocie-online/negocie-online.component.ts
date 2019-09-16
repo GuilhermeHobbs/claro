@@ -100,7 +100,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     this.apiRestService.plano = plano;
   }
 
-  getAllOpcoesClaroMovel() { ///////////////////////////////
+  getAllOpcoesClaroMovel() { 
     
     this.mostrarAbas = [true, false, false, false];
 
@@ -124,43 +124,44 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   getAllOpcoesClaroTv() {
     this.mostrarAbas = [false, true, false, false];
 
-   //////////////////////////////if (!this.apiRestService.getAllOpcoesClaroTv()) {
     this.apiRestService.getAllOpcoesClaroTv();
     this.loader = true;  
     this.showHeader = false;
     this.movelLabel = true;
-
     
     if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length) {
       if (this.apiRestService.dividasClaroTv.Divida.DadosDivida.length > 2) this.apiRestService.showDisclaimer = false;
       this.apiRestService.dividasClaroTv.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
     }
-  //}
   }
 
 
   getAllOpcoesClaroInternet() {
     this.mostrarAbas = [false, false, true, false];
 
-   ///////////////////////////////////if (!this.apiRestService.getAllOpcoesClaroInternet()) { 
     this.apiRestService.getAllOpcoesClaroInternet();
     this.loader = true;
     this.showHeader = false;
     this.movelLabel = true;
             
-    this.dadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
-   //////}
+    if (this.apiRestService.dividasClaroInternet.Divida.DadosDivida.length) {
+      if (this.apiRestService.dividasClaroInternet.Divida.DadosDivida.length > 2) this.apiRestService.showDisclaimer = false;
+      this.apiRestService.dividasClaroInternet.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+    }
   }
 
   getAllOpcoesClaroFixo() {
     this.mostrarAbas = [false, false, false, true];
 
-   if (!this.apiRestService.getAllOpcoesClaroFixo()) { 
+   this.apiRestService.getAllOpcoesClaroFixo();
+    this.loader = true;
     this.showHeader = false;
     this.movelLabel = true;
             
-    this.dadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
-   }
+    if (this.apiRestService.dividasClaroFixo.Divida.DadosDivida.length) {
+      if (this.apiRestService.dividasClaroFixo.Divida.DadosDivida.length > 2) this.apiRestService.showDisclaimer = false;
+      this.apiRestService.dividasClaroFixo.Divida.DadosDivida.forEach( (dados) => this.setOpcoes(dados.CodigoTitulo));
+    }
   }
   
   setOpcoes (cod: string) {

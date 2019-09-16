@@ -45,12 +45,16 @@ export class CpfCnpjBoxComponent implements OnInit {
   public verificando = false;
   public disclaimer = true;
 
-  cleanAlertsAndDisclaimer() {
+  clearAlerts() {
     this.cpf_inv = false; 
     this.cnpj_inv = false; 
     this.cpf_sem_debitos = false;
     this.cnpj_sem_debitos = false;
     this.input_inv = false;
+    
+  }
+
+  clearDisclaimer() {
     this.disclaimer = false;
   }
 

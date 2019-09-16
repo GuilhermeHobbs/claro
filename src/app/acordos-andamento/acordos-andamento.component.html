@@ -29,10 +29,10 @@
                         Status: {{ par.StatusParcelaAcordo }}
                     </div>
                     <div class="col-6 col-md-2 valor-mobile">
-                        {{ par.ValorParcela }}
+                        R$ {{ par.ValorParcela }}
                     </div>
                     <div class="col-4 col-md-2 no-padd-left">
-                        <a type="button" class="btn btn-primary padd-mobile" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.NumeroTitulo, ind)">
+                        <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.NumeroTitulo, ind)">
                             Segunda via do boleto        
                         </a>
                         <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
@@ -52,10 +52,10 @@
                             Status: {{ acordo.ParcelasAcordo.ParcelaAcordo.StatusParcelaAcordo }}
                         </div>
                         <div class="col-5 col-md-2 no-padd-right">
-                            Valor: {{ acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela }}
+                            Valor: R$ {{ acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela }}
                         </div>
                         <div class="col-5 col-md-2 no-padd-right no-padd-left">
-                            <a type="button" class="btn btn-primary padd-mobile" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0)">
+                            <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0)">
                                 Segunda via do boleto        
                             </a>                          
                             <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  

@@ -34,6 +34,10 @@ button {
       margin-bottom: 0px;            
     }
     
+    .btn-segunda {
+        margin-bottom: 30px;
+    }
+
     @media (max-width: 768px) {
         .no-padd-left {
             padding-left: 0;
@@ -88,4 +92,7 @@ button {
             padding: 2px;
         }
     
+        .btn-segunda {
+            margin-bottom: 0px;
+        }
     }    

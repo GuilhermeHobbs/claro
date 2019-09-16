@@ -31,24 +31,24 @@
         
         <tr><td colspan=11 class="BoletoPontilhado">&nbsp;</td></tr>
         <TR>
-          <TD colspan=4 class="BoletoLogo"><img src='assets/img/logo.jpg' style="width: 60px; padding: 5px"></TD>
-          <TD colspan=8 class="BoletoLinhaDigitavel">{{ linha }}</TD>
+          <TD colspan=3 class="BoletoLogo"><img src='assets/img/logo.jpg' style="width: 60px; padding: 5px"></TD>
+          <TD colspan=9 class="BoletoLinhaDigitavel">{{ linha }}</TD>
         </TR>
         <TR>
           <TD colspan=10 class=BoletoTituloEsquerdo>Nome do Cliente</TD>
-          <TD class=BoletoTituloDireito>Vencimento</TD>
+          <TD colspan=2 class=BoletoTituloDireito>Valor</TD>
         </TR>
         <TR>
           <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm; text-transform: capitalize'>{{ cliente }}</TD>
-          <TD class="BoletoValorDireito">{{ data }}</TD>
+          <TD colspan=2 class="BoletoValorDireito">R$ {{ valor }}</TD>
         </TR>  
         <TR>
-          <TD colspan=10 class="BoletoTituloEsquerdo">Valor</TD>
-          <TD class=BoletoTituloDireito>Contrato</TD>
+          <TD colspan=10 class="BoletoTituloEsquerdo">Contrato</TD>
+          <TD colspan=2 class=BoletoTituloDireito>Vencimento</TD>
         </TR>
         <TR>
-          <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>R$ {{ valor }}</TD>
-          <TD class=BoletoValorDireito>{{ contrato }}</TD>
+          <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>{{ contrato }}</TD>
+          <TD colspan=2 class=BoletoValorDireito>{{ data }}</TD>
         </TR>   
         <TR>
           <TD colspan=3 class=BoletoTituloEsquerdo>Data do Documento</TD>
@@ -66,22 +66,7 @@
           <TD class=BoletoValorEsquerdo>DataDoProces</TD>
           <TD class=BoletoValorDireito>NossoNumero</TD>
         </TR>  
-        <TR>
-          <TD colspan=3 class=BoletoTituloEsquerdo>Uso do Banco</TD>
-          <TD colspan=2 class=BoletoTituloEsquerdo>Carteira</TD>
-          <TD colspan=2 class=BoletoTituloEsquerdo>Moeda</TD>
-          <TD colspan=2 class=BoletoTituloEsquerdo>Quantidade</TD>
-          <TD class=BoletoTituloEsquerdo>(x) Valor</TD>
-          <TD class=BoletoTituloDireito>(=) Valor do Documento</TD>
-        </TR>
-        <TR>
-          <TD colspan=3 class=BoletoValorEsquerdo>&nbsp;</TD>
-          <TD colspan=2 class=BoletoValorEsquerdo>SR</TD>
-          <TD colspan=2 class=BoletoValorEsquerdo>R$</TD>
-          <TD colspan=2 class=BoletoValorEsquerdo>&nbsp;</TD>
-          <TD class=BoletoValorEsquerdo>&nbsp;</TD>
-          <TD class=BoletoValorDireito>ValorDocumento</TD>
-        </TR>  
+          
         <TR>
           <TD colspan=10 class=BoletoTituloEsquerdo>Instruco</TD>
           <TD class=BoletoTituloDireito>(-) Desconto</TD>

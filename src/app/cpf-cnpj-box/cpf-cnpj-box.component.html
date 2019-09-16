@@ -4,7 +4,7 @@
     <img src="assets/img/logo.png" alt="Claro" class="logo">
     <p>Quer negociar com a Claro? <br> Inicie aqui uma consulta sem custo!  </p>
         <div class="form-group"> 
-            <input type="text" [textMask]="mask()" class="form-control col-sm-8" aria-describedby="emailHelp" placeholder="Digite seu CPF ou CNPJ" [(ngModel)]="cpf_cnpj" (input)="cleanAlertsAndDisclaimer()" (keydown.backspace)="backspacePress($event)" (keydown.enter)="valida()">
+            <input type="text" [textMask]="mask()" class="form-control col-sm-8" aria-describedby="emailHelp" placeholder="Digite seu CPF ou CNPJ" [(ngModel)]="cpf_cnpj" (input)="clearAlerts()" (focus)="clearDisclaimer()"  (keydown.backspace)="backspacePress($event)" (keydown.enter)="valida()">
             <button type="submit" class="col-sm-3" (click)="valida()">Verificar</button>            
         <div class="input_error">
             <p *ngIf="cpf_inv">CPF inválido.</p>
