@@ -1,16 +1,18 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute } from '@angular/router';
+import bwipjs from 'bwip-angular2';
+
 
 @Component({
   selector: 'app-boleto',
   templateUrl: './boleto.component.html',
   styleUrls: ['./boleto.component.css']
 })
-  export class BoletoComponent {
+  export class BoletoComponent implements OnInit {
 
     @ViewChild('template', {static: false}) templateRef: TemplateRef<any>;
-
+    
   modalRef: BsModalRef;
 
   public linha: string;
@@ -27,7 +29,26 @@ import { ActivatedRoute } from '@angular/router';
     this.cliente = route.snapshot.queryParams.cliente;
     this.contrato = route.snapshot.queryParams.contrato;
 
-    
+  }
+  
+//this.linha.split(' ').join(''),
+
+  ngOnInit() { 
+    bwipjs('barcodeCanvas', {
+      bcid: 'interleaved2of5',        // Barcode type
+      text: this.linha.split(' ').join(''),   	  // Text to encode
+      scale: 3,               // 3x scaling factor
+      height: 10,             // Bar height, in millimeters
+      width: 10,
+      includetext: true,      // Show human-readable text
+      textxalign: 'center',   // Always good to set this
+    }, (err, cvs) => {
+      if (err) {
+        //document.getElementById('err').innerText = 'Error occured. See browser log for more information';
+        console.log(err);
+      } else {
+      }
+    });
   }
 
   ngAfterViewInit() {
