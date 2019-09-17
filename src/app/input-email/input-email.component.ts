@@ -13,7 +13,9 @@ export class InputEmailComponent implements OnInit {
 
    public email: string; 
    public email_inv: boolean;
-
+   public verificando: boolean;
+   public cadastrado: boolean;
+   public houve_erro: boolean;
 
   constructor(private apiRestService: ApiRestService) { }
 

@@ -28,20 +28,20 @@ export class ApiRestService {
 
   public opcoesPg = { }; 
 
-  private urlDadosDevedor = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/devedores'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
-  //private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
-  private urlDadosDivida = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/divida';   //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
-  //private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';
-  private urlOpcoesPagamento = 'https://my-json-server.typicode.com/GuilhermeHobbs/opcoes/opcoes'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
-  //private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
-  private urlDadosAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/dadosAcordo/acordo';  // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
-  //private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
-  private urlGravaAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/gravaAcordo/gravar';
-  //private urlGravaAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
-  private urlBoletoAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/boletoAcordo/boleto'; // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
-  //private urlBoletoAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
-  //private urlEnviaSms = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_smsenvio.php';
-  private urlEnviaSms = 'https://my-json-server.typicode.com/GuilhermeHobbs/smsEnvio/sms';
+  //private urlDadosDevedor = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/devedores'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
+  private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
+  //private urlDadosDivida = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/divida';   //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
+  private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';
+  //private urlOpcoesPagamento = 'https://my-json-server.typicode.com/GuilhermeHobbs/opcoes/opcoes'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
+  private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
+  //private urlDadosAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/dadosAcordo/acordo';  // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
+  private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
+  //private urlGravaAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/gravaAcordo/gravar';
+  private urlGravaAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
+  //private urlBoletoAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/boletoAcordo/boleto'; // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
+  private urlBoletoAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
+  private urlEnviaSms = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_smsenvio.php';
+  //private urlEnviaSms = 'https://my-json-server.typicode.com/GuilhermeHobbs/smsEnvio/sms';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -49,14 +49,6 @@ export class ApiRestService {
   
   
   constructor(private http: HttpClient) { }
-
-  notificarMotor(id: string) {
-   /* const params = new HttpParams().set('cpf', this.cpfCnpj)
-                                   .set('datahora', (new Date) as any)
-                                   .set('id', id)
-                                   .set('Operacao', 'Claro'); */
-    //this.http.post("https://fulltime.free.beeceptor.com", params, this.httpOptions).subscribe();
-  }
 
   temDividasouAcordo(cpfCnpj: string): Observable<any> {
      
@@ -88,32 +80,33 @@ export class ApiRestService {
   
  getDadosDevedor(cpfCnpj: string): Observable<Devedor> {
   const cpfCnpjParam = new HttpParams().set('cpf', cpfCnpj);
-   return this.http.get<Devedor>(this.urlDadosDevedor); //, cpfCnpjParam, this.httpOptions);
+   return this.http.post<Devedor>(this.urlDadosDevedor, cpfCnpjParam, this.httpOptions);
   }  
 
  getDadosDivida(cpfCnpj: string, codDevedor: string): Observable<Divida> {
   const cpfDevedorParam = new HttpParams()
   .set('cpf', cpfCnpj)    
   .set('codigodevedor', codDevedor);
-  return this.http.get<Divida>(this.urlDadosDivida); //,cpfDevedorParam, this.httpOptions);
+  return this.http.post<Divida>(this.urlDadosDivida,cpfDevedorParam, this.httpOptions);
  }  
 
  getOpcoesPagamento(codTitulo: string): Observable<OpcoesPagamento> {
   const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo)
                                        .set('cpf', this.cpfCnpj);    
-  return this.http.get<OpcoesPagamento>(this.urlOpcoesPagamento); //, cpfCnpjParam, this.httpOptions);
+  return this.http.post<OpcoesPagamento>(this.urlOpcoesPagamento, cpfCnpjParam, this.httpOptions);
  } 
 
  getDadosAcordo(codTitulo: string): Observable<any> {
-  const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo);
-  return this.http.get<any>(this.urlDadosAcordo); //, cpfCnpjParam, this.httpOptions);
+  const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo)
+                                       .set('cpf', this.cpfCnpj);
+  return this.http.post<any>(this.urlDadosAcordo, cpfCnpjParam, this.httpOptions);
  }
  
  getBoletoAcordo(codAcordo: string, codCodigoAcordo: string): Observable<Boleto> {
   const params = new HttpParams().set('codigoacordo', codAcordo)
                                  .set('codigoparcelaacordo', codCodigoAcordo)
                                  .set('cpf', this.cpfCnpj);    
-  return this.http.get<Boleto>(this.urlBoletoAcordo); //, params, this.httpOptions);
+  return this.http.post<Boleto>(this.urlBoletoAcordo, params, this.httpOptions);
  }
 
  enviaSms(codigobarra: string, vencimento: string, valor: string): Observable<any> {
@@ -122,7 +115,7 @@ export class ApiRestService {
                                  .set('vencimento', vencimento)
                                  .set('valor', valor)    
                                  .set('numeroenvio', this.telefone);
-  return this.http.get(this.urlEnviaSms); //, params, this.httpOptions);
+  return this.http.post(this.urlEnviaSms, params, this.httpOptions);
  }
  
 
@@ -135,7 +128,7 @@ export class ApiRestService {
                                        .set('vencimentoprimeira', vencimentoPrimeira)
                                        .set('valorprimeira', valorPrimeira);
 
-  return this.http.get(this.urlGravaAcordo); //, params, this.httpOptions);
+  return this.http.post(this.urlGravaAcordo, params, this.httpOptions);
  }
   
 

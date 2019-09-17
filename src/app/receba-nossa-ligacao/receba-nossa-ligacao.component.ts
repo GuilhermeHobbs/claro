@@ -10,6 +10,8 @@ export class RecebaNossaLigacaoComponent implements OnInit {
 
   constructor(private cd: ChangeDetectorRef, private apiRestService: ApiRestService) { }
 
+  public verificando: boolean;
+
   ngOnInit() {
   }
 

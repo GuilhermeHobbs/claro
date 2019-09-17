@@ -9,7 +9,7 @@ import { ApiRestService, Divida, OpcoesPagamento } from '../api-rest.service';
 })
 export class NegocieOnlineComponent implements OnInit, OnDestroy {
 
-  constructor(private apiRestService: ApiRestService, private cd: ChangeDetectorRef) { }
+  constructor(public apiRestService: ApiRestService, private cd: ChangeDetectorRef) { }
 
   ngOnDestroy() {
    // this.cd.detach();
@@ -183,8 +183,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   getValorTotal (cod: string) {
     if (this.opcoesPg[cod] && !this.opcoesPg[cod].Carregando) {
       if (this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido) {
-
-        this.parcelado[cod] = 1;
+        if (+this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido.replace(',','.') < 45.00) this.parcelado[cod] = 1;
         return this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido;      
       } else if (this.opcoesPg[cod].OpcaoPagamento.length) {
         this.parcelado[cod] = 2;

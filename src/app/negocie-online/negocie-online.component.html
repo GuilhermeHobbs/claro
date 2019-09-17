@@ -28,7 +28,7 @@
         </div>  
       </div>   
   
-    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
+    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento(0)" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
     <div class="loader-wrap-wrap" *ngIf="loader">  
         <div class="loader-wrap">
           <div class="loader"></div>
@@ -59,7 +59,7 @@
             <button type="button" class="btn btn-primary" *ngIf="!parcelado[div.CodigoTitulo]"> 
                 Aguarde...
             </button>            
-            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind, 0)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
+            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
               Parcelado
             </button>
             <button type="button" class="btn btn-primary font-15px" *ngIf="parcelado[div.CodigoTitulo] === 1" disabled> 
@@ -95,7 +95,7 @@
         </div>  
       </div>   
   
-    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
+    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento(0)" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
     <div class="loader-wrap-wrap" *ngIf="loader">  
         <div class="loader-wrap">
           <div class="loader"></div>
@@ -126,7 +126,7 @@
             <button type="button" class="btn btn-primary" *ngIf="!parcelado[div.CodigoTitulo]"> 
                 Aguarde...
             </button>            
-            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind, 0)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
+            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
               Parcelado
             </button>
             <button type="button" class="btn btn-primary font-15px" *ngIf="parcelado[div.CodigoTitulo] === 1" disabled> 
@@ -162,7 +162,7 @@
         </div>  
       </div>   
   
-    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
+    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento(0)" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
     <div class="loader-wrap-wrap" *ngIf="loader">  
         <div class="loader-wrap">
           <div class="loader"></div>
@@ -193,7 +193,7 @@
             <button type="button" class="btn btn-primary" *ngIf="!parcelado[div.CodigoTitulo]"> 
                 Aguarde...
             </button>            
-            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind, 0)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
+            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
               Parcelado
             </button>
             <button type="button" class="btn btn-primary font-15px" *ngIf="parcelado[div.CodigoTitulo] === 1" disabled> 
@@ -229,7 +229,7 @@
         </div>  
       </div>   
   
-    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento()" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
+    <app-prazo-finalizacao *ngIf="prazoFinalizacao" (clickVoltar)="showOpcoesParcelamento(0)" (clickVoltarAVista)="hideOpcoesParcelamento()"></app-prazo-finalizacao>
     <div class="loader-wrap-wrap" *ngIf="loader">  
         <div class="loader-wrap">
           <div class="loader"></div>
@@ -260,7 +260,7 @@
             <button type="button" class="btn btn-primary" *ngIf="!parcelado[div.CodigoTitulo]"> 
                 Aguarde...
             </button>            
-            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind, 0)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
+            <button type="button" class="btn btn-primary" (click)="showOpcoesParcelamento(ind)" *ngIf="parcelado[div.CodigoTitulo] === 2"> 
               Parcelado
             </button>
             <button type="button" class="btn btn-primary font-15px" *ngIf="parcelado[div.CodigoTitulo] === 1" disabled> 

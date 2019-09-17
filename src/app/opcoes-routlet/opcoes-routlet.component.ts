@@ -8,7 +8,7 @@ import { ApiRestService, Divida, Acordo } from '../api-rest.service';
 })
 export class OpcoesRoutletComponent implements OnInit {
 
-  constructor(private apiRestService: ApiRestService) { }
+  constructor(public apiRestService: ApiRestService) { }
 
   public nome: string = this.apiRestService.getNome();
   //////////////////////////////////////////////////////////////
@@ -51,9 +51,6 @@ export class OpcoesRoutletComponent implements OnInit {
       }
     }];
 */
-
-
-    this.apiRestService.notificarMotor('1');
   }
 
   negocieOnline() {

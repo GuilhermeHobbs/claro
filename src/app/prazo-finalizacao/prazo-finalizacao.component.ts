@@ -42,6 +42,8 @@ export class PrazoFinalizacaoComponent implements OnInit {
   ngOnInit() {
   }
 
+  enviarEmail() {}
+
   voltarEmail() {
     this.porEmail = false;
     this.sucesso = true;

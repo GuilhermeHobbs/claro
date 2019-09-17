@@ -21,6 +21,8 @@ export class InputTelComponent implements OnInit {
   public tel_inv: boolean;
   public cadastrado: boolean;
   public houve_erro: boolean;
+  public verificando: boolean;
+
 
   cleanAlerts() {
     this.tel_inv = false;  
@@ -35,6 +37,7 @@ export class InputTelComponent implements OnInit {
       this.tel_inv = true;
       return;
     }
+
   
     this.cadastrado = false;
     this.houve_erro = false;
