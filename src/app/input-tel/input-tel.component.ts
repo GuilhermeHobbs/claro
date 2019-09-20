@@ -29,15 +29,13 @@ export class InputTelComponent implements OnInit {
   }
 
   envia() {
-    let telNum = this.tel.replace(/[`\-()_.\{\}\[\]\\\/]/gi, '');
+    let telNum = this.tel.replace(/[`\-()_.\{\}\[\] \\\/]/gi, '');
     let ddd = telNum.slice(0,2);
     
-
     if (telNum.length < 11 || telNum.length > 12 || +ddd < 10) {
       this.tel_inv = true;
       return;
     }
-
   
     this.cadastrado = false;
     this.houve_erro = false;

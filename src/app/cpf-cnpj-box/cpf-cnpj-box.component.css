@@ -8,7 +8,7 @@
 }
 
 .tela-grid {
-    background: url(/assets/img/back.jpg) 100% 50% no-repeat;
+    background: url('~/landingpage/assets/img/back.jpg') 100% 50% no-repeat;
     height: 100%;
     position: relative;
     background-size: cover;
@@ -24,7 +24,7 @@
     position: absolute;
   right: 20px; 
   margin: auto; */
-  font-family: SourceSansPro;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: 600;
   font-size: 19px;
 }

@@ -9,7 +9,8 @@ import { ApiRestService, Divida, OpcoesPagamento } from '../api-rest.service';
 })
 export class NegocieOnlineComponent implements OnInit, OnDestroy {
 
-  constructor(public apiRestService: ApiRestService, private cd: ChangeDetectorRef) { }
+  constructor(public apiRestService: ApiRestService, private cd: ChangeDetectorRef) { 
+   }
 
   ngOnDestroy() {
    // this.cd.detach();
@@ -46,6 +47,10 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
       this.dadosDivida.push(this.apiRestService.dividas.Divida.DadosDivida);
     }
  // }
+ }
+
+ botaoNaoClicavel() {
+   return this.mostrarAbas.every(Boolean);
  }
 
   pagarAVista(codTitulo: string, valor: string, plano: string) {

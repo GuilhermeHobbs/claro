@@ -42,7 +42,38 @@ export class PrazoFinalizacaoComponent implements OnInit {
   ngOnInit() {
   }
 
-  enviarEmail() {}
+  enviarEmail() {
+    alert ("hey");
+    let codigoParcelaAcordo: string;
+    let numeroTitulo: string;
+    this.loadingBoleto = true;
+    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => {
+      console.log("acc=");
+      console.log(acc);
+      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
+      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+      numeroTitulo = acc.Acordo.DadosAcordo.NumeroTitulo.split('.')[0];
+
+      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => {
+       console.log(bol);
+       this.loadingBoleto = false;
+
+       if (bol.BoletoAcordo) { 
+        //this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: bol.BoletoAcordo.Valor, cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: numeroTitulo}});
+        this.apiRestService.enviaBoletoEmail (numeroTitulo, bol.BoletoAcordo.Valor, bol.BoletoAcordo.DataVencimento, bol.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
+          this.sucessoEmail = true;
+          console.log("RES SMS="); 
+          console.log(res);
+        });
+    
+      }
+       else {
+         this.erroBoleto = true;
+       }       
+    });
+  });
+    
+  }
 
   voltarEmail() {
     this.porEmail = false;
@@ -124,7 +155,9 @@ export class PrazoFinalizacaoComponent implements OnInit {
     this.loader = true;
     this.fim = false;
       if (this.apiRestService.parcelas.aVista) {
-        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.aVista).subscribe(res => {
+        console.log(this.dataPagamento.toLocaleString().slice(0,10));
+        
+        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, '1', this.dataPagamento.toLocaleString().slice(0,10), this.apiRestService.parcelas.aVista).subscribe(res => {
           console.log(res);  
           this.loader = false;
           if (res.Codigo === '12') {
@@ -140,7 +173,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
         });
       }
       else if (this.apiRestService.parcelas.primeira) {
-        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().split(',')[0], this.apiRestService.parcelas.primeira).subscribe(res => {
+        this.apiRestService.gravaAcordo(this.apiRestService.codTitulo, this.apiRestService.cpfCnpj, this.apiRestService.devedor.Devedores.Devedor.CodigoDevedor, this.apiRestService.plano, this.dataPagamento.toLocaleString().slice(0,10), this.apiRestService.parcelas.primeira).subscribe(res => {
           console.log(res);
           this.loader = false; 
           if (res.Codigo === '12') {

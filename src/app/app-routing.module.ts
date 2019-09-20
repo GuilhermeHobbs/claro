@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: CpfCnpjBoxComponent, pathMatch: 'full' }, //  CpfCnpjBoxComponent
   { path: 'negocie-online', component: NegocieOnlineComponent },
   { path: 'opcoes-routlet', component: OpcoesRoutletComponent },
-  { path: 'boleto', component: BoletoComponent } 
+  { path: 'landingpage/boleto', component: BoletoComponent } 
 ];
 
 @NgModule({

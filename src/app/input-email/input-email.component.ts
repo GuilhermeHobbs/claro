@@ -33,6 +33,10 @@ export class InputEmailComponent implements OnInit {
 
   envia() { 
     if (!this.validaEmail(this.email)) this.email_inv = true; 
+    else {
+      this.apiRestService.email = this.email;
+      this.clickEnviar.emit(true); 
+    }
   }
  
   voltar() {

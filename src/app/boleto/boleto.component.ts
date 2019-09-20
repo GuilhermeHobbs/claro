@@ -25,7 +25,7 @@ import bwipjs from 'bwip-angular2';
     
     this.linha = route.snapshot.queryParams.linha;
     this.valor = route.snapshot.queryParams.valor;
-    this.data = route.snapshot.queryParams.data;
+    this.data = decodeURIComponent(route.snapshot.queryParams.data);
     this.cliente = route.snapshot.queryParams.cliente;
     this.contrato = route.snapshot.queryParams.contrato;
 
@@ -37,14 +37,14 @@ import bwipjs from 'bwip-angular2';
     bwipjs('barcodeCanvas', {
       bcid: 'interleaved2of5',        // Barcode type
       text: this.linha.split(' ').join(''),   	  // Text to encode
-      scale: 3,               // 3x scaling factor
+      scale: 2,               // 3x scaling factor
       height: 10,             // Bar height, in millimeters
-      width: 10,
+      width: 6,
       includetext: true,      // Show human-readable text
       textxalign: 'center',   // Always good to set this
     }, (err, cvs) => {
       if (err) {
-        //document.getElementById('err').innerText = 'Error occured. See browser log for more information';
+       // document.getElementById('err').innerText = 'Error occured. See browser log for more information';
         console.log(err);
       } else {
       }

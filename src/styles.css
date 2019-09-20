@@ -1,15 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
-@font-face {
-    font-family: 'SourceSansPro';
-    src: url(assets/fonts/SourceSansPro-SemiBold.ttf);
-  }
   
   @font-face {
     font-family: 'DINOT-Medium';
-    src: url(assets/fonts/DINOT-Medium.ttf);
+    src: url('https://rawcdn.githack.com/Vizzuality/Data.GBIF/e76db8f262f8ad83976c29dc4a8974c174995561/assets/fonts/DINOT-Medium.ttf');
   }
 
 

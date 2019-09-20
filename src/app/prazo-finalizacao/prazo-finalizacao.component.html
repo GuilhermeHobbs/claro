@@ -55,7 +55,7 @@
 
 <div *ngIf="fim">
   <p class="detalhes-titulo">Detalhes do acordo:</p>
-  <p>Data do {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ dataPagamento.toLocaleString().split(',')[0] }}</p>
+  <p>Data do {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ dataPagamento.toLocaleString().slice(0,10) }}</p>
   <p>Valor {{ primeiraParcelado()? 'da primeira parcela':'' }}: R$ {{ primeiraParcelado()? primeiraParcelado():valorAVista() }}</p>
   <p *ngIf="vezesParcelado()">Demais parcelas: {{ vezesParcelado() }} x R$ {{ outrasParcelado() }}</p>
   <div class="row">

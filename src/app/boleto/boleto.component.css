@@ -38,4 +38,8 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
       td.BoletoLinhaDigitavel, td.BoletoValorDireito {
             text-align: left;
       }
+
+      .modal-body {
+        padding-left: 0;
+      }
 }      
