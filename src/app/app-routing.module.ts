@@ -5,11 +5,12 @@ import { OpcoesRoutletComponent } from './opcoes-routlet/opcoes-routlet.componen
 import { NegocieOnlineComponent } from './negocie-online/negocie-online.component';
 import { BoletoComponent } from './boleto/boleto.component';
 
+
 const routes: Routes = [
-  { path: '', component: CpfCnpjBoxComponent, pathMatch: 'full' }, //  CpfCnpjBoxComponent
+  { path: '', component: CpfCnpjBoxComponent, pathMatch: 'full' }, 
   { path: 'negocie-online', component: NegocieOnlineComponent },
   { path: 'opcoes-routlet', component: OpcoesRoutletComponent },
-  { path: 'landingpage/boleto', component: BoletoComponent } 
+  { path: 'boleto', component: BoletoComponent } 
 ];
 
 @NgModule({

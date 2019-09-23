@@ -43,7 +43,6 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   enviarEmail() {
-    alert ("hey");
     let codigoParcelaAcordo: string;
     let numeroTitulo: string;
     this.loadingBoleto = true;
@@ -139,7 +138,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
        console.log(bol);
        this.loadingBoleto = false;
 
-       if (bol.BoletoAcordo) { ///////////////////////////////////////////////////////////////////
+       if (bol.BoletoAcordo) { 
         //window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor, "_self");
         this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: bol.BoletoAcordo.Valor, cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: numeroTitulo}});
 

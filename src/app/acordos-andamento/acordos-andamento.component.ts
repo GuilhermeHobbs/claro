@@ -13,6 +13,12 @@ export class AcordosAndamentoComponent implements OnInit {
   public acordos = [ ];
   public loadingBoleto = [false];
   public erroBoleto: boolean;
+  public sucessoEmail: boolean;
+  public porEmail: boolean;
+  public sucessoSms: boolean;
+  public porSms: boolean;
+  public accDividas = true;
+  public boleto: Boleto;
 
   constructor(private apiRestService: ApiRestService, private router: Router) { }
 
@@ -46,13 +52,13 @@ export class AcordosAndamentoComponent implements OnInit {
        this.loadingBoleto[ind] = false;
 
        if (bol.BoletoAcordo) {
-          window.open ("/landingpage/boleto?data=" + encodeURIComponent(bol.BoletoAcordo.DataVencimento) + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor + "&cliente=" + this.apiRestService.getNome() + "&contrato=" + numeroTitulo);
-          /*this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, 
+          //window.open ("boleto?data=" + encodeURIComponent(bol.BoletoAcordo.DataVencimento) + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor + "&cliente=" + this.apiRestService.getNome() + "&contrato=" + numeroTitulo);
+          this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, 
             linha: bol.BoletoAcordo.LinhaDigitavel, 
             valor: bol.BoletoAcordo.Valor, 
             cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, 
             contrato: numeroTitulo
-          }}); */
+          }}); 
 
         }
        else {
@@ -60,6 +66,59 @@ export class AcordosAndamentoComponent implements OnInit {
        }
        
     });
+  }
+
+  voltarEmail() {
+    this.porEmail = false;
+    this.sucessoEmail = false;
+    this.accDividas = true;
+  }
+
+  voltarSms() {
+    this.porSms = false;
+    this.sucessoSms = false;
+    this.accDividas = true;
+  }
+
+  enviarSms() {
+    this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.Valor).subscribe(res => {
+      this.sucessoSms = true;
+      console.log("RES SMS="); 
+      console.log(res);
+   });
+  }
+
+  pegarTelefone(ind: number, codAcordo: string, codTitulo: any) {
+    this.accDividas = false;
+
+    let codigoParcelaAcordo: string;
+    this.loadingBoleto[ind] = true;
+    console.log("acoordo=");
+    console.log(codTitulo);
+    this.apiRestService.getDadosAcordo(codTitulo).subscribe (acc => { 
+      console.log("acc=");
+      console.log(acc);
+      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
+      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+      this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
+        this.loadingBoleto[ind] = false;
+        console.log("bol=");  
+        console.log(bol);
+               
+       if (bol.BoletoAcordo) {
+         this.porSms = true;
+         this.boleto = bol; 
+       } else this.erroBoleto = true;
+              
+    });
+  });
+
+  }
+
+  pegarEmail(ind: number) {
+    this.porEmail = true;
+    this.accDividas = false;
+
   }
 
 }
