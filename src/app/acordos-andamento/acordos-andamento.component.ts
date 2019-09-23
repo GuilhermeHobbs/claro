@@ -121,4 +121,6 @@ export class AcordosAndamentoComponent implements OnInit {
 
   }
 
+  enviarEmail () { }
+
 }

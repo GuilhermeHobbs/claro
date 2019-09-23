@@ -40,7 +40,7 @@
         <div class="acc-body">
          <p class="font-weight-bold">Parcelas</p>
           <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.length">
-            <div *ngFor="let par of acordo.ParcelasAcordo.ParcelaAcordo; let ind = index" class="row bottom-parcela">
+            <div *ngFor="let par of acordo.ParcelasAcordo.ParcelaAcordo; let ind = index" class="row bottom-parcela parcela-border">
                     <div class="col-6 col-md-2">
                          {{ par.DataVencimento }}
                     </div>
@@ -76,7 +76,7 @@
                     </div>
             </div>
          </div>
-         <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo" class="row">
+         <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo" class="row parcela-border">
                     <div class="col-6 col-md-2">
                          {{ acordo.ParcelasAcordo.ParcelaAcordo.DataVencimento }}
                         </div>
