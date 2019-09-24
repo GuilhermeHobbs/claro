@@ -107,20 +107,19 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   valorAVista() {
-    if (this.apiRestService.parcelas.aVista) return this.apiRestService.parcelas.aVista;
+    if (this.apiRestService.parcelas.aVista) return this.apiRestService.doisDigitosDecimais (this.apiRestService.parcelas.aVista);
   }
 
   primeiraParcelado() {
-    if (this.apiRestService.parcelas.primeira) return this.apiRestService.parcelas.primeira;
+    if (this.apiRestService.parcelas.primeira) return this.apiRestService.doisDigitosDecimais (this.apiRestService.parcelas.primeira);
   }
 
   vezesParcelado() {
-    console.log (this.apiRestService.parcelas);
     if (this.apiRestService.parcelas.vezes) return this.apiRestService.parcelas.vezes;
   }
 
   outrasParcelado() {
-    if (this.apiRestService.parcelas.outrasParcelas) return this.apiRestService.parcelas.outrasParcelas;
+    if (this.apiRestService.parcelas.outrasParcelas) return this.apiRestService.doisDigitosDecimais (this.apiRestService.parcelas.outrasParcelas);
   }
 
   abrirBoleto() {
@@ -140,7 +139,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
        if (bol.BoletoAcordo) { 
         //window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor, "_self");
-        this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: bol.BoletoAcordo.Valor, cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: numeroTitulo}});
+        this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: this.apiRestService.doisDigitosDecimais (bol.BoletoAcordo.Valor), cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: numeroTitulo}});
 
       }
        else {
@@ -190,7 +189,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   enviarSms() {
-    this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.Valor).subscribe(res => {
+    this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor)).subscribe(res => {
       this.sucessoSms = true;
       console.log("RES SMS="); 
       console.log(res);
@@ -216,7 +215,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
                
        if (bol.BoletoAcordo) {
          this.porSms = true;
-         this.boleto = bol; 
+          this.boleto = bol; 
        } else this.erroBoleto = true;
               
     });

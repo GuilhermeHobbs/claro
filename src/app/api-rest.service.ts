@@ -307,6 +307,12 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
           });
         });
        }
+   
+   doisDigitosDecimais (num: string) {
+     num = num.replace(',','.');
+     if (num.indexOf('.') === num.length-2) return num + '0';
+     else return num;
+   }   
 
 }
 

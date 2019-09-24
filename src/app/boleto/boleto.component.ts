@@ -32,8 +32,11 @@ import bwipjs from 'bwip-angular2';
   }
   
 //this.linha.split(' ').join(''),
+  public newDate = new Date();
+  public hoje = this.newDate.toLocaleString().slice(0,10);
 
   ngOnInit() { 
+    
     bwipjs('barcodeCanvas', {
       bcid: 'interleaved2of5',        // Barcode type
       text: this.linha.split(' ').join(''),   	  // Text to encode

@@ -188,11 +188,11 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   getValorTotal (cod: string) {
     if (this.opcoesPg[cod] && !this.opcoesPg[cod].Carregando) {
       if (this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido) {
-        if (+this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido.replace(',','.') < 45.00) this.parcelado[cod] = 1;
-        return this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido;      
+        if (+this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido.replace(',','.') < 45.00) this.parcelado[cod] = 1;        
+        return this.apiRestService.doisDigitosDecimais(this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido);
       } else if (this.opcoesPg[cod].OpcaoPagamento.length) {
         this.parcelado[cod] = 2;
-        return this.opcoesPg[cod].OpcaoPagamento[0].ValorCorrigido; 
+        return this.apiRestService.doisDigitosDecimais(this.opcoesPg[cod].OpcaoPagamento[0].ValorCorrigido);
       }  
     }
     else return "";      
@@ -204,17 +204,17 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     if (this.opcoesPg[cod]) {
       if (this.opcoesPg[cod].OpcaoPagamento.ValorNegociar) {
         this.parcelado[cod] = 1;
-        return this.opcoesPg[cod].OpcaoPagamento.ValorNegociar;      
+        return this.apiRestService.doisDigitosDecimais (this.opcoesPg[cod].OpcaoPagamento.ValorNegociar);      
       } else if (this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar) {
         this.parcelado[cod] = 2;
-        return this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar; 
+        return this.apiRestService.doisDigitosDecimais (this.opcoesPg[cod].OpcaoPagamento[0].ValorNegociar); 
       }  
     }
     else return "";      
   }
 
   getOpcaoFixo (ind: number) {
-    return this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+    return this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira) + " + " + ind + " X R$ " + this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas);
   } 
 
   getOpcaoTv (ind: number) {
@@ -224,7 +224,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     console.log(this.opcoesPg);
     console.log("ind=");
     console.log(ind);*/
-    return this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+    return this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira) + " + " + ind + " X R$ " + this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas);
   }
 
   getOpcaoMovel (ind: number) {
@@ -234,7 +234,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     console.log(this.opcoesPg);
     console.log("ind=");
     console.log(ind);*/
-    return this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+    return this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira) + " + " + ind + " X R$ " + this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas);
   }
 
   getOpcaoInternet (ind: number) {
@@ -244,7 +244,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
     console.log(this.opcoesPg);
     console.log("ind=");
     console.log(ind);*/
-    return this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira + " + " + ind + " X R$ " + this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas;
+    return this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorPrimeira) + " + " + ind + " X R$ " + this.apiRestService.doisDigitosDecimais (this.opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[this.ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].ValorDemaisParcelas);
   }
 
   showPrazoFinalizacao() {

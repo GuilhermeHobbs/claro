@@ -48,7 +48,7 @@
                         Status: {{ par.StatusParcelaAcordo }}
                     </div>
                     <div class="col-4 col-md-2 no-padd-right">
-                        R$ {{ par.ValorParcela }}
+                        R$ {{ apiRestService.doisDigitosDecimais(par.ValorParcela) }}
                     </div>
                     <div class="col-4 col-md-2 no-padd-right">
                         <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.CodigoTitulo, ind)">
@@ -84,7 +84,7 @@
                             Status: {{ acordo.ParcelasAcordo.ParcelaAcordo.StatusParcelaAcordo }}
                         </div>
                         <div class="col-4 col-md-2 no-padd-right">
-                           R$ {{ acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela }}
+                           R$ {{ apiRestService.doisDigitosDecimais(acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela) }}
                         </div>
                         <div class="col-4 col-md-2 no-padd-right">
                             <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0)">

@@ -20,7 +20,7 @@ export class AcordosAndamentoComponent implements OnInit {
   public accDividas = true;
   public boleto: Boleto;
 
-  constructor(private apiRestService: ApiRestService, private router: Router) { }
+  constructor(public apiRestService: ApiRestService, private router: Router) { }
 
   ngOnInit() {
       
@@ -55,7 +55,7 @@ export class AcordosAndamentoComponent implements OnInit {
           //window.open ("boleto?data=" + encodeURIComponent(bol.BoletoAcordo.DataVencimento) + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor + "&cliente=" + this.apiRestService.getNome() + "&contrato=" + numeroTitulo);
           this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, 
             linha: bol.BoletoAcordo.LinhaDigitavel, 
-            valor: bol.BoletoAcordo.Valor, 
+            valor: this.apiRestService.doisDigitosDecimais(bol.BoletoAcordo.Valor), 
             cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, 
             contrato: numeroTitulo
           }}); 
@@ -81,7 +81,7 @@ export class AcordosAndamentoComponent implements OnInit {
   }
 
   enviarSms() {
-    this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.Valor).subscribe(res => {
+    this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.apiRestService.doisDigitosDecimais(this.boleto.BoletoAcordo.Valor)).subscribe(res => {
       this.sucessoSms = true;
       console.log("RES SMS="); 
       console.log(res);
@@ -89,8 +89,6 @@ export class AcordosAndamentoComponent implements OnInit {
   }
 
   pegarTelefone(ind: number, codAcordo: string, codTitulo: any) {
-    this.accDividas = false;
-
     let codigoParcelaAcordo: string;
     this.loadingBoleto[ind] = true;
     console.log("acoordo=");
@@ -102,6 +100,7 @@ export class AcordosAndamentoComponent implements OnInit {
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
       this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
         this.loadingBoleto[ind] = false;
+        this.accDividas = false;
         console.log("bol=");  
         console.log(bol);
                
