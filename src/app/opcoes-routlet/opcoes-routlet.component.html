@@ -26,7 +26,7 @@
                             <p class="btn btn-acessar">Acessar</p>
                     </a>
     
-            <a class="card col-lg-2" (click)="assistenteVirtual()">
+            <a class="card col-lg-2" (click)="assistenteVirtual()" [hidden]="true">
                     <img src="assets/icons/assistente-virtual.png" class="card-img-top" alt="...">
                     <div class="card-body">
                     <h5 class="card-title">ASSISTENTE VIRTUAL</h5>
@@ -36,7 +36,7 @@
                     <p class="btn btn-acessar">Acessar</p>
             </a>
     
-            <a class="card col-lg-2" (click)="recebaNossaLigacao()">
+            <a class="card col-lg-2" (click)="recebaNossaLigacao()" [hidden]="true">
                     <img src="assets/icons/receber-ligacao.png" class="card-img-top" alt="...">
                     <div class="card-body">
                     <h5 class="card-title">RECEBA NOSSA LIGAÇÃO</h5>
@@ -55,7 +55,7 @@
                 </div>            
         </div>
 
-            <div class="card col-lg-2" *ngIf="cardBodyPagamento" (click)="fizPagamento()">
+            <div class="card col-lg-2" *ngIf="cardBodyPagamento" (click)="fizPagamento()" [hidden]="true">
                     <img src="assets/icons/fiz-pagamento.png" class="card-img-top" alt="...">
                     <div class="card-body">
                     <h5 class="card-title">JÁ FIZ O PAGAMENTO</h5>

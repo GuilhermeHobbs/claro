@@ -106,12 +106,12 @@ export class CpfCnpjBoxComponent implements OnInit {
     case 14: {
     if (this.testaCNPJ(cpfCnpj)) {
              
-  //      this.verificando = true; 
-    //  this.apiRestService.temDividas(cpfCnpj).subscribe(div => {
-      //  this.verificando = false;
-        //if (div) this.router.navigateByUrl('/opcoes-routlet');
-     //   else this.cnpj_sem_debitos = true;
-    //  });
+        this.verificando = true; 
+     this.apiRestService.temDividasouAcordo(cpfCnpj).subscribe(res => {
+        this.verificando = false;
+        if (res) this.router.navigateByUrl('/opcoes-routlet');
+        else this.cnpj_sem_debitos = true;
+      });
     }  
     else this.cnpj_inv = true; 
     break;

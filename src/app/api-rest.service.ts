@@ -70,6 +70,7 @@ export class ApiRestService {
      
      this.cpfCnpj = cpfCnpj;
      return this.getDadosDevedor(cpfCnpj).pipe( flatMap( (devedor: Devedor) => {
+      if (!devedor.Devedores) return of(false);
       this.devedor = devedor;
       console.log(devedor);
       return this.getDadosDivida(cpfCnpj, devedor.Devedores.Devedor.CodigoDevedor).pipe( map( (divida: Divida) => {
@@ -339,7 +340,7 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
   }
 
   export class Devedor {
-    Devedores: {
+    Devedores?: {
       Devedor: {
         Credor: string;
         CodigoDevedor: string;
