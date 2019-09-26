@@ -57,7 +57,7 @@ export class ApiRestService {
   //private urlEnviaSms = 'https://my-json-server.typicode.com/GuilhermeHobbs/smsEnvio/sms';
   private urlEnviaSms = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_smsenvio.php';
   //private urlEnviaSms = 'apiresposta/apirequest_smsenvio.php';
-  private urlBoletoEmail = 'http://186.215.156.250:8085/landingpage/geraboleto/boleto_claro.php';
+  private urlBoletoEmail = 'http://186.215.156.250:8085/landingpage/apiresposta/boleto/sendBill.php';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -150,12 +150,12 @@ export class ApiRestService {
   
 
  enviaBoletoEmail(contrato: string, valor: string, vencimento: string, linha: string, email: string): Observable<any> {
-  const params = new HttpParams().set('nome', this.devedor.Devedores.Devedor.Nome.toLocaleUpperCase())
+  const params = new HttpParams().set('cliente', this.devedor.Devedores.Devedor.Nome.toLocaleUpperCase())
                                  .set('cpf', this.cpfCnpj)
                                  .set('contrato', contrato)
                                  .set('valor', valor)
                                  .set('vencimento', vencimento)
-                                 .set('linha', linha)
+                                 .set('codigobarra', linha)
                                  .set('email', email);
 
   return this.http.post(this.urlBoletoEmail, params, this.httpOptions);

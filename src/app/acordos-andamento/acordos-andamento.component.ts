@@ -15,12 +15,15 @@ export class AcordosAndamentoComponent implements OnInit {
   public erroBoleto: boolean;
   public sucessoEmail: boolean;
   public porEmail: boolean;
-  public sucessoSms: boolean;
   public porSms: boolean;
   public accDividas = true;
   public boleto: Boleto;
-
-  constructor(public apiRestService: ApiRestService, private router: Router) { }
+  public numTitulo: string;
+  public emailRes: string;
+  public smsRes = '';
+  
+  constructor(public apiRestService: ApiRestService, private router: Router) {
+   }
 
   ngOnInit() {
       
@@ -76,21 +79,22 @@ export class AcordosAndamentoComponent implements OnInit {
 
   voltarSms() {
     this.porSms = false;
-    this.sucessoSms = false;
     this.accDividas = true;
   }
 
   enviarSms() {
     this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.apiRestService.doisDigitosDecimais(this.boleto.BoletoAcordo.Valor)).subscribe(res => {
-      this.sucessoSms = true;
-      console.log("RES SMS="); 
-      console.log(res);
+      this.smsRes = JSON.parse(res).statusDescription;
+      this.accDividas = true;
+      this.porSms = false;
    });
   }
 
   pegarTelefone(ind: number, codAcordo: string, codTitulo: any) {
     let codigoParcelaAcordo: string;
     this.loadingBoleto[ind] = true;
+    this.emailRes = '';
+    this.smsRes = '';
     console.log("acoordo=");
     console.log(codTitulo);
     this.apiRestService.getDadosAcordo(codTitulo).subscribe (acc => { 
@@ -114,12 +118,43 @@ export class AcordosAndamentoComponent implements OnInit {
 
   }
 
-  pegarEmail(ind: number) {
-    this.porEmail = true;
-    this.accDividas = false;
+  pegarEmail(ind: number, codAcordo: string, codTitulo: any, numTitulo: string) {
+    let codigoParcelaAcordo: string;
+    this.smsRes = '';
+    this.loadingBoleto[ind] = true;
+    this.numTitulo = numTitulo;
+    this.emailRes = '';
+    console.log("acoordo=");
+    console.log(codTitulo);
+    this.apiRestService.getDadosAcordo(codTitulo).subscribe (acc => { 
+      console.log("acc=");
+      console.log(acc);
+      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
+      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+      this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
+        //this.loadingBoleto[ind] = false;
+        //this.accDividas = false;
+        console.log("bol=");  
+        console.log(bol);
+               
+       if (bol.BoletoAcordo) {
+        this.loadingBoleto[ind] = false;
+        this.accDividas = false;
+        this.porEmail = true;
+        this.boleto = bol; 
+       } else this.erroBoleto = true;
+              
+    });
+  });
 
   }
 
-  enviarEmail () { }
+  enviarEmail () {
+    this.apiRestService.enviaBoletoEmail(this.numTitulo, this.boleto.BoletoAcordo.Valor, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
+      this.emailRes = res.message;
+      this.accDividas = true;
+      this.porEmail = false;
+    });
+ }
 
 }

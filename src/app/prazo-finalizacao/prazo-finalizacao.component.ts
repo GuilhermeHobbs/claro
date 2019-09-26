@@ -25,11 +25,12 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public loadingBoleto: boolean;
   public erroBoleto: boolean;
   public codAcordo: string;
-  public sucessoSms: boolean;
   public boleto: Boleto;
   public porSms: boolean;
   public porEmail: boolean;
-  public sucessoEmail: boolean;
+  public smsRes = '';
+  public emailRes = '';
+  public numeroTitulo: string; 
 
   constructor(private localeService: BsLocaleService, private apiRestService: ApiRestService, private router: Router) {
     this.localeService.use('pt-br');
@@ -43,47 +44,22 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   enviarEmail() {
-    let codigoParcelaAcordo: string;
-    let numeroTitulo: string;
-    this.loadingBoleto = true;
-    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => {
-      console.log("acc=");
-      console.log(acc);
-      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
-      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
-      numeroTitulo = acc.Acordo.DadosAcordo.NumeroTitulo.split('.')[0];
-
-      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => {
-       console.log(bol);
-       this.loadingBoleto = false;
-
-       if (bol.BoletoAcordo) { 
-        //this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: bol.BoletoAcordo.Valor, cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: numeroTitulo}});
-        this.apiRestService.enviaBoletoEmail (numeroTitulo, bol.BoletoAcordo.Valor, bol.BoletoAcordo.DataVencimento, bol.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
-          this.sucessoEmail = true;
-          console.log("RES SMS="); 
-          console.log(res);
-        });
-    
-      }
-       else {
-         this.erroBoleto = true;
-       }       
-    });
-  });
-    
+    this.apiRestService.enviaBoletoEmail(this.numeroTitulo, this.boleto.BoletoAcordo.Valor, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
+      this.emailRes = res.message;
+      this.porEmail = false;
+      this.sucesso = true;
+    });    
   }
 
   voltarEmail() {
     this.porEmail = false;
     this.sucesso = true;
-    this.sucessoEmail = false;
   }
 
   voltarSms() {
     this.porSms = false;
     this.sucesso = true;
-    this.sucessoSms = false;
+    this.smsRes = '';
   }
 
   showFinalizacao() {
@@ -190,7 +166,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
   enviarSms() {
     this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor)).subscribe(res => {
-      this.sucessoSms = true;
+      this.smsRes = JSON.parse(res).statusDescription;
       console.log("RES SMS="); 
       console.log(res);
    });
@@ -201,20 +177,20 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
     let codigoParcelaAcordo: string;
     this.loader = true;
-    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => { 
+    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => {  // "14306351"
       console.log("acc=");
       console.log(acc);
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
       console.log("this.codAcordo + + + codigoParcelaAcordo");      
       console.log("22547866 " + codigoParcelaAcordo);
-      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
+      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { // "22730208"
         this.loader = false;
         console.log("bol=");  
         console.log(bol);
                
        if (bol.BoletoAcordo) {
-         this.porSms = true;
+          this.porSms = true;
           this.boleto = bol; 
        } else this.erroBoleto = true;
               
@@ -224,8 +200,30 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   pegarEmail() {
-    this.porEmail = true;
-    this.sucesso = false;
+    let codigoParcelaAcordo: string;
+    
+    this.smsRes = '';
+    this.loader = true;
+    this.emailRes = '';
+    this.apiRestService.getDadosAcordo(this.apiRestService.codTitulo).subscribe (acc => { //  "14306351"
+      this.numeroTitulo = acc.Acordo.DadosAcordo.NumeroTitulo.split('.')[0];
+      console.log("acc=");
+      console.log(acc);
+      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
+      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+      this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { // "22730208"
+        console.log("bol=");  
+        console.log(bol);
+               
+       if (bol.BoletoAcordo) {
+        this.sucesso = false; 
+        this.loader = false;
+        this.porEmail = true;
+        this.boleto = bol; 
+       } else this.erroBoleto = true;
+              
+    });
+  });
 
   }  
 }

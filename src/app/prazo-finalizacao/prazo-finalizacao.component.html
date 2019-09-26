@@ -1,5 +1,5 @@
-<div *ngIf="sucessoEmail" class="mb-15">
-    <h1>E-mail enviado com sucesso!</h1>
+<div *ngIf="emailRes" class="mb-15">
+    <h1>{{ emailRes }}</h1>
 </div>
   
 <div *ngIf="porEmail">
@@ -7,8 +7,8 @@
     <app-input-email (clickEnviar)="enviarEmail()" (clickVoltar)="voltarEmail()"></app-input-email>
 </div>
   
-<div *ngIf="sucessoSms" class="mb-15">
-  <h1>SMS enviado com sucesso!</h1>
+<div *ngIf="smsRes" class="mb-15">
+  <h1>SMS enviado: {{ smsRes }}</h1>
 </div>
 
 <div *ngIf="porSms">
