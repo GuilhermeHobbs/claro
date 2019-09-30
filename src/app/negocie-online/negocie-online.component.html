@@ -84,7 +84,7 @@
     <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento && opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo]">
         <p class="w-100 pl-15px">Opções de Parcelamento:</p>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
-          <button type="button" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParceladoMovel(ind, apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
+          <button type="button" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParceladoTv(ind, apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
               R$ {{ getOpcaoTv(ind) }}
           </button>
         </div>
@@ -218,7 +218,7 @@
     <div class="row opcoes-parcelamento" *ngIf="opcoesParcelamento && opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo]">
         <p class="w-100 pl-15px">Opções de Parcelamento:</p>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
-          <button type="button" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParceladoMovel(ind, apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
+          <button type="button" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" class="btn btn-primary" (click)="showPrazoFinalizacao(); pagarParceladoFixo(ind, apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
               R$ {{ getOpcaoFixo(ind) }}
           </button>
         </div>
