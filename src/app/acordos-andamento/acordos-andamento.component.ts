@@ -42,10 +42,18 @@ export class AcordosAndamentoComponent implements OnInit {
       case "Móvel": {
         return "assets/icons/phone.jpg";
       }
-
+      case "Internet": {
+        return "assets/icons/internet.jpg";
+      }
+      case "TV": {
+        return "assets/icons/tv.jpg";
+      }
+      case "Fixo": {  
+        return "assets/icons/phone.jpg";  
     }
+   }
   }
-  
+
   segunda_via(codAcordo: string, codCodigoAcordo: string, numeroTitulo: string, ind: number) {
     numeroTitulo = numeroTitulo.split('.')[0];
     this.loadingBoleto[ind] = true;

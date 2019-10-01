@@ -16,7 +16,7 @@ export class InputTelComponent implements OnInit {
   ngOnInit() {
   }
 
-  public telMask = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/];
+  public telMask = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   public tel: string;
   public tel_inv: boolean;
   public cadastrado: boolean;

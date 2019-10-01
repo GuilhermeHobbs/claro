@@ -86,12 +86,16 @@ export class OpcoesRoutletComponent implements OnInit {
 
 
   voltarMenu() {
-    this.showOpcoes = true;
-    this.showNegocieOnline = false;
-    this.showAssistenteVirtual = false;
-    this.showRecebaNossaLigacao = false;
-    this.showAcordosAndamento = false;  
-    this.logo_menor = false;
+      this.showOpcoes = true;
+      this.showNegocieOnline = false;
+      this.showAssistenteVirtual = false;
+      this.showRecebaNossaLigacao = false;
+      this.showAcordosAndamento = false;  
+      this.logo_menor = false;
+    }
+
+  voltarInicio() {
+    window.open ("/");
   }
 
 }

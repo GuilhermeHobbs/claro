@@ -188,7 +188,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
   getValorTotal (cod: string) {
     if (this.opcoesPg[cod] && !this.opcoesPg[cod].Carregando) {
       if (this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido) {
-        if (+this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido.replace(',','.') < 45.00) this.parcelado[cod] = 1;        
+     //   if (+this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido.replace(',','.') < 45.00) this.parcelado[cod] = 1;        
         return this.apiRestService.doisDigitosDecimais(this.opcoesPg[cod].OpcaoPagamento.ValorCorrigido);
       } else if (this.opcoesPg[cod].OpcaoPagamento.length) {
         this.parcelado[cod] = 2;
