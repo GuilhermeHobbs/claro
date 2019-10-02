@@ -1,5 +1,5 @@
 .form-group {
-    max-width: 500px;
+    width: 500px;
     margin: 0 auto;
 }
 
@@ -84,5 +84,9 @@
     .cpf-box button {
         margin-left: 0px;
         margin-top: 10px;
+    }
+    
+    .form-group {
+        width: inherit;
     }    
 }    
