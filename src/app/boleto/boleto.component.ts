@@ -33,7 +33,7 @@ import bwipjs from 'bwip-angular2';
   
 //this.linha.split(' ').join(''),
   public newDate = new Date();
-  public hoje = this.newDate.toLocaleString().slice(0,10);
+  public hoje = (this.newDate.toLocaleString().indexOf(',') > -1)? this.newDate.toLocaleString().slice(0, 10) : this.newDate.toLocaleString().split(' ')[0];
 
   ngOnInit() { 
     
