@@ -26,27 +26,32 @@
 <div *ngIf="sucesso">
   <h4 class="font-weight-bold"> O Acordo foi realizado com sucesso!</h4>
   <br>
+  <p>Feito acordo em {{ vezesParcelado() + 1 }} parcelas no valor de {{ vezesParcelado() }} x R$ {{ outrasParcelado() }} com vencimento para o {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ (dataPagamento.toLocaleString().indexOf(',') > -1)? dataPagamento.toLocaleString().slice(0, 10) : dataPagamento.toLocaleString().split(' ')[0] }}</p>
   <h4>Como deseja receber seu boleto?</h4>
   <br>
   <div class="row">
       <div class="col-6 col-sm-4">
-        <button type="button" class="btn btn-primary" (click)="pegarEmail()">
+        <button type="button" class="btn btn-primary back-red" (click)="pegarEmail()">
           Por e-mail
         </button>
       </div>
       <div class="col-6 col-sm-4">
-        <button type="button" class="btn btn-primary" (click)="pegarTelefone()">
+        <button type="button" class="btn btn-primary back-red" (click)="pegarTelefone()">
           Por SMS
         </button>
       </div>
       <div class="col-sm-4">
-        <button type="button" class="btn btn-primary btn-mudar-parce" (click)="abrirBoleto()">
+        <button type="button" class="btn btn-primary btn-mudar-parce back-red" (click)="abrirBoleto()">
           Ver dados do boleto
         </button>
       </div>            
     </div>
     <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
-</div>
+    <div class="text-center">
+      <p>Em caso de dúvidas, ligue: 3003-8080 ou 0800-208-8080</p>
+      <p>De segunda a sexta-feira, das 08:00 às 21:00 e aos sábados das 09:00 às 16:00</p>
+    </div>
+  </div>
 
 <div *ngIf="erro">
   <h1> Houve um erro. Tente novamente, por favor.</h1>
@@ -65,7 +70,7 @@
       </button>
     </div>
     <div class="col-6 col-sm-4">
-      <button type="button" class="btn btn-primary" (click)="mudarData()">
+      <button type="button" class="btn btn-primary back-red" (click)="mudarData()">
         Mudar data
       </button>
     </div>
@@ -88,12 +93,12 @@
         [maxDate]="maxDate"  [(ngModel)]="dataPagamento">
     </div>  
     <div class="col-sm-3">
-      <button type="button" class="btn btn-primary" (click)="showFinalizacao()">
+      <button type="button" class="btn btn-primary back-red" (click)="showFinalizacao()">
           Realizar acordo
       </button>      
     </div>
     <div class="col-sm-3">      
-      <button type="button" class="btn btn-primary" (click)="voltar_data()">
+      <button type="button" class="btn btn-primary back-red" (click)="voltar_data()">
         Voltar
       </button>
     </div>    

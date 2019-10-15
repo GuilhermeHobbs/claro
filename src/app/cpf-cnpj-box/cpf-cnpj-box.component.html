@@ -4,9 +4,10 @@
     <img src="assets/img/logo.png" alt="Claro" class="logo">
     <p>Quer negociar com a Claro? <br> Inicie aqui uma consulta sem custo!  </p>
         <div class="form-group"> 
-            <input autofocus type="text" [textMask]="mask()" class="form-control col-sm-8" aria-describedby="emailHelp" placeholder="Digite seu CPF ou CNPJ" [(ngModel)]="cpf_cnpj" (input)="clearAlerts()" (focus)="clearDisclaimer()"  (keydown.backspace)="backspacePress($event)" (keydown.enter)="valida()">
+            <input autofocus type="text" [textMask]="mask()" class="form-control col-sm-8" aria-describedby="emailHelp" placeholder="Digite seu CPF ou CNPJ" [(ngModel)]="cpf_cnpj" (input)="clearAlerts()" (focus)="clearDisclaimer"  (keydown.backspace)="backspacePress($event)" (keydown.enter)="valida()">
             <button type="submit" class="col-sm-3" (click)="valida()">Verificar</button>            
         <div class="input_error">
+            <p *ngIf="erro">Houve um erro. Tente novamente, por favor.</p>
             <p *ngIf="cpf_inv">CPF inválido.</p>
             <p *ngIf="cnpj_inv">CNPJ inválido.</p>
             <p *ngIf="input_inv">Por favor, informe um CPF ou CNPJ.</p>
@@ -17,6 +18,6 @@
     </div> 
  </div>
 
-    <a class="fixed-bottom auto_inicio" target="_blank" href="http://www.fulltimesolucoes.com.br/" *ngIf="disclaimer">A Fulltime é uma empresa autorizada pela Claro para a cobrança de débito.</a>
+ <a class="fixed-bottom auto_inicio" target="_blank" href="http://www.fulltimesolucoes.com.br/" *ngIf="disclaimer">A Fulltime é uma empresa autorizada pela Claro para a cobrança de débito.</a>
 
 </div>

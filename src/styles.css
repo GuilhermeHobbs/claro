@@ -20,12 +20,20 @@ body, html {
     background: #f8f8f8;
 }
 
+a {
+  color: black;
+}
+
 a:hover {
   text-decoration: none;
 }
 
 .red {
   color: #e32620;
+}
+
+.back-red {
+  background: #e32620;
 }
 
 .mb-15 {

@@ -30,7 +30,6 @@ export class CpfCnpjBoxComponent implements OnInit {
       });
     });
      */
-
   }
 
   public cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
@@ -44,6 +43,7 @@ export class CpfCnpjBoxComponent implements OnInit {
   public input_inv = false;
   public verificando = false;
   public disclaimer = true;
+  public erro: boolean;
 
   clearAlerts() {
     this.cpf_inv = false; 
@@ -51,7 +51,7 @@ export class CpfCnpjBoxComponent implements OnInit {
     this.cpf_sem_debitos = false;
     this.cnpj_sem_debitos = false;
     this.input_inv = false;
-    
+    this.erro = false;
   }
 
   clearDisclaimer() {
@@ -95,8 +95,20 @@ export class CpfCnpjBoxComponent implements OnInit {
         this.verificando = true;
         this.apiRestService.temDividasouAcordo(cpfCnpj).subscribe(res => {
           this.verificando = false;
-          if (res) this.router.navigateByUrl('/opcoes-routlet');
-         else this.cpf_sem_debitos = true;
+          switch (res) {
+            case 0: {
+              this.cpf_sem_debitos = true;
+              break;              
+            }
+            case 1: { 
+              this.router.navigateByUrl('/opcoes-routlet');
+              break;
+            }
+            case 2: {
+              this.erro = true;
+              break;                
+            }
+          }
         }); 
       }
       else this.cpf_inv = true; 
@@ -109,8 +121,20 @@ export class CpfCnpjBoxComponent implements OnInit {
         this.verificando = true; 
      this.apiRestService.temDividasouAcordo(cpfCnpj).subscribe(res => {
         this.verificando = false;
-        if (res) this.router.navigateByUrl('/opcoes-routlet');
-        else this.cnpj_sem_debitos = true;
+        switch (res) {
+          case 0: {
+            this.cpf_sem_debitos = true;
+            break;              
+          }
+          case 1: { 
+            this.router.navigateByUrl('/opcoes-routlet');
+            break;
+          }
+          case 2: {
+            this.erro = true;
+            break;                
+          }
+        }
       });
     }  
     else this.cnpj_inv = true; 
