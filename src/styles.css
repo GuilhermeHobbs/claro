@@ -25,7 +25,7 @@ a {
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration: none;  
 }
 
 .red {
@@ -34,6 +34,15 @@ a:hover {
 
 .back-red {
   background: #e32620;
+}
+
+.btn-primary {
+  border: 1px solid rgba(0,0,0,.125);
+}
+
+.btn-primary:hover {
+  background: rgba(0,0,0,.125);
+  border: 1px solid rgba(0,0,0,.125);
 }
 
 .btn-link {

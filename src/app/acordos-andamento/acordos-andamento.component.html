@@ -51,20 +51,20 @@
                         R$ {{ apiRestService.doisDigitosDecimais(par.ValorParcela) }}
                     </div>
                     <div class="col-4 col-md-2 no-padd-right">
-                        <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.CodigoTitulo, ind)">
+                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.CodigoTitulo, ind)">
                             Ver segunda via do boleto        
                         </a>
                         <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
                     </div>
                     <div class="col-4 col-md-2 no-padd-right">
-                        <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="pegarEmail(ind, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo)">
+                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarEmail(ind, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo)">
                             Enviar por e-mail        
                         </a>                          
                         <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
                     </div>
                     
                     <div class="col-4 col-md-2 no-padd-right">
-                        <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="pegarTelefone(ind, acordo.CodigoAcordo, acordo.CodigoTitulo)">
+                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarTelefone(ind, acordo.CodigoAcordo, acordo.CodigoTitulo)">
                             Enviar por SMS        
                         </a>                          
                         <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
@@ -87,20 +87,20 @@
                            R$ {{ apiRestService.doisDigitosDecimais(acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela) }}
                         </div>
                         <div class="col-4 col-md-2 no-padd-right">
-                            <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0)">
+                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0)">
                                 Ver segunda via do boleto        
                             </a>                          
                             <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
                         </div>
                         <div class="col-4 col-md-2 no-padd-right">
-                            <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="pegarEmail(0, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo)">
+                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarEmail(0, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo)">
                                 Enviar por e-mail        
                             </a>                          
                             <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
                         </div>
                         
                         <div class="col-4 col-md-2 no-padd-right">
-                            <a type="button" class="btn btn-primary padd-mobile btn-segunda" (click)="pegarTelefone(0, acordo.CodigoAcordo, acordo.CodigoTitulo)">
+                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarTelefone(0, acordo.CodigoAcordo, acordo.CodigoTitulo)">
                                 Enviar por SMS        
                             </a>                          
                             <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
