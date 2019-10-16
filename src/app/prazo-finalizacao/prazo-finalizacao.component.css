@@ -18,6 +18,21 @@
     font-weight: bold;
 }
 
+.btn-voltar {
+    width: 25%;
+}    
+
+@media (min-width: 768px) {
+
+    .btn-voltar {
+        float: right;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+    }
+    
+}    
+
 @media (max-width: 768px) {
  
     .btn {

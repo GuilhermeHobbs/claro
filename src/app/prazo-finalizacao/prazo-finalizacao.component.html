@@ -85,22 +85,20 @@
 <div class="opcoes-parcelamento" *ngIf="opcoesParcelamento">
     <p class="escolha-data">Data para o pagamento:</p>
     <div class="row">
-    <div class="col-sm-4">
-        <input type="text"
-        placeholder="Clique para escolher uma data"
-        class="form-control"
-        bsDatepicker [minDate]="minDate"
-        [maxDate]="maxDate"  [(ngModel)]="dataPagamento">
-    </div>  
-    <div class="col-sm-3">
-      <button type="button" class="btn btn-primary back-red" (click)="showFinalizacao()">
-          Realizar acordo
-      </button>      
+      <div class="col-sm-4">
+          <input type="text"
+          placeholder="Clique para escolher uma data"
+          class="form-control"
+          bsDatepicker [minDate]="minDate"
+          [maxDate]="maxDate"  [(ngModel)]="dataPagamento">
+      </div>  
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-primary back-red" (click)="showFinalizacao()">
+            Realizar acordo
+        </button>      
+      </div>        
     </div>
-    <div class="col-sm-3">      
-      <button type="button" class="btn btn-primary back-red" (click)="voltar_data()">
-        Voltar
-      </button>
-    </div>    
-  </div>
+    <button type="button" class="btn btn-primary btn-voltar back-red" (click)="voltar_data()">
+      Voltar
+    </button>
 </div>  

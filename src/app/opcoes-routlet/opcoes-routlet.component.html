@@ -24,7 +24,7 @@
                             <p class="card-text">Clique e tenha as melhores condições para negociar com a Claro de forma rápida e prática.</p>
                             
                             </div>
-                            <p class="btn btn-acessar">Acessar</p>
+                            <p class="btn btn-acessar back-red">Acessar</p>
                     </a>
     
             <a class="card col-lg-2" (click)="assistenteVirtual()" [hidden]="true">
@@ -34,7 +34,7 @@
                     <p class="card-text">Converse agora com nosso Assistente Virtual, não perca tempo!</p>
                     
                     </div>
-                    <p class="btn btn-acessar">Acessar</p>
+                    <p class="btn btn-acessar back-red">Acessar</p>
             </a>
     
             <a class="card col-lg-2" (click)="recebaNossaLigacao()" [hidden]="true">
@@ -44,7 +44,7 @@
                     <p class="card-text">Quer receber uma ligação de nosso agente digital? Aqui é o lugar certo!</p>
                     
                     </div>
-                    <p class="btn btn-acessar">Acessar</p>
+                    <p class="btn btn-acessar back-red">Acessar</p>
             </a>
     
             <div class="col-lg-3 fiz-pagamento-ok" *ngIf="fizPagamentoOk">
@@ -63,7 +63,7 @@
                     <p class="card-text">Já realizou o pagamento de seus débitos com a claro? Pressione o botão abaixo!</p>
                         
                     </div>
-                    <p class="btn btn-acessar">Informar</p>
+                    <p class="btn btn-acessar back-red">Informar</p>
                 </div>
     
             <a class="card col-lg-2" (click)="acordosAndamento()" *ngIf="this.apiRestService.dividas.Acordo">
@@ -73,7 +73,7 @@
                     <p class="card-text">Se tiver um acordo em andamento, acesse aqui para retirar a 2ª via.</p>
                     
                     </div>
-                    <p class="btn btn-acessar">Acessar</p>
+                    <p class="btn btn-acessar back-red">Acessar</p>
             </a>
         </div>
      </div>    
