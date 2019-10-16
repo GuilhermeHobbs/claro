@@ -33,7 +33,7 @@ a:hover {
 }
 
 .back-red {
-  background: #e32620;
+  background: #e32620 !important;
 }
 
 .btn-primary {
