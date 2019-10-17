@@ -135,6 +135,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   gravaAcordo () {
     this.loader = true;
     this.fim = false;
+    this.erro = false;
       if (this.apiRestService.parcelas.aVista) {
         console.log(this.dataPagamento.toLocaleString().slice(0,10));
         
