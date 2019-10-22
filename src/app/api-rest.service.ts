@@ -32,34 +32,34 @@ export class ApiRestService {
 
   //private urlDadosDevedor = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/devedores'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
   //private urlDadosDevedor = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
-  private urlDadosDevedor = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
-  //private urlDadosDevedor = 'apiresposta/apirequest_getdadosdevedor.php';
+  //private urlDadosDevedor = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
+  private urlDadosDevedor = 'apiresposta/apirequest_getdadosdevedor.php';
   //private urlDadosDivida = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/divida';   //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
   //private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';
-  private urlDadosDivida = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';
-  //private urlDadosDivida = 'apiresposta/apirequest_getdadosdivida.php';
+  //private urlDadosDivida = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';
+  private urlDadosDivida = 'apiresposta/apirequest_getdadosdivida.php';
   //private urlOpcoesPagamento = 'https://my-json-server.typicode.com/GuilhermeHobbs/opcoes/opcoes'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
   //private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
-  private urlOpcoesPagamento = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php';
-  //private urlOpcoesPagamento = 'apiresposta/apirequest_getdadosopcoespagamento.php';
+  //private urlOpcoesPagamento = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php';
+  private urlOpcoesPagamento = 'apiresposta/apirequest_getdadosopcoespagamento.php';
   //private urlDadosAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/dadosAcordo/acordo';  // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
   //private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
-  private urlDadosAcordo = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
-  //private urlDadosAcordo = 'apiresposta/apirequest_getdadosacordo.php';
-  //private urlGravaAcordoTv = 'apiresposta/apirequest_gravaacordo_clarotv.php';
+  //private urlDadosAcordo = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
+  private urlDadosAcordo = 'apiresposta/apirequest_getdadosacordo.php';
+  private urlGravaAcordoTv = 'apiresposta/apirequest_gravaacordo_clarotv.php';
   //private urlGravaAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/gravaAcordo/gravar';
   //private urlGravaAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
-  private urlGravaAcordo = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
-  private urlGravaAcordoTv = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_gravaacordo_clarotv.php';
-  //private urlGravaAcordo = 'apiresposta/apirequest_gravaacordo.php';
+  //private urlGravaAcordo = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_gravaacordo.php';
+  //private urlGravaAcordoTv = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_gravaacordo_clarotv.php';
+  private urlGravaAcordo = 'apiresposta/apirequest_gravaacordo.php';
   //private urlBoletoAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/boletoAcordo/boleto'; // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
   //private urlBoletoAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
-  private urlBoletoAcordo = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
-  //private urlBoletoAcordo = 'apiresposta/apirequest_getboletoacordo.php';
+  //private urlBoletoAcordo = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_getboletoacordo.php';
+  private urlBoletoAcordo = 'apiresposta/apirequest_getboletoacordo.php';
   //private urlEnviaSms = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_smsenvio.php';
   //private urlEnviaSms = 'https://my-json-server.typicode.com/GuilhermeHobbs/smsEnvio/sms';
-  private urlEnviaSms = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_smsenvio.php';
-  //private urlEnviaSms = 'apiresposta/apirequest_smsenvio.php';
+  //private urlEnviaSms = 'http://186.215.156.250:8085/landingpage/apiresposta/apirequest_smsenvio.php';
+  private urlEnviaSms = 'apiresposta/apirequest_smsenvio.php';
   private urlBoletoEmail = 'http://186.215.156.250:8085/landingpage/apiresposta/boleto/sendBill.php';
 
   private httpOptions = {
@@ -174,7 +174,7 @@ export class ApiRestService {
   let nome = this.devedor.Devedores.Devedor.Nome.toLocaleUpperCase().split(' ')[0];
   const params = new HttpParams().set('cpf', this.cpfCnpj)
       .set('numeroenvio', this.telefone)
-      .set('textosms', nome + ", Código de barras da conta CLARO, Vencimento " + vencimento + ", Valor R$ " + valor + ", Código: " + codigobarra);  
+      .set('textosms', nome + ", Codigo Barras de sua conta CLARO. Vencimento: " + vencimento + ", R$ " + valor + ", Código: " + codigobarra);  
       return this.http.post(this.urlEnviaSms, params, this.httpOptions).pipe(
     retry(100),
     catchError(() => {

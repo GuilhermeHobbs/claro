@@ -94,6 +94,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
     if (this.apiRestService.parcelas.vezes) return this.apiRestService.parcelas.vezes;
   }
 
+  
   outrasParcelado() {
     if (this.apiRestService.parcelas.outrasParcelas) return this.apiRestService.doisDigitosDecimais (this.apiRestService.parcelas.outrasParcelas);
   }
