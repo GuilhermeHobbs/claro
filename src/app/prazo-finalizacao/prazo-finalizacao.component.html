@@ -24,11 +24,13 @@
 </div>  
 
 <div *ngIf="sucesso">
+  
   <h4 class="font-weight-bold"> O Acordo foi realizado com sucesso!</h4>
   <br>
-  <p>Feito acordo em {{ vezesParcelado() + 1 }} parcelas no valor de R$ {{ primeiraParcelado() }} + {{ vezesParcelado() }} x R$ {{ outrasParcelado() }} com vencimento para o {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ (dataPagamento.toLocaleString().indexOf(',') > -1)? dataPagamento.toLocaleString().slice(0, 10) : dataPagamento.toLocaleString().split(' ')[0] }}</p>
+  <p>Feito acordo em {{ vezesParcelado() + 1 }} parcela(s) no valor de R$ {{ primeiraParcelado() }} {{ (vezesParcelado())? ' + ' + vezesParcelado() + ' x R$ ' + outrasParcelado():'' }}  com vencimento para o {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ (dataPagamento.toLocaleString().indexOf(',') > -1)? dataPagamento.toLocaleString().slice(0, 10) : dataPagamento.toLocaleString().split(' ')[0] }}</p>
   <h4>Como deseja receber seu boleto?</h4>
   <br>
+  <h4 class="erro-boleto red" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</h4>
   <div class="row">
       <div class="col-6 col-sm-4">
         <button type="button" class="btn btn-primary back-red" (click)="pegarEmail()">
@@ -46,7 +48,7 @@
         </button>
       </div>            
     </div>
-    <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
+    
     <div class="text-center">
       <p>Em caso de dúvidas, ligue: 3003-8080 ou 0800-208-8080</p>
       <p>De segunda a sexta-feira, das 08:00 às 21:00 e aos sábados das 09:00 às 16:00</p>

@@ -54,20 +54,18 @@
                         <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.CodigoTitulo, ind)">
                             Ver segunda via do boleto        
                         </a>
-                        <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
+                        
                     </div>
                     <div class="col-4 col-md-2 no-padd-right">
                         <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarEmail(ind, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo)">
                             Enviar por e-mail        
                         </a>                          
-                        <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
                     </div>
                     
                     <div class="col-4 col-md-2 no-padd-right">
                         <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarTelefone(ind, acordo.CodigoAcordo, acordo.CodigoTitulo)">
                             Enviar por SMS        
                         </a>                          
-                        <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>  
                     </div>
                     <div class="col-2 col-md-1">
                         <div class="loader-wrap">
@@ -75,6 +73,7 @@
                         </div>    
                     </div>
             </div>
+            <div class="erro-boleto" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</div>
          </div>
          <div *ngIf="acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo" class="row parcela-border">
                     <div class="col-6 col-md-2">

@@ -140,7 +140,7 @@ export class AcordosAndamentoComponent implements OnInit {
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
       this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
-        //this.loadingBoleto[ind] = false;
+        this.loadingBoleto[ind] = false;
         //this.accDividas = false;
         console.log("bol=");  
         console.log(bol);

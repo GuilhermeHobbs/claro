@@ -88,10 +88,12 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
   primeiraParcelado() {
     if (this.apiRestService.parcelas.primeira) return this.apiRestService.doisDigitosDecimais (this.apiRestService.parcelas.primeira);
+    else return this.apiRestService.doisDigitosDecimais (this.apiRestService.parcelas.aVista);
   }
 
   vezesParcelado() {
     if (this.apiRestService.parcelas.vezes) return this.apiRestService.parcelas.vezes;
+    else return 0;
   }
 
   
@@ -201,14 +203,17 @@ export class PrazoFinalizacaoComponent implements OnInit {
       console.log("22547866 " + codigoParcelaAcordo);
       this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { // "22730208"
         this.loader = false;
+        
         console.log("bol=");  
         console.log(bol);
                
        if (bol.BoletoAcordo) {
-          this.porSms = true;
+          this.porSms = true;  
           this.boleto = bol; 
-       } else this.erroBoleto = true;
-              
+       } else {
+         this.erroBoleto = true;
+         this.sucesso = true;      
+       }
     });
   });
   }
@@ -234,14 +239,15 @@ export class PrazoFinalizacaoComponent implements OnInit {
       this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { // "22730208"
         console.log("bol=");  
         console.log(bol);
-               
-       if (bol.BoletoAcordo) {
-        
         this.loader = false;
+        
+       if (bol.BoletoAcordo) {
         this.porEmail = true;
         this.boleto = bol; 
-       } else this.erroBoleto = true;
-              
+       } else {
+         this.erroBoleto = true;
+         this.sucesso = true;
+       }     
     });
   });
 
