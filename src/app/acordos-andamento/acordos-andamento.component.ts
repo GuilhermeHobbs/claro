@@ -12,7 +12,7 @@ export class AcordosAndamentoComponent implements OnInit {
 
   public acordos = [ ];
   public loadingBoleto = [false];
-  public erroBoleto: boolean;
+  public erroBoleto = [false];
   public sucessoEmail: boolean;
   public porEmail: boolean;
   public porSms: boolean;
@@ -55,6 +55,7 @@ export class AcordosAndamentoComponent implements OnInit {
   }
 
   segunda_via(codAcordo: string, codCodigoAcordo: string, numeroTitulo: string, ind: number) {
+    this.erroBoleto[ind] = false;
     numeroTitulo = numeroTitulo.split('.')[0];
     this.loadingBoleto[ind] = true;
     console.log(codCodigoAcordo);
@@ -73,7 +74,8 @@ export class AcordosAndamentoComponent implements OnInit {
 
         }
        else {
-         this.erroBoleto = true;
+         
+         this.erroBoleto[ind] = true;
        }
        
     });
@@ -99,6 +101,7 @@ export class AcordosAndamentoComponent implements OnInit {
   }
 
   pegarTelefone(ind: number, codAcordo: string, codTitulo: any) {
+    this.erroBoleto[ind] = false;
     let codigoParcelaAcordo: string;
     this.loadingBoleto[ind] = true;
     this.emailRes = '';
@@ -112,14 +115,15 @@ export class AcordosAndamentoComponent implements OnInit {
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
       this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
         this.loadingBoleto[ind] = false;
-        this.accDividas = false;
+        
         console.log("bol=");  
         console.log(bol);
                
        if (bol.BoletoAcordo) {
-         this.porSms = true;
+        this.accDividas = false; 
+        this.porSms = true;
          this.boleto = bol; 
-       } else this.erroBoleto = true;
+       } else this.erroBoleto[ind] = true;
               
     });
   });
@@ -127,6 +131,7 @@ export class AcordosAndamentoComponent implements OnInit {
   }
 
   pegarEmail(ind: number, codAcordo: string, codTitulo: any, numTitulo: string) {
+    this.erroBoleto[ind] = false;
     let codigoParcelaAcordo: string;
     this.smsRes = '';
     this.loadingBoleto[ind] = true;
@@ -150,7 +155,7 @@ export class AcordosAndamentoComponent implements OnInit {
         this.accDividas = false;
         this.porEmail = true;
         this.boleto = bol; 
-       } else this.erroBoleto = true;
+       } else this.erroBoleto[ind] = true;
               
     });
   });

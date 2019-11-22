@@ -28,7 +28,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public boleto: Boleto;
   public porSms: boolean;
   public porEmail: boolean;
-  public smsRes = '';
+  public smsRes: boolean;
   public emailRes = '';
   public numeroTitulo: string; 
 
@@ -44,7 +44,9 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   enviarEmail() {
+    this.loader = true;
     this.apiRestService.enviaBoletoEmail(this.numeroTitulo, this.boleto.BoletoAcordo.Valor, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
+      this.loader = false;
       this.emailRes = res.message;
       this.porEmail = false;
       this.sucesso = true;
@@ -59,7 +61,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   voltarSms() {    
     this.porSms = false;
     this.sucesso = true;
-    this.smsRes = '';
+    this.smsRes = false;
   }
 
   showFinalizacao() {
@@ -95,7 +97,6 @@ export class PrazoFinalizacaoComponent implements OnInit {
     if (this.apiRestService.parcelas.vezes) return this.apiRestService.parcelas.vezes;
     else return 0;
   }
-
   
   outrasParcelado() {
     if (this.apiRestService.parcelas.outrasParcelas) return this.apiRestService.doisDigitosDecimais (this.apiRestService.parcelas.outrasParcelas);
@@ -178,10 +179,17 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   enviarSms() {
+    this.loader = true;
     this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor)).subscribe(res => {
-      this.smsRes = JSON.parse(res).statusDescription;
-      this.porSms = false;
-      this.sucesso = true;
+      this.loader = false;
+      if (res.response) {
+        this.smsRes = true;
+        this.porSms = false;
+        this.sucesso = true;
+      }
+      else {
+        this.erro = true;
+      }  
 
       console.log("RES SMS="); 
       console.log(res);
@@ -225,7 +233,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
   pegarEmail() {
     let codigoParcelaAcordo: string;    
-    this.smsRes = '';
+    this.smsRes = false;
     this.sucesso = false; 
     if (!this.boleto) {
     this.loader = true;

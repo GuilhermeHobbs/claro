@@ -23,7 +23,6 @@ export class InputTelComponent implements OnInit {
   public houve_erro: boolean;
   public verificando: boolean;
 
-
   cleanAlerts() {
     this.tel_inv = false;  
   }

@@ -157,7 +157,7 @@ export class NegocieOnlineComponent implements OnInit, OnDestroy {
 
   getAllOpcoesClaroFixo() {
     this.mostrarAbas = [false, false, false, true];
-
+    
    this.apiRestService.getAllOpcoesClaroFixo();
     this.loader = true;
     this.showHeader = false;
