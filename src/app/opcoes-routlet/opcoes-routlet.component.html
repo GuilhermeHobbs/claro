@@ -47,17 +47,8 @@
                     </div>
                     <p class="btn btn-acessar back-red">Acessar</p>
             </a>
-    
-            <div class="col-lg-3 fiz-pagamento-ok" *ngIf="fizPagamentoOk">
-                  <div class="container">
-                        <span class="red">Obrigada!</span><br>
-                        As informações de pagamento foram enviadas para a nossa central.<br>
-                        Caso necessário entraremos em contato no nosso número:<br> 
-                        0800 208 8080         
-                </div>            
-        </div>
-
-            <div class="card col-lg-2" (click)="fizPagamento()" *ngIf="this.apiRestService.dividas.Acordo">
+               
+            <div class="card col-lg-2" (click)="fizPagamento()">
                     <img src="assets/icons/fiz-pagamento.png" class="card-img-top" alt="...">
                     <div class="card-body">
                     <h5 class="card-title">JÁ FIZ O PAGAMENTO</h5>

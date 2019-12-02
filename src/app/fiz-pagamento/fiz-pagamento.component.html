@@ -1,42 +1,193 @@
-<h3 *ngIf="acordos.length > 1" class="text-center">Para qual acordo você fez o pagamento?</h3>  
-  <accordion [isAnimated]="true" [closeOthers]="true">   
-    <accordion-group *ngFor="let acordo of acordos">
-        <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading>
-         <div class="row">
-          <div class="col-12 col-sm-2 img-produto">
-             <img [src]="getIcon(acordo)" class="produto-img">  
-             <p class="titulo-mobile">{{ acordo.NumeroTitulo.split(' ')[1] }}</p>
-          </div>  
-            <div class="col-sm-3 col-4 btn-linha no-padd-left no-padd-right">  
-                Data: {{ acordo.DataAcordo }}
-            </div>              
-          <div class="col-5 btn-linha">
-              Status: {{ acordo.StatusAcordo }}
-          </div>
-          <div class="col-sm-2 col-3 btn-linha">
-              Filial: {{ acordo.FilialAcordo }}
-          </div>
-        </div>
-        </button>
-        
-        <div>
-            <p class="escolha-data">Data do pagamento:</p>
-            <div class="row">
-              <div class="col-7">
-                  <input type="text"
-                  placeholder="Clique para informar a data"
-                  class="form-control"
-                  bsDatepicker
-                  [maxDate]="maxDate" [(ngModel)]="dataPagamento">
-              </div>  
-              <div class="col-4">
-                <button type="button" class="btn btn-primary back-red" (click)="showFinalizacao()">
-                    Informar pagamento
-                </button>      
-              </div>  
+<accordion [isAnimated]="true" [closeOthers]="true">
+  
+  <accordion-group *ngIf="mostraAbaClaroMovel()">
+    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroMovel()"> <!-- [class.mobile-hidden]="!showHeader"-->
+      <img src="assets/icons/phone.jpg" class="produto-img" alt="...">
+      <div class="pull-left float-left produto-heading"><span>Claro Móvel</span> 
+        <span class="movelLabel" *ngIf="movelLabel">Selecione o débito que você pagou</span>
+      </div>        
+    </button>  
+    
+    <div class="row up-30px up-15px-mobile">
+              <div *ngFor="let par of acordosClaroMovelParcelas; let ind = index" class="col-xl-4">
+                <div class="metodo-pagamento">   
+                <div class="metodo-de-pagamento">
+                    <p class="font-weight-bold">Parcela de Negociação</p> 
+                    {{ par.DataVencimento }} - Valor original: {{ par.ValorParcela }} <br> Número do título: {{ par.NumeroTitulo }}
+                </div>   
+                <p class="btn btn-acessar">Paguei este débito</p>
+              </div>        
             </div>
-        </div>            
+
+     <div class="col-xl-4" *ngFor="let div of apiRestService.dividasClaroMovel.Divida.DadosDivida; let ind = index"> 
+      <div class="metodo-pagamento">
+        <div class="metodo-de-pagamento">
+          <!--<span class="font-weight-bold">Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }} </span><br>-->
+          <p class="font-weight-bold">Débito original</p>
+                
+              {{ div.Parcelas.ParcelaDivida.Vencimento }} - Valor original: {{ div.Parcelas.ParcelaDivida.Valor }} <br> Número do título: {{ div.NumeroTitulo }} 
+            </div>
+          <p class="btn btn-acessar">Paguei este débito</p>
         
-         
-    </accordion-group>
+      </div>  
+     </div>
+    </div>  
+    
+  </accordion-group>
+
+  <accordion-group *ngIf="mostraAbaClaroTv()">
+    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroTv()" > <!-- [class.mobile-hidden]="!showHeader" -->
+      <img src="assets/icons/tv.jpg" class="produto-img" alt="...">
+      <div class="pull-left float-left produto-heading"><span>Claro TV</span> 
+        <span class="movelLabel" *ngIf="movelLabel">Selecione o débito que você pagou</span>
+      </div>        
+    </button>  
+   
+    <div class="loader-wrap-wrap" *ngIf="loader">  
+        <div class="loader-wrap">
+          <div class="loader"></div> 
+        </div>  
+      </div>
+      
+      <div class="row up-30px up-15px-mobile">
+          <div *ngFor="let par of acordosClaroTvParcelas; let ind = index" class="col-xl-4">
+            <div class="metodo-pagamento">   
+            <div class="metodo-de-pagamento">
+                <p class="font-weight-bold">Parcela de Negociação</p>
+                {{ par.DataVencimento }} - {{ par.StatusParcelaAcordo }} <br> Número do título: {{ par.NumeroTitulo }}
+            </div>   
+            <p class="btn btn-acessar">Paguei este débito</p>
+          </div>        
+        </div>
+
+ <div class="col-xl-4" *ngFor="let div of apiRestService.dividasClaroTv.Divida.DadosDivida; let ind = index"> 
+  <div class="metodo-pagamento">
+    <div class="metodo-de-pagamento">
+      <!--<span class="font-weight-bold">Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }} </span><br>-->
+      <p class="font-weight-bold">Débito original</p>
+          {{ div.Parcelas.ParcelaDivida.Vencimento }} - Valor original: {{ div.Parcelas.ParcelaDivida.Valor }}  <br> Número do título: {{ div.NumeroTitulo }}
+      </div>
+      <p class="btn btn-acessar">Paguei este débito</p>
+    
+  </div>  
+ </div>
+</div> 
+  </accordion-group> 
+    
+  <accordion-group *ngIf="mostraAbaClaroInternet()">
+    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroInternet()" > <!-- [class.mobile-hidden]="!showHeader" -->
+      <img src="assets/icons/internet.jpg" class="produto-img" alt="...">
+      <div class="pull-left float-left produto-heading"><span>Claro Internet</span> 
+        <span class="movelLabel" *ngIf="movelLabel">Selecione o débito que você pagou</span>
+      </div>        
+    </button>  
+   
+    <div class="loader-wrap-wrap" *ngIf="loader">  
+        <div class="loader-wrap">
+          <div class="loader"></div> 
+        </div>  
+      </div>
+      
+      <div class="row up-30px up-15px-mobile">
+          <div *ngFor="let par of acordosClaroInternetParcelas; let ind = index" class="col-xl-4">
+            <div class="metodo-pagamento">   
+            <div class="metodo-de-pagamento">
+                <p class="font-weight-bold">Parcela de Negociação</p>
+                {{ par.DataVencimento }} - {{ par.StatusParcelaAcordo }} <br> Número do título: {{ par.NumeroTitulo }}
+            </div>   
+            <p class="btn btn-acessar">Paguei este débito</p>
+          </div>        
+        </div>
+
+ <div class="col-xl-4" *ngFor="let div of apiRestService.dividasClaroInternet.Divida.DadosDivida; let ind = index"> 
+  <div class="metodo-pagamento">
+    <div class="metodo-de-pagamento">
+      <!--<span class="font-weight-bold">Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }} </span><br>-->
+      <p class="font-weight-bold">Débito original</p>
+          {{ div.Parcelas.ParcelaDivida.Vencimento }} - Valor original: {{ div.Parcelas.ParcelaDivida.Valor }} <br> Número do título: {{ div.NumeroTitulo }}
+        </div>
+      <p class="btn btn-acessar">Paguei este débito</p>    
+  </div>  
+ </div>
+</div> 
+  </accordion-group>
+
+  <accordion-group *ngIf="mostraAbaClaroFixo()">
+    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroFixo()" > <!-- [class.mobile-hidden]="!showHeader" -->
+      <img src="assets/icons/internet.jpg" class="produto-img" alt="...">
+      <div class="pull-left float-left produto-heading"><span>Claro Fixo</span> 
+        <span class="movelLabel" *ngIf="movelLabel">Selecione o débito que você pagou</span>
+      </div>        
+    </button>  
+   
+    <div class="loader-wrap-wrap" *ngIf="loader">  
+        <div class="loader-wrap">
+          <div class="loader"></div> 
+        </div>  
+      </div>
+      
+      <div class="row up-30px up-15px-mobile">
+          <div *ngFor="let par of acordosClaroFixoParcelas; let ind = index" class="col-xl-4">
+            <div class="metodo-pagamento">   
+            <div class="metodo-de-pagamento">
+                <p class="font-weight-bold">Parcela de Negociação</p>
+                {{ par.DataVencimento }} - {{ par.StatusParcelaAcordo }} <br> Número do título: {{ par.NumeroTitulo }}
+            </div>   
+            <p class="btn btn-acessar">Paguei este débito</p>
+          </div>        
+        </div>
+
+ <div class="col-xl-4" *ngFor="let div of apiRestService.dividasClaroFixo.Divida.DadosDivida; let ind = index"> 
+  <div class="metodo-pagamento">
+    <div class="metodo-de-pagamento">
+      <!--<span class="font-weight-bold">Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }} </span><br>-->
+      <p class="font-weight-bold">Débito original</p>      
+          {{ div.Parcelas.ParcelaDivida.Vencimento }} - Valor original: {{ div.Parcelas.ParcelaDivida.Valor }} <br> Número do título: {{ div.NumeroTitulo }} 
+        </div>
+      <p class="btn btn-acessar">Paguei este débito</p>    
+  </div>  
+ </div>
+</div> 
+  </accordion-group>
+
+  
+  <accordion-group *ngIf="mostraAbaClaroFixo()">
+    <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading (click)="getAllOpcoesClaroFixo()" > <!-- [class.mobile-hidden]="!showHeader" -->
+      <img src="assets/icons/internet.jpg" class="produto-img" alt="...">
+      <div class="pull-left float-left produto-heading"><span>Claro Fixo</span> 
+        <span class="movelLabel" *ngIf="movelLabel">Selecione o débito que você pagou</span>
+      </div>        
+    </button>  
+   
+    <div class="loader-wrap-wrap" *ngIf="loader">  
+        <div class="loader-wrap">
+          <div class="loader"></div> 
+        </div>  
+      </div>
+      
+      <div class="row up-30px up-15px-mobile">
+          <div *ngFor="let par of acordosClaroFixoParcelas; let ind = index" class="col-xl-4">
+            <div class="metodo-pagamento">   
+            <div class="metodo-de-pagamento">
+                <p class="font-weight-bold">Parcela de Negociação</p>
+                {{ par.DataVencimento }} - {{ par.StatusParcelaAcordo }} <br> Número do título: {{ par.NumeroTitulo }}
+            </div>   
+            <p class="btn btn-acessar">Paguei este débito</p>
+          </div>        
+        </div>
+
+ <div class="col-xl-4" *ngFor="let div of apiRestService.dividasClaroFixo.Divida.DadosDivida; let ind = index"> 
+  <div class="metodo-pagamento">
+    <div class="metodo-de-pagamento">
+      <!--<span class="font-weight-bold">Valor total: R$ {{ getValorTotal(div.CodigoTitulo) }} </span><br>-->
+      <p class="font-weight-bold">Débito original</p>      
+          {{ div.Parcelas.ParcelaDivida.Vencimento }} - Valor original: {{ div.Parcelas.ParcelaDivida.Valor }} <br> Número do título: {{ div.NumeroTitulo }}
+        </div>
+      <p class="btn btn-acessar">Paguei este débito</p>
+  </div>  
+ </div>
+</div> 
+  </accordion-group>
+
+
 </accordion>

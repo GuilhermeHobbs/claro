@@ -255,6 +255,7 @@ export class ApiRestService {
     }
   };
 
+  if (this.dividas && this.dividas.Divida) {
     
   if (this.dividas.Divida.DadosDivida.length) {
     this.dividasClaroMovel.Divida.DadosDivida = this.dividas.Divida.DadosDivida.filter( div => div.Produto === "Claro Móvel" );  
@@ -292,6 +293,7 @@ export class ApiRestService {
  }
 }
 
+ }
  getAllOpcoesClaroMovel() {
 
 if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) return true;  
