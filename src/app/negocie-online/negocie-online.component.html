@@ -18,7 +18,7 @@
         <p class="w-100 pl-15px no-margimBottom-mobile">Opções de Parcelamento:</p>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
           <button type="button" class="btn btn-primary back-red" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" (click)="showPrazoFinalizacao(); pagarParceladoMovel(ind, apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
-              R$ {{ getOpcaoMovel(ind) }}
+              R$ {{ apiRestService.doisDigitosDecimais(getOpcaoMovel(ind)) }}
           </button>
         </div>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroMovel.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4"> 
@@ -52,7 +52,7 @@
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->
             <button type="button" class="btn btn-primary back-red" (click)="showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
-              À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} 
+              À vista:<br> R$ {{ apiRestService.doisDigitosDecimais(getValorNegociar(div.CodigoTitulo)) }} 
             </button>
           </div>
           <div class="col-6">
@@ -85,7 +85,7 @@
         <p class="w-100 pl-15px">Opções de Parcelamento:</p>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
           <button type="button" class="btn btn-primary back-red" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" (click)="showPrazoFinalizacao(); pagarParceladoTv(ind, apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
-              R$ {{ getOpcaoTv(ind) }}
+              R$ {{ apiRestService.doisDigitosDecimais(getOpcaoTv(ind)) }}
           </button>
         </div>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroTv.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4"> 
@@ -119,7 +119,7 @@
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->
             <button type="button" class="btn btn-primary back-red" (click)="showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
-              À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} 
+              À vista:<br> R$ {{ apiRestService.doisDigitosDecimais(getValorNegociar(div.CodigoTitulo)) }} 
             </button>
           </div>
           <div class="col-6">
@@ -152,7 +152,7 @@
         <p class="w-100 pl-15px">Opções de Parcelamento:</p>
         <div class="col-xs-12 col-sm-6 wrap-opcao-btn" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
           <button type="button" class="btn btn-primary back-red" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" (click)="showPrazoFinalizacao(); pagarParceladoMovel(ind, apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
-              R$ {{ getOpcaoInternet(ind) }}
+              R$ {{ apiRestService.doisDigitosDecimais(getOpcaoInternet(ind)) }}
           </button>
         </div>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroInternet.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4"> 
@@ -186,7 +186,7 @@
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->
             <button type="button" class="btn btn-primary back-red" (click)="showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
-              À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} 
+              À vista:<br> R$ {{ apiRestService.doisDigitosDecimais(getValorNegociar(div.CodigoTitulo)) }} 
             </button>
           </div>
           <div class="col-6">
@@ -219,7 +219,7 @@
         <p class="w-100 pl-15px">Opções de Parcelamento:</p>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" *ngFor="let opc of opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento; let ind = index" [hidden]="!ind">
           <button type="button" class="btn btn-primary back-red" [class.btn-smaller]="opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4" (click)="showPrazoFinalizacao(); pagarParceladoFixo(ind, apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo, opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento[ind].Plano)"> 
-              R$ {{ getOpcaoFixo(ind) }}
+              R$ {{ apiRestService.doisDigitosDecimais(getOpcaoFixo(ind)) }}
           </button>
         </div>
         <div class="col-xs-12 col-sm-6" [class.col-lg-4]="opcoesPg[this.apiRestService.dividasClaroFixo.Divida.DadosDivida[ind_parcelado].CodigoTitulo].OpcaoPagamento.length > 4"> 
@@ -253,7 +253,7 @@
         <div class="row">  
           <div class="col-6 pr-0"> <!--  col-sm-3 -->
             <button type="button" class="btn btn-primary back-red" (click)="showPrazoFinalizacao(); pagarAVista(div.CodigoTitulo, getValorNegociar(div.CodigoTitulo), opcoesPg[div.CodigoTitulo].OpcaoPagamento.Plano)"> 
-              À vista:<br> R$ {{ getValorNegociar(div.CodigoTitulo) }} 
+              À vista:<br> R$ {{ apiRestService.doisDigitosDecimais(getValorNegociar(div.CodigoTitulo)) }} 
             </button>
           </div>
           <div class="col-6">

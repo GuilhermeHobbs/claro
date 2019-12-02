@@ -1,0 +1,42 @@
+<h3 *ngIf="acordos.length > 1" class="text-center">Para qual acordo você fez o pagamento?</h3>  
+  <accordion [isAnimated]="true" [closeOthers]="true">   
+    <accordion-group *ngFor="let acordo of acordos">
+        <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading>
+         <div class="row">
+          <div class="col-12 col-sm-2 img-produto">
+             <img [src]="getIcon(acordo)" class="produto-img">  
+             <p class="titulo-mobile">{{ acordo.NumeroTitulo.split(' ')[1] }}</p>
+          </div>  
+            <div class="col-sm-3 col-4 btn-linha no-padd-left no-padd-right">  
+                Data: {{ acordo.DataAcordo }}
+            </div>              
+          <div class="col-5 btn-linha">
+              Status: {{ acordo.StatusAcordo }}
+          </div>
+          <div class="col-sm-2 col-3 btn-linha">
+              Filial: {{ acordo.FilialAcordo }}
+          </div>
+        </div>
+        </button>
+        
+        <div>
+            <p class="escolha-data">Data do pagamento:</p>
+            <div class="row">
+              <div class="col-7">
+                  <input type="text"
+                  placeholder="Clique para informar a data"
+                  class="form-control"
+                  bsDatepicker
+                  [maxDate]="maxDate" [(ngModel)]="dataPagamento">
+              </div>  
+              <div class="col-4">
+                <button type="button" class="btn btn-primary back-red" (click)="showFinalizacao()">
+                    Informar pagamento
+                </button>      
+              </div>  
+            </div>
+        </div>            
+        
+         
+    </accordion-group>
+</accordion>

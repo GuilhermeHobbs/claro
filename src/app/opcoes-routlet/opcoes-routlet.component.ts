@@ -17,8 +17,7 @@ export class OpcoesRoutletComponent implements OnInit {
   showAssistenteVirtual: boolean;
   showRecebaNossaLigacao: boolean;
   showAcordosAndamento: boolean;
-  cardBodyPagamento: boolean = true;
-  fizPagamentoOk: boolean;
+  showFizPagamento: boolean;
 
   logo_menor: boolean;
 
@@ -70,12 +69,10 @@ export class OpcoesRoutletComponent implements OnInit {
   } 
 
   fizPagamento() {    
-    this.apiRestService.fizPagamento().subscribe(res => {
-      if (res) {
-        this.cardBodyPagamento = false;
-        this.fizPagamentoOk = true;
-      }  
-    });
+    this.showOpcoes = false;
+    this.showFizPagamento = true;
+    this.logo_menor = true;
+    this.apiRestService.showDisclaimer = false;
   }
 
   acordosAndamento() {
@@ -90,8 +87,10 @@ export class OpcoesRoutletComponent implements OnInit {
       this.showNegocieOnline = false;
       this.showAssistenteVirtual = false;
       this.showRecebaNossaLigacao = false;
-      this.showAcordosAndamento = false;  
+      this.showAcordosAndamento = false;
+      this.showFizPagamento = false;  
       this.logo_menor = false;
+      this.apiRestService.showDisclaimer = true;
     }
 
   voltarInicio() {

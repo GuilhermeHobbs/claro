@@ -27,7 +27,7 @@
   
   <h4 class="font-weight-bold"> O Acordo foi realizado com sucesso!</h4>
   <br>
-  <p>Feito acordo em {{ vezesParcelado() + 1 }} parcela(s) no valor de R$ {{ primeiraParcelado() }} {{ (vezesParcelado())? ' + ' + vezesParcelado() + ' x R$ ' + outrasParcelado():'' }}  com vencimento para o {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ (dataPagamento.toLocaleString().indexOf(',') > -1)? dataPagamento.toLocaleString().slice(0, 10) : dataPagamento.toLocaleString().split(' ')[0] }}</p>
+  <p>Feito acordo em {{ vezesParcelado() + 1 }} parcela(s) no valor de R$ {{ apiRestService.doisDigitosDecimais(primeiraParcelado()) }} {{ (vezesParcelado())? ' + ' + vezesParcelado() + ' x R$ ' + apiRestService.doisDigitosDecimais(outrasParcelado()):'' }}  com vencimento para o {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ (dataPagamento.toLocaleString().indexOf(',') > -1)? dataPagamento.toLocaleString().slice(0, 10) : dataPagamento.toLocaleString().split(' ')[0] }}</p>
   <h4>Como deseja receber seu boleto?</h4>
   <br>
   <h4 class="erro-boleto red" *ngIf="erroBoleto">Houve um erro. Tente novamente, por favor.</h4>
@@ -63,8 +63,8 @@
 <div *ngIf="fim">
   <p class="detalhes-titulo">Detalhes do acordo:</p>
   <p>Data do {{ primeiraParcelado()? 'primeiro':'' }} pagamento: {{ (dataPagamento.toLocaleString().indexOf(',') > -1)? dataPagamento.toLocaleString().slice(0, 10) : dataPagamento.toLocaleString().split(' ')[0] }}</p>
-  <p>Valor {{ primeiraParcelado()? 'da primeira parcela':'' }}: R$ {{ primeiraParcelado()? primeiraParcelado():valorAVista() }}</p>
-  <p *ngIf="vezesParcelado()">Demais parcelas: {{ vezesParcelado() }} x R$ {{ outrasParcelado() }}</p>
+  <p>Valor {{ primeiraParcelado()? 'da primeira parcela':'' }}: R$ {{ primeiraParcelado()? apiRestService.doisDigitosDecimais(primeiraParcelado()):apiRestService.doisDigitosDecimais(valorAVista()) }}</p>
+  <p *ngIf="vezesParcelado()">Demais parcelas: {{ vezesParcelado() }} x R$ {{ apiRestService.doisDigitosDecimais(outrasParcelado()) }}</p>
   <div class="row">
     <div class="col-sm-4">
       <button type="button" class="btn btn-yellow" (click)="gravaAcordo()"> <!-- sucesso = true; this.fim = false; -->

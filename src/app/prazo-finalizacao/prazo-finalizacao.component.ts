@@ -32,7 +32,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   public emailRes = '';
   public numeroTitulo: string; 
 
-  constructor(private localeService: BsLocaleService, private apiRestService: ApiRestService, private router: Router) {
+  constructor(private localeService: BsLocaleService, public apiRestService: ApiRestService, private router: Router) {
     this.localeService.use('pt-br');
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -45,7 +45,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
   enviarEmail() {
     this.loader = true;
-    this.apiRestService.enviaBoletoEmail(this.numeroTitulo, this.boleto.BoletoAcordo.Valor, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
+    this.apiRestService.enviaBoletoEmail(this.numeroTitulo, this.apiRestService.doisDigitosDecimais(this.boleto.BoletoAcordo.Valor), this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
       this.loader = false;
       this.emailRes = res.message;
       this.porEmail = false;
@@ -120,8 +120,8 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
        if (bol.BoletoAcordo) {
          this.boleto = bol; 
-        //window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + bol.BoletoAcordo.Valor, "_self");
-        this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: this.apiRestService.doisDigitosDecimais (bol.BoletoAcordo.Valor), cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: this.numeroTitulo}});
+        window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais (bol.BoletoAcordo.Valor) +  "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome +  "&contrato=" + this.numeroTitulo, "_blank");
+        //this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: this.apiRestService.doisDigitosDecimais (bol.BoletoAcordo.Valor), cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: this.numeroTitulo}});
 
       }
        else {
@@ -132,7 +132,8 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   else {
-    this.router.navigate(['/boleto'] , { queryParams: { data: this.boleto.BoletoAcordo.DataVencimento, linha: this.boleto.BoletoAcordo.LinhaDigitavel, valor: this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor), cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: this.numeroTitulo}});
+    window.open ("/boleto?data=" + this.boleto.BoletoAcordo.DataVencimento + "&linha=" + this.boleto.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor) +  "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome +  "&contrato=" + this.numeroTitulo, "_blank");
+    //this.router.navigate(['/boleto'] , { queryParams: { data: this.boleto.BoletoAcordo.DataVencimento, linha: this.boleto.BoletoAcordo.LinhaDigitavel, valor: this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor), cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: this.numeroTitulo}});
   }
 }
   
@@ -207,8 +208,6 @@ export class PrazoFinalizacaoComponent implements OnInit {
       console.log(acc);
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
-      console.log("this.codAcordo + + + codigoParcelaAcordo");      
-      console.log("22547866 " + codigoParcelaAcordo);
       this.apiRestService.getBoletoAcordo(this.codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { // "22730208"
         this.loader = false;
         
