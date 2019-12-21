@@ -24,7 +24,6 @@ import { AcordosAndamentoComponent } from './acordos-andamento/acordos-andamento
 import { PrazoFinalizacaoComponent } from './prazo-finalizacao/prazo-finalizacao.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BoletoComponent } from './boleto/boleto.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { InputTelComponent } from './input-tel/input-tel.component';
 import { InputEmailComponent } from './input-email/input-email.component';
 import { FizPagamentoComponent } from './fiz-pagamento/fiz-pagamento.component';
@@ -53,7 +52,6 @@ import { FizPagamentoComponent } from './fiz-pagamento/fiz-pagamento.component';
     HttpClientModule,
     AccordionModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

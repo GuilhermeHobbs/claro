@@ -1,7 +1,7 @@
 import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute } from '@angular/router';
 import bwipjs from 'bwip-angular2';
+import { ApiRestService } from '../api-rest.service';
 
 
 @Component({
@@ -13,57 +13,52 @@ import bwipjs from 'bwip-angular2';
 
     @ViewChild('template', {static: false}) templateRef: TemplateRef<any>;
     
-  modalRef: BsModalRef;
 
   public linha: string;
   public data: string;
   public valor: string;
   public cliente: string;
   public contrato: string;
+  public codigo: string;
 
-  constructor(private modalService: BsModalService, route: ActivatedRoute) {
+  constructor(route: ActivatedRoute, public apiRestService: ApiRestService) {
     
     this.linha = route.snapshot.queryParams.linha;
     this.valor = route.snapshot.queryParams.valor;
     this.data = decodeURIComponent(route.snapshot.queryParams.data);
     this.cliente = route.snapshot.queryParams.cliente;
     this.contrato = route.snapshot.queryParams.contrato;
+    this.codigo = route.snapshot.queryParams.codigo;
+    //this.codigo = this.apiRestService.linhaDigitavelToCodigoBarras(this.linha);
 
   }
   
 //this.linha.split(' ').join(''),
   public newDate = new Date();
+  // Necessario para funcionar bug no Edge:
   public hoje = (this.newDate.toLocaleString().indexOf(',') > -1)? this.newDate.toLocaleString().slice(0, 10) : this.newDate.toLocaleString().split(' ')[0];
 
   ngOnInit() { 
-    setTimeout(this.mostrarBoleto, 1000, this.linha); 
+    setTimeout(this.mostrarBoleto, 1000, this.codigo);  // necessario carregar o codigo de barras depois do resto da pagina 
   }
   
-  mostrarBoleto(linha: string) {
+  mostrarBoleto(codigo: string) {
 
     bwipjs('barcodeCanvas', {
       bcid: 'interleaved2of5',        // Barcode type
-      text: linha.split(' ').join(''),   	  // Text to encode
-      scale: 2,               // 3x scaling factor
-      height: 10,             // Bar height, in millimeters
-      width: 6,
+      text: codigo,   	  // Text to encode
+      scale: 1,               // 3x scaling factor
+      height: 20,             // Bar height, in millimeters
+   //   width: 6,
       includetext: true,      // Show human-readable text
       textxalign: 'center',   // Always good to set this
     }, (err, cvs) => {
       if (err) {
-       // document.getElementById('err').innerText = 'Error occured. See browser log for more information';
         console.log(err);
       } else {
       }
     });
   }
 
-  ngAfterViewInit() {
-    const initialState = {
-      writerProfileActive: true,
-      smallInfoActive: false
-      };
-    this.modalRef = this.modalService.show(this.templateRef, {initialState, class: 'modal-lg'});
-  }
   
 }

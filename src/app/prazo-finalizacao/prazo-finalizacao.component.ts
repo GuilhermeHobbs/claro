@@ -120,7 +120,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
 
        if (bol.BoletoAcordo) {
          this.boleto = bol; 
-        window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais (bol.BoletoAcordo.Valor) +  "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome +  "&contrato=" + this.numeroTitulo, "_blank");
+        window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais (bol.BoletoAcordo.Valor) +  "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome +  "&contrato=" + this.numeroTitulo + "&codigo=" + this.apiRestService.linhaDigitavelToCodigoBarras(bol.BoletoAcordo.LinhaDigitavel), "_blank");
         //this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, linha: bol.BoletoAcordo.LinhaDigitavel, valor: this.apiRestService.doisDigitosDecimais (bol.BoletoAcordo.Valor), cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: this.numeroTitulo}});
 
       }
@@ -132,7 +132,7 @@ export class PrazoFinalizacaoComponent implements OnInit {
   }
 
   else {
-    window.open ("/boleto?data=" + this.boleto.BoletoAcordo.DataVencimento + "&linha=" + this.boleto.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor) +  "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome +  "&contrato=" + this.numeroTitulo, "_blank");
+    window.open ("/boleto?data=" + this.boleto.BoletoAcordo.DataVencimento + "&linha=" + this.boleto.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor) +  "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome +  "&contrato=" + this.numeroTitulo + "&codigo=" + this.apiRestService.linhaDigitavelToCodigoBarras(this.boleto.BoletoAcordo.LinhaDigitavel), "_blank");
     //this.router.navigate(['/boleto'] , { queryParams: { data: this.boleto.BoletoAcordo.DataVencimento, linha: this.boleto.BoletoAcordo.LinhaDigitavel, valor: this.apiRestService.doisDigitosDecimais (this.boleto.BoletoAcordo.Valor), cliente: this.apiRestService.devedor.Devedores.Devedor.Nome, contrato: this.numeroTitulo}});
   }
 }

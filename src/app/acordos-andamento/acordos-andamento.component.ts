@@ -12,7 +12,9 @@ export class AcordosAndamentoComponent implements OnInit {
 
   public acordos = [ ];
   public loadingBoleto = [false];
-  public erroBoleto = [false];
+  public loader = false;
+  public erroBoleto = [[false]];
+  public erro = false;
   public sucessoEmail: boolean;
   public porEmail: boolean;
   public porSms: boolean;
@@ -34,7 +36,12 @@ export class AcordosAndamentoComponent implements OnInit {
     }
     if (this.apiRestService.acordos.CodigoAcordo) {
       this.acordos.push(this.apiRestService.acordos);
-    }  
+    }
+    
+    this.acordos.forEach( (acc, ind) => {
+      this.erroBoleto[ind] = [];
+     });
+    
   }
 
   getIcon(acordo) {
@@ -54,8 +61,10 @@ export class AcordosAndamentoComponent implements OnInit {
    }
   }
 
-  segunda_via(codAcordo: string, codCodigoAcordo: string, numeroTitulo: string, ind: number) {
-    this.erroBoleto[ind] = false;
+  segunda_via(codAcordo: string, codCodigoAcordo: string, numeroTitulo: string, ind: number, indAcordo: number) {
+    console.log("indAcordo=");
+    console.log(indAcordo);
+    this.erroBoleto[indAcordo][ind] = false;
     numeroTitulo = numeroTitulo.split('.')[0];
     this.loadingBoleto[ind] = true;
     console.log(codCodigoAcordo);
@@ -64,7 +73,7 @@ export class AcordosAndamentoComponent implements OnInit {
        this.loadingBoleto[ind] = false;
 
        if (bol.BoletoAcordo) {
-          window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais(bol.BoletoAcordo.Valor) + "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome + "&contrato=" + numeroTitulo);
+          window.open ("/boleto?data=" + bol.BoletoAcordo.DataVencimento + "&linha=" + bol.BoletoAcordo.LinhaDigitavel + "&valor=" + this.apiRestService.doisDigitosDecimais(bol.BoletoAcordo.Valor) + "&cliente=" + this.apiRestService.devedor.Devedores.Devedor.Nome + "&contrato=" + numeroTitulo + "&codigo=" + this.apiRestService.linhaDigitavelToCodigoBarras(bol.BoletoAcordo.LinhaDigitavel));
           /* this.router.navigate(['/boleto'] , { queryParams: { data: bol.BoletoAcordo.DataVencimento, 
             linha: bol.BoletoAcordo.LinhaDigitavel, 
             valor: this.apiRestService.doisDigitosDecimais(bol.BoletoAcordo.Valor), 
@@ -75,7 +84,7 @@ export class AcordosAndamentoComponent implements OnInit {
         }
        else {
          
-         this.erroBoleto[ind] = true;
+         this.erroBoleto[indAcordo][ind] = true;
        }
        
     });
@@ -85,23 +94,33 @@ export class AcordosAndamentoComponent implements OnInit {
     this.porEmail = false;
     this.sucessoEmail = false;
     this.accDividas = true;
+    this.erro = false;
+    this.loader = false;
   }
 
   voltarSms() {
     this.porSms = false;
     this.accDividas = true;
+    this.erro = false;
+    this.loader = false;
   }
 
   enviarSms() {
+    this.loader = true;
     this.apiRestService.enviaSms( this.boleto.BoletoAcordo.LinhaDigitavel, this.boleto.BoletoAcordo.DataVencimento, this.apiRestService.doisDigitosDecimais(this.boleto.BoletoAcordo.Valor)).subscribe(res => {
-      this.smsRes = JSON.parse(res).statusDescription;
-      this.accDividas = true;
-      this.porSms = false;
+      this.loader = false;
+      if (res.response) {
+        this.accDividas = true;
+        this.porSms = false;
+      }
+      else {
+        this.erro = true;
+      }
    });
   }
 
-  pegarTelefone(ind: number, codAcordo: string, codTitulo: any) {
-    this.erroBoleto[ind] = false;
+  pegarTelefone(ind: number, codAcordo: string, codTitulo: any, indAcordo: number) {
+    this.erroBoleto[indAcordo][ind] = false;
     let codigoParcelaAcordo: string;
     this.loadingBoleto[ind] = true;
     this.emailRes = '';
@@ -111,6 +130,11 @@ export class AcordosAndamentoComponent implements OnInit {
     this.apiRestService.getDadosAcordo(codTitulo).subscribe (acc => { 
       console.log("acc=");
       console.log(acc);
+      if (acc.Acordo.DadosAcordo.length) {
+        console.log(".length");
+        console.log(ind);
+        acc.Acordo.DadosAcordo = acc.Acordo.DadosAcordo[indAcordo];
+      }
       if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
       else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
       this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
@@ -123,15 +147,15 @@ export class AcordosAndamentoComponent implements OnInit {
         this.accDividas = false; 
         this.porSms = true;
          this.boleto = bol; 
-       } else this.erroBoleto[ind] = true;
+       } else this.erroBoleto[indAcordo][ind] = true;
               
     });
   });
 
   }
 
-  pegarEmail(ind: number, codAcordo: string, codTitulo: any, numTitulo: string) {
-    this.erroBoleto[ind] = false;
+  pegarEmail(ind: number, codAcordo: string, codTitulo: any, numTitulo: string, indAcordo: number) {
+    this.erroBoleto[indAcordo][ind] = false;
     let codigoParcelaAcordo: string;
     this.smsRes = '';
     this.loadingBoleto[ind] = true;
@@ -140,30 +164,41 @@ export class AcordosAndamentoComponent implements OnInit {
     console.log("acoordo=");
     console.log(codTitulo);
     this.apiRestService.getDadosAcordo(codTitulo).subscribe (acc => { 
-      console.log("acc=");
-      console.log(acc);
-      if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
-      else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
-      this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
-        this.loadingBoleto[ind] = false;
-        //this.accDividas = false;
-        console.log("bol=");  
-        console.log(bol);
-               
-       if (bol.BoletoAcordo) {
-        this.loadingBoleto[ind] = false;
-        this.accDividas = false;
-        this.porEmail = true;
-        this.boleto = bol; 
-       } else this.erroBoleto[ind] = true;
-              
-    });
+          console.log("acc=");
+          console.log(acc);
+
+          console.log(acc.Acordo.DadosAcordo)
+      if (acc.Acordo.DadosAcordo.length) {
+        console.log(".length");
+        console.log(ind);
+        acc.Acordo.DadosAcordo = acc.Acordo.DadosAcordo[indAcordo];
+      }
+        console.log(acc.Acordo.DadosAcordo)
+          if (acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.length) codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo[0].CodigoParcelaAcordo;
+          else codigoParcelaAcordo = acc.Acordo.DadosAcordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo;
+          this.apiRestService.getBoletoAcordo(codAcordo, codigoParcelaAcordo).subscribe ((bol: Boleto) => { 
+            this.loadingBoleto[ind] = false;
+            //this.accDividas = false;
+            console.log("bol=");  
+            console.log(bol);
+                  
+          if (bol.BoletoAcordo) {
+            this.loadingBoleto[ind] = false;
+            this.accDividas = false;
+            this.porEmail = true;
+            this.boleto = bol; 
+          } else this.erroBoleto[indAcordo][ind] = true;
+                  
+        });
+      
   });
 
   }
 
   enviarEmail () {
-    this.apiRestService.enviaBoletoEmail(this.numTitulo, this.boleto.BoletoAcordo.Valor, this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
+    this.loader = true;
+    this.apiRestService.enviaBoletoEmail(this.numTitulo.split('.')[0], this.apiRestService.doisDigitosDecimais(this.boleto.BoletoAcordo.Valor), this.boleto.BoletoAcordo.DataVencimento, this.boleto.BoletoAcordo.LinhaDigitavel, this.apiRestService.email).subscribe(res => {
+      this.loader = false;
       this.emailRes = res.message;
       this.accDividas = true;
       this.porEmail = false;

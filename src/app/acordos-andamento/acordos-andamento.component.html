@@ -1,3 +1,14 @@
+<div *ngIf="loader">
+    <p>Aguarde . . .</p>
+    <div class="loader-wrap">  
+      <div class="loader"></div>
+    </div>
+  </div>  
+  
+  <div *ngIf="erro">
+    <h1> Houve um erro. Tente novamente, por favor.</h1>
+  </div>
+  
 <div *ngIf="emailRes" class="mb-15">
     <h1>{{ emailRes }}</h1>
 </div>
@@ -19,7 +30,7 @@
 
 <accordion [isAnimated]="true" [closeOthers]="true" *ngIf="accDividas">
    
-    <accordion-group *ngFor="let acordo of acordos">
+    <accordion-group *ngFor="let acordo of acordos; let indAcordo = index">
         <button class="btn btn-link btn-block clearfix btn-accordion" accordion-heading>
          <div class="row">
           <div class="col-12 col-sm-2 img-produto">
@@ -51,19 +62,19 @@
                         R$ {{ apiRestService.doisDigitosDecimais(par.ValorParcela) }}
                     </div>
                     <div class="col-4 col-md-2 no-padd-right">
-                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.CodigoTitulo, ind)">
+                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="segunda_via(acordo.CodigoAcordo, par.CodigoParcelaAcordo, acordo.CodigoTitulo, ind, indAcordo)">
                             Ver segunda via do boleto        
                         </a>
                         
                     </div>
                     <div class="col-4 col-md-2 no-padd-right">
-                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarEmail(ind, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo)">
+                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarEmail(ind, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo, indAcordo)">
                             Enviar por e-mail        
                         </a>                          
                     </div>
                     
                     <div class="col-4 col-md-2 no-padd-right">
-                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarTelefone(ind, acordo.CodigoAcordo, acordo.CodigoTitulo)">
+                        <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarTelefone(ind, acordo.CodigoAcordo, acordo.CodigoTitulo, indAcordo)">
                             Enviar por SMS        
                         </a>                          
                     </div>
@@ -72,7 +83,7 @@
                             <div class="loader" *ngIf="loadingBoleto[ind]"></div>
                         </div>    
                     </div>
-                    <div class="erro-boleto red" *ngIf="erroBoleto[ind]">Houve um erro. Tente novamente, por favor.</div>
+                    <div class="erro-boleto red" *ngIf="erroBoleto[indAcordo][ind]">Houve um erro. Tente novamente, por favor.</div>
             </div>
             
          </div>
@@ -87,18 +98,18 @@
                            R$ {{ apiRestService.doisDigitosDecimais(acordo.ParcelasAcordo.ParcelaAcordo.ValorParcela) }}
                         </div>
                         <div class="col-4 col-md-2 no-padd-right">
-                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0)">
+                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="segunda_via(acordo.CodigoAcordo, acordo.ParcelasAcordo.ParcelaAcordo.CodigoParcelaAcordo, acordo.NumeroTitulo, 0, indAcordo)">
                                 Ver segunda via do boleto        
                             </a>                          
                         </div>
                         <div class="col-4 col-md-2 no-padd-right">
-                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarEmail(0, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo)">
+                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarEmail(0, acordo.CodigoAcordo, acordo.CodigoTitulo, acordo.NumeroTitulo, indAcordo)">
                                 Enviar por e-mail        
                             </a>                          
                         </div>
                         
                         <div class="col-4 col-md-2 no-padd-right">
-                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarTelefone(0, acordo.CodigoAcordo, acordo.CodigoTitulo)">
+                            <a type="button" class="btn btn-primary padd-mobile btn-segunda back-red" (click)="pegarTelefone(0, acordo.CodigoAcordo, acordo.CodigoTitulo, indAcordo)">
                                 Enviar por SMS        
                             </a>                          
                         </div>

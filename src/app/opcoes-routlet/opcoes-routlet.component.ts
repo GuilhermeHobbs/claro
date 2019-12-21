@@ -94,7 +94,7 @@ export class OpcoesRoutletComponent implements OnInit {
     }
 
   voltarInicio() {
-    window.open ("/");
+    window.open (this.apiRestService.rootPath);
   }
 
 }

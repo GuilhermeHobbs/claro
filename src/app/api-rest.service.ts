@@ -9,6 +9,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class ApiRestService {
 
+  public rootPath = "/landingpageclaro"; // atualmente esta hospedado em http://186.215.156.250:8085/landingpageclaro/
+
   public showDisclaimer = true;
   
   public acordos: any;
@@ -30,21 +32,21 @@ export class ApiRestService {
 
   public opcoesPg = { }; 
 
-  private urlDadosDevedor = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/devedores'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
+  //private urlDadosDevedor = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/devedores'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
   //private urlDadosDevedor = 'https://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdevedor.php';
-  //private urlDadosDevedor = 'http://186.215.156.250:8085/landingpageclaro/apiresposta/apirequest_getdadosdevedor.php';
+  private urlDadosDevedor = 'http://186.215.156.250:8085/landingpageclaro/apiresposta/apirequest_getdadosdevedor.php';
   //private urlDadosDevedor = 'apiresposta/apirequest_getdadosdevedor.php';
-  private urlDadosDivida = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/divida';   //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
+  //private urlDadosDivida = 'https://my-json-server.typicode.com/GuilhermeHobbs/devedor/divida';   //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';  
   //private urlDadosDivida = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosdivida.php';
-  //private urlDadosDivida = 'http://186.215.156.250:8085/landingpageclaro/apiresposta/apirequest_getdadosdivida.php';
+  private urlDadosDivida = 'http://186.215.156.250:8085/landingpageclaro/apiresposta/apirequest_getdadosdivida.php';
   //private urlDadosDivida = 'apiresposta/apirequest_getdadosdivida.php';
   //private urlOpcoesPagamento = 'https://my-json-server.typicode.com/GuilhermeHobbs/opcoes/opcoes'; //'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
   //private urlOpcoesPagamento = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosopcoespagamento.php'
   private urlOpcoesPagamento = 'http://186.215.156.250:8085/landingpageclaro/apiresposta/apirequest_getdadosopcoespagamento.php';
   //private urlOpcoesPagamento = 'apiresposta/apirequest_getdadosopcoespagamento.php';
-  private urlDadosAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/dadosAcordo/acordo';  // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
+  //private urlDadosAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/dadosAcordo/acordo';  // 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
   //private urlDadosAcordo = 'http://172.22.4.33:8085/landingpage/apiresposta/apirequest_getdadosacordo.php';
-  //private urlDadosAcordo = 'http://186.215.156.250:8085/landingpageclaro/apiresposta/apirequest_getdadosacordo.php';
+  private urlDadosAcordo = 'http://186.215.156.250:8085/landingpageclaro/apiresposta/apirequest_getdadosacordo.php';
   //private urlDadosAcordo = 'apiresposta/apirequest_getdadosacordo.php';
   //private urlGravaAcordoTv = 'apiresposta/apirequest_gravaacordo_clarotv.php';
   //private urlGravaAcordo = 'https://my-json-server.typicode.com/GuilhermeHobbs/gravaAcordo/gravar';
@@ -107,33 +109,36 @@ export class ApiRestService {
 
      
  getDadosDevedor(cpfCnpj: string): Observable<Devedor> {
-  const cpfCnpjParam = new HttpParams().set('cpf', cpfCnpj);
-   return this.http.get<Devedor>(this.urlDadosDevedor)/*, cpfCnpjParam, this.httpOptions).pipe(
+  const cpfCnpjParam = new HttpParams().set('cpf', cpfCnpj)
+                                       .set('origin', 'portal')
+   return this.http.post<Devedor>(this.urlDadosDevedor, cpfCnpjParam, this.httpOptions).pipe(
      retry(100),
      catchError(() => {
        return EMPTY;
      }),
      shareReplay()
-     ) */
+     ) 
    
   }  
 
  getDadosDivida(cpfCnpj: string, codDevedor: string): Observable<Divida> {
   const cpfDevedorParam = new HttpParams()
   .set('cpf', cpfCnpj)    
-  .set('codigodevedor', codDevedor);
-  return this.http.get<Divida>(this.urlDadosDivida)/*,cpfDevedorParam, this.httpOptions).pipe(
+  .set('codigodevedor', codDevedor)
+  .set('origin', 'portal')
+  return this.http.post<Divida>(this.urlDadosDivida,cpfDevedorParam, this.httpOptions).pipe(
     retry(100),
     catchError(() => {
       return EMPTY;
     }),
     shareReplay()
-    )  */
+    )  
  }  
 
  getOpcoesPagamento(codTitulo: string): Observable<OpcoesPagamento> {
   const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo)
-                                       .set('cpf', this.cpfCnpj);    
+                                       .set('cpf', this.cpfCnpj)
+                                       .set('origin', 'portal')    
   return this.http.post<OpcoesPagamento>(this.urlOpcoesPagamento, cpfCnpjParam, this.httpOptions).pipe(
     retry(100),
     catchError(() => {
@@ -145,20 +150,22 @@ export class ApiRestService {
 
  getDadosAcordo(codTitulo: string): Observable<any> {
   const cpfCnpjParam = new HttpParams().set('codigotitulo', codTitulo)
-                                       .set('cpf', this.cpfCnpj);
-  return this.http.get(this.urlDadosAcordo)/*, cpfCnpjParam, this.httpOptions).pipe(
+                                       .set('cpf', this.cpfCnpj)
+                                       .set('origin', 'portal')
+  return this.http.post(this.urlDadosAcordo, cpfCnpjParam, this.httpOptions).pipe(
     retry(100),
     catchError(() => {
       return EMPTY;
     }),
     shareReplay()
-    ) */
+    ) 
  }
  
  getBoletoAcordo(codAcordo: string, codCodigoAcordo: string): Observable<Boleto> {
   const params = new HttpParams().set('codigoacordo', codAcordo)
                                  .set('codigoparcelaacordo', codCodigoAcordo)
-                                 .set('cpf', this.cpfCnpj);    
+                                 .set('cpf', this.cpfCnpj)
+                                 .set('origin', 'portal')
   return this.http.post<Boleto>(this.urlBoletoAcordo, params, this.httpOptions).pipe(
     retry(100),
     catchError(() => {
@@ -172,7 +179,8 @@ export class ApiRestService {
   let nome = this.devedor.Devedores.Devedor.Nome.toLocaleUpperCase().split(' ')[0];
   const params = new HttpParams().set('cpf', this.cpfCnpj)
       .set('numeroenvio', this.telefone)
-      .set('textosms', nome + ", Codigo Barras de sua conta CLARO. Vencimento: " + vencimento + ", R$ " + valor + ", Código: " + codigobarra);  
+      .set('textosms', nome + ", Codigo Barras de sua conta CLARO. Vencimento: " + vencimento + ", R$ " + valor + ", Código: " + codigobarra)
+      .set('origin', 'portal')
       return this.http.post(this.urlEnviaSms, params, this.httpOptions).pipe(
     retry(100),
     catchError(() => {
@@ -190,7 +198,8 @@ export class ApiRestService {
                                        .set('codigodevedor', codDevedor)
                                        .set('plano', codPlano)
                                        .set('vencimentoprimeira', vencimentoPrimeira)
-                                       .set('valorprimeira', valorPrimeira.replace('.',','));
+                                       .set('valorprimeira', valorPrimeira.replace('.',',')) // o acordo só é feito com uma virgula separando as casas decimais
+                                       .set('origin', 'portal')
   if (this.dividasClaroFixo.Divida.DadosDivida.length ||
       this.dividasClaroInternet.Divida.DadosDivida.length ||
       this.dividasClaroMovel.Divida.DadosDivida.length) url = this.urlGravaAcordo;
@@ -213,8 +222,10 @@ export class ApiRestService {
                                  .set('contrato', contrato)
                                  .set('valor', valor)
                                  .set('vencimento', vencimento)
-                                 .set('codigobarra', linha)
-                                 .set('email', email);
+                                 .set('codigobarra', this.linhaDigitavelToCodigoBarras(linha))
+                                 .set('linhadigitavel', linha)
+                                 .set('email', email)
+                                 .set('origin', 'portal')
 
   return this.http.post(this.urlBoletoEmail, params, this.httpOptions).pipe(
     retry(100),
@@ -266,10 +277,6 @@ export class ApiRestService {
   }
   
   else { 
-  
-    console.log("====this.dividasClaroFixo.Divida.DadosDivida");
-    console.log(this.dividasClaroFixo.Divida.DadosDivida);
-  
 
     switch (this.dividas.Divida.DadosDivida.Produto) {
       case "Claro Móvel": {
@@ -358,9 +365,6 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
   
      getAllOpcoesClaroFixo() {
 
-      console.log("=====getAllOpcoesClaroFixo()");
-      console.log(this.dividasClaroFixo);
-
       if (this.opcoesPg[this.dividasClaroFixo.Divida.DadosDivida[0].CodigoTitulo]) return true;  
        this.dividasClaroFixo.Divida.DadosDivida.forEach ( (divida) => {
        
@@ -384,7 +388,16 @@ if (this.opcoesPg[this.dividasClaroMovel.Divida.DadosDivida[0].CodigoTitulo]) re
      if (num.indexOf('.') === num.length-2) return num + '0';
      if (num.indexOf('.') === -1) return num + '.00';
      return num;
-   }   
+   }
+   
+   linhaDigitavelToCodigoBarras(linha: string) {
+
+    linha = linha.trim();
+    let num = linha.split(' ').join('');
+    return num.substring(0, 11) + num.substring(12, 23) + num.substring(24, 35) + num.substring(36, 47);
+
+  }
+
 
 }
 
